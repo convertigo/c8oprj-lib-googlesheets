@@ -112,6 +112,7 @@ comment: Get a range of cells from a Google Sheet.
 ↓Range [variables.RequestableVariable-1607603780863]: 
   comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
 ↓FirstRowHeader [variables.RequestableVariable-1607621396129]: 
+  comment: Set this to true if the first row a header
   value: true
 ↓TestOk [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607603826140]: 
