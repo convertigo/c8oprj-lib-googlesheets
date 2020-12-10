@@ -1,0 +1,9 @@
+↑convertigo: 7.9.0.m006
+↓lib_GoogleSheet [core.Project]: 
+  comment: Mashup Sequencer project
+  version: 1.0
+  ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
+  ↓GetRange [sequences.GenericSequence]: 🗏 sequences/GetRange.yaml
+  ↓gSheet [sequences.GenericSequence]: 🗏 sequences/gSheet.yaml
+  ↓Project_reference [references.ProjectSchemaReference]: 
+    projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master

@@ -1,0 +1,85 @@
+accessibility: Hidden
+↓Init [steps.SimpleStep-1607450285035]: 
+  expression: |
+    'var GSheetAPI = JavaImporter(
+      com.google.api.client.auth.oauth2.Credential,
+      com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp,
+      com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver,
+      com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow,
+      com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets,
+      com.google.api.client.googleapis.javanet.GoogleNetHttpTransport,
+      com.google.api.client.http.javanet.NetHttpTransport,
+      com.google.api.client.json.JsonFactory,
+      com.google.api.client.json.jackson2.JacksonFactory,
+      com.google.api.client.util.store.FileDataStoreFactory,
+      com.google.api.services.sheets.v4.Sheets,
+      com.google.api.services.sheets.v4.SheetsScopes,
+      com.google.api.services.sheets.v4.model.ValueRange,
+    
+      java.io.FileNotFoundException,
+      java.io.IOException,
+      java.io.InputStream,
+      java.io.ByteArrayInputStream,
+      java.io.InputStreamReader,
+      java.security.GeneralSecurityException,
+      java.util.Collections,
+      java.util.List
+    );
+    
+    with (GSheetAPI) {
+    	APPLICATION_NAME = "Google Sheets API Java Quickstart";
+        JSON_FACTORY = JacksonFactory.getDefaultInstance();
+        TOKENS_DIRECTORY_PATH = "tokens";
+    
+        /**
+         * Global instance of the scopes required by this quickstart.
+         * If modifying these scopes, delete your previously saved tokens/ folder.
+         */
+        SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
+        CREDENTIALS_FILE_PATH = "/credentials.json";
+    	CREDENTIALS = new java.lang.String(credentials);
+    
+    	getCredentials = function (HTTP_TRANSPORT) {
+    	    clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(new ByteArrayInputStream(CREDENTIALS.getBytes("UTF-8"))));
+    		// Build flow and trigger user authorization request.
+    		
+            flow = new GoogleAuthorizationCodeFlow.Builder(
+                    HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                    .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                    .setAccessType("offline")
+                    .build();	
+    
+            receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+    		token = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+    		log.warn("[Google Sreadsheet Connector] Token is :" + token);
+    		return token;
+    	}
+    	
+        HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
+        range = "Class Data!A2:E";
+    
+    	gCreds = getCredentials(HTTP_TRANSPORT);
+    	
+    	service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, gCreds)
+            .setApplicationName(APPLICATION_NAME)
+            .build();
+    
+    	response = service.spreadsheets().values()
+            .get(spreadsheetId, range)
+            .execute();
+    
+    
+        values = response.getValues();
+        if (values == null || values.isEmpty()) {
+    		log.warn("[Google Sreadsheet Connector] no data found");
+        } else {
+    		rows = values.toArray();
+            for (i=0; i< rows.length; i++) {
+    			log.warn("[Google Sreadsheet Connector] " + rows[i].get(0) + "," + rows[i].get(4));
+            }
+        }
+    }
+    '
+↓credentials [variables.RequestableVariable-1607451153403]: 
+  value: '{"installed":{"client_id":"1056161733704-nnt92or9u05t7k1dttv8f1kkudo89mk2.apps.googleusercontent.com","project_id":"convertigo-1607451185763","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"BRGvAzhEZD2gWv39vl_r_cw-","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}}'

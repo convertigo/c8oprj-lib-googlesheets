@@ -1,0 +1,119 @@
+↓GetTokenFromUserSession [steps.SessionGetStep-1607519410325]: 
+  key: oAuthAccessToken
+  output: false
+↓gGreds [steps.SimpleSourceStep-1607519428991]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1607519410325
+        - java.lang.String: 
+          - ↑value: ./expression/text()
+  variableName: gCreds
+↓GetRange [steps.SimpleStep-1607519254611]: 
+  expression: |
+    ' var GSheetAPI = JavaImporter(
+      com.google.api.client.auth.oauth2.Credential,
+      com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp,
+      com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver,
+      com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow,
+      com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets,
+      com.google.api.client.googleapis.javanet.GoogleNetHttpTransport,
+      com.google.api.client.http.javanet.NetHttpTransport,
+      com.google.api.client.json.JsonFactory,
+      com.google.api.client.json.jackson2.JacksonFactory,
+      com.google.api.client.util.store.FileDataStoreFactory,
+      com.google.api.services.sheets.v4.Sheets,
+      com.google.api.services.sheets.v4.SheetsScopes,
+      com.google.api.services.sheets.v4.model.ValueRange,
+      com.google.api.client.googleapis.auth.oauth2.GoogleCredential,
+    
+      java.io.FileNotFoundException,
+      java.io.IOException,
+      java.io.InputStream,
+      java.io.ByteArrayInputStream,
+      java.io.InputStreamReader,
+      java.security.GeneralSecurityException,
+      java.util.Collections,
+      java.util.List
+    );
+    
+    with (GSheetAPI) {
+    	APPLICATION_NAME = "Convertigo Form Builder";
+    	JSON_FACTORY = JacksonFactory.getDefaultInstance();	
+        HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    
+    	credential = new GoogleCredential().setAccessToken(gCreds);
+    	
+    	service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+            .setApplicationName("Convertigo Form Builder")
+            .build();
+    
+    	response = service.spreadsheets().values()
+            .get(SheetID, Range)
+            .execute();
+    
+        values = response.getValues();
+        if (values == null || values.isEmpty()) {
+    		log.warn("[Google Sreadsheet Connector] no data found");
+        } else {
+    		rows = values.toArray();
+            for (i=0; i< rows.length; i++) {
+    			log.warn("[Google Sreadsheet Connector] " + rows[i].get(0) + "," + rows[i].get(4));
+            }
+        }
+    }
+    '
+↓Complex [steps.XMLComplexStep-1607604822203]: 
+  nodeName: sheet
+  ↓Complexh [steps.XMLComplexStep-1607606245567]: 
+    nodeName: columns
+    ↓Attribute [steps.XMLAttributeStep-1607606284708]: 
+      nodeName: type
+      nodeText: array
+    ↓jIterator [steps.SimpleIteratorStep-1607606387785]: 
+      expression: rows[0]
+      ↓Complex [steps.XMLComplexStep-1607606297810]: 
+        nodeName: def
+        ↓Attribute [steps.XMLAttributeStep-1607606312976]: 
+          nodeName: type
+          nodeText: object
+        ↓jElement [steps.ElementStep-1607606419732]: 
+          expression: 'FirstRowHeader ? item : "col" + index'
+          nodeName: field
+  ↓Complex [steps.XMLComplexStep-1607606181102]: 
+    nodeName: data
+    ↓Attribute [steps.XMLAttributeStep-1607604837429]: 
+      nodeName: type
+      nodeText: array
+    ↓jIterator [steps.SimpleIteratorStep-1607604349367]: 
+      expression: rows
+      startIndex: 'FirstRowHeader ? 1: 0'
+      ↓Complex [steps.XMLComplexStep-1607604364354]: 
+        nodeName: row
+        ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
+          nodeName: type
+          nodeText: object
+        ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
+          expression: item
+          ↓jElement [steps.ElementStep-1607604404519]: 
+            expression: item
+            nodeName: cell
+            ↓Attribute [steps.XMLAttributeStep-1607605049494]: 
+              nodeName: type
+              nodeText: string
+            ↓jAttribute [steps.AttributeStep-1607613234128]: 
+              expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
+              nodeName: originalKeyName
+↓SheetID [variables.RequestableVariable-1607603766200]: 
+  comment: The Sheet id as found in the google  sheet URL
+↓Range [variables.RequestableVariable-1607603780863]: 
+  comment: The Cell range to read. (A1:D7 or  Class Data!A2:E)
+↓FirstRowHeader [variables.RequestableVariable-1607621396129]: 
+  value: true
+↓TestOk [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1607603826140]: 
+    value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
+  ↓Range [variables.TestCaseVariable-1607603826142]: 
+    value: Class Data!A2:E
