@@ -1,3 +1,4 @@
+comment: Get a range of cells from a Google Sheet.
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607519410325]: 
   key: oAuthAccessToken
   output: false
@@ -109,7 +110,7 @@
 ↓SheetID [variables.RequestableVariable-1607603766200]: 
   comment: The Sheet id as found in the google  sheet URL
 ↓Range [variables.RequestableVariable-1607603780863]: 
-  comment: The Cell range to read. (A1:D7 or  Class Data!A2:E)
+  comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
 ↓FirstRowHeader [variables.RequestableVariable-1607621396129]: 
   value: true
 ↓TestOk [core.TestCase]: 
