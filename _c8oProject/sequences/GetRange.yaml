@@ -51,62 +51,84 @@ comment: Get a range of cells from a Google Sheet.
             .setApplicationName("Convertigo Form Builder")
             .build();
     
-    	response = service.spreadsheets().values()
-            .get(SheetID, Range)
-            .execute();
-    
-        values = response.getValues();
-        if (values == null || values.isEmpty()) {
-    		log.warn("[Google Sreadsheet Connector] no data found");
-        } else {
-    		rows = values.toArray();
-            for (i=0; i< rows.length; i++) {
-    			log.warn("[Google Sreadsheet Connector] " + rows[i].get(0) + "," + rows[i].get(4));
-            }
-        }
+    	try {
+    		response = service.spreadsheets().values()
+    	        .get(SheetID, Range)
+    	        .execute();
+    		
+    	    values = response.getValues();
+    	    if (values == null || values.isEmpty()) {
+    			log.warn("[Google Sreadsheet Connector] no data found");
+    	    } else {
+    			rows = values.toArray();
+    	        for (i=0; i< rows.length; i++) {
+    				log.warn("[Google Sreadsheet Connector] " + rows[i].get(0) + "," + rows[i].get(4));
+    	        }
+    	    }
+    	} catch (error) {
+    		setError = error;
+    		log.error("[Google Sreadsheet Connector] Error occured " + error);				
+    	}
     }
     '
-↓Complex [steps.XMLComplexStep-1607604822203]: 
-  nodeName: sheet
-  ↓Complexh [steps.XMLComplexStep-1607606245567]: 
-    nodeName: columns
-    ↓Attribute [steps.XMLAttributeStep-1607606284708]: 
-      nodeName: type
-      nodeText: array
-    ↓jIterator [steps.SimpleIteratorStep-1607606387785]: 
-      expression: rows[0]
-      ↓Complex [steps.XMLComplexStep-1607606297810]: 
-        nodeName: def
-        ↓Attribute [steps.XMLAttributeStep-1607606312976]: 
+↓jIfThenElse [steps.IfThenElseStep-1607623986642]: 
+  condition: setError != undefined
+  ↓jThen [steps.ThenStep-1607623987085]: 
+    ↓Error_structure [steps.XMLErrorStep-1607624010022]: 
+      details: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: JS
+            - →→: setError
+      message: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: PLAIN
+            - →→: GoogleSheet connector error
+  ↓jElse [steps.ElseStep-1607623987087]: 
+    ↓Complex [steps.XMLComplexStep-1607604822203]: 
+      nodeName: sheet
+      ↓Complexh [steps.XMLComplexStep-1607606245567]: 
+        nodeName: columns
+        ↓Attribute [steps.XMLAttributeStep-1607606284708]: 
           nodeName: type
-          nodeText: object
-        ↓jElement [steps.ElementStep-1607606419732]: 
-          expression: 'FirstRowHeader ? item : "col" + index'
-          nodeName: field
-  ↓Complex [steps.XMLComplexStep-1607606181102]: 
-    nodeName: data
-    ↓Attribute [steps.XMLAttributeStep-1607604837429]: 
-      nodeName: type
-      nodeText: array
-    ↓jIterator [steps.SimpleIteratorStep-1607604349367]: 
-      expression: rows
-      startIndex: 'FirstRowHeader ? 1: 0'
-      ↓Complex [steps.XMLComplexStep-1607604364354]: 
-        nodeName: row
-        ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
-          nodeName: type
-          nodeText: object
-        ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
-          expression: item
-          ↓jElement [steps.ElementStep-1607604404519]: 
-            expression: item
-            nodeName: cell
-            ↓Attribute [steps.XMLAttributeStep-1607605049494]: 
+          nodeText: array
+        ↓jIterator [steps.SimpleIteratorStep-1607606387785]: 
+          expression: rows[0]
+          ↓Complex [steps.XMLComplexStep-1607606297810]: 
+            nodeName: def
+            ↓Attribute [steps.XMLAttributeStep-1607606312976]: 
               nodeName: type
-              nodeText: string
-            ↓jAttribute [steps.AttributeStep-1607613234128]: 
-              expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
-              nodeName: originalKeyName
+              nodeText: object
+            ↓jElement [steps.ElementStep-1607606419732]: 
+              expression: 'FirstRowHeader ? item : "col" + index'
+              nodeName: field
+      ↓Complex [steps.XMLComplexStep-1607606181102]: 
+        nodeName: data
+        ↓Attribute [steps.XMLAttributeStep-1607604837429]: 
+          nodeName: type
+          nodeText: array
+        ↓jIterator [steps.SimpleIteratorStep-1607604349367]: 
+          expression: rows
+          startIndex: 'FirstRowHeader ? 1: 0'
+          ↓Complex [steps.XMLComplexStep-1607604364354]: 
+            nodeName: row
+            ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
+              nodeName: type
+              nodeText: object
+            ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
+              expression: item
+              ↓jElement [steps.ElementStep-1607604404519]: 
+                expression: item
+                nodeName: cell
+                ↓Attribute [steps.XMLAttributeStep-1607605049494]: 
+                  nodeName: type
+                  nodeText: string
+                ↓jAttribute [steps.AttributeStep-1607613234128]: 
+                  expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
+                  nodeName: originalKeyName
 ↓SheetID [variables.RequestableVariable-1607603766200]: 
   comment: The Sheet id as found in the google  sheet URL
 ↓Range [variables.RequestableVariable-1607603780863]: 
