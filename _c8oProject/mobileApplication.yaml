@@ -1,0 +1,30 @@
+componentScriptContent: 
+  - xmlizable: 
+    - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+    - com.twinsoft.convertigo.beans.common.FormatedContent: 
+      →: |
+        /*Begin_c8o_AppImport*/
+        /*End_c8o_AppImport*/
+        /*Begin_c8o_AppDeclaration*/
+        	/*End_c8o_AppDeclaration*/
+        /*Begin_c8o_AppConstructor*/
+        		/*End_c8o_AppConstructor*/
+        /*Begin_c8o_AppInitialization*/
+                        /* Uncomment the following lines to enable the i18n feature.
+                         * You should add a json per language in the assets/i18n folder. */
+                        translate.setDefaultLang('en');
+                        translate.use(translate.getBrowserLang());
+                        
+                        /* Uncomment the following lines to enable the custom status bar color. */
+                        // statusBar.overlaysWebView(false);
+                        // statusBar.backgroundColorByHexString("#000000");
+                        // statusBar.styleBlackOpaque();
+        			/*End_c8o_AppInitialization*/
+        /*Begin_c8o_AppFunction*/
+        	/*End_c8o_AppFunction*/
+        
+tplProjectName: mobilebuilder_tpl_7_9_0
+↓AuthenticateToGoogle [mobile.components.UIActionStack-1607691117020]: 🗏 mobileSharedActions/AuthenticateToGoogle.yaml
+↓DisplayGoogleDrivePicker [mobile.components.UIActionStack-1607693309128]: 🗏 mobileSharedActions/DisplayGoogleDrivePicker.yaml
+↓GoogleDriveBrowser [mobile.components.UISharedComponent-1607691008631]: 🗏 mobileSharedComponents/GoogleDriveBrowser.yaml
+↓Page [mobile.components.PageComponent-1607690643768]: 🗏 mobilePages/Page.yaml

@@ -1,0 +1,140 @@
+comment: |
+  Perform the OAuth flow for Google
+  
+  If the token is valid, it will be stored in the user's session to be used when calling Microsoft APIs.
+  
+  Also if the token is valid, setAuthenticatedUser step is executed to flag this session as authenticated.
+  
+↓Input_variables [steps.InputVariablesStep-1607691047300]: 
+↓Call_Transaction2 [steps.TransactionStep-1607691047303]: 
+  sourceTransaction: lib_OAuth.GoogleOAuth.DiscoveryDocument
+↓Call_Transaction [steps.TransactionStep-1607691047306]: 
+  connectionStringDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1607691047303
+        - java.lang.String: 
+          - ↑value: ./document/object/token_endpoint/text()
+  sourceTransaction: lib_OAuth.GoogleOAuth.GetToken
+  ↓code [variables.StepVariable-1607691047309]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1607691047300
+          - java.lang.String: 
+            - ↑value: ./code/text()
+  ↓client_id [variables.StepVariable-1607691047312]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1607691047300
+          - java.lang.String: 
+            - ↑value: ./client_id/text()
+  ↓client_secret [variables.StepVariable-1607691047315]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1607691047300
+          - java.lang.String: 
+            - ↑value: ./keySecret/text()
+  ↓redirect_uri [variables.StepVariable-1607691047318]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1607691047300
+          - java.lang.String: 
+            - ↑value: ./redirect_uri/text()
+  ↓grant_type [variables.StepVariable-1607691047321]: 
+    value: authorization_code
+↓IfExistThenElse [steps.IfExistThenElseStep-1607691047324]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1607691047306
+        - java.lang.String: 
+          - ↑value: ./document/object/id_token
+  ↓jThen [steps.ThenStep-1607691047327]: 
+    ↓login [steps.XMLElementStep-1607691047330]: 
+      nodeName: login
+      nodeText: ok
+    ↓id_token [steps.SimpleSourceStep-1607691047333]: 
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1607691047306
+            - java.lang.String: 
+              - ↑value: ./document/object/id_token/text()
+      variableName: id_token
+    ↓SetOAuthTokenInSession [steps.SessionSetStep-1607691047336]: 
+      expression: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: SOURCE
+            - com.twinsoft.convertigo.beans.common.XMLVector: 
+              - java.lang.String: 
+                - ↑value: 1607691047306
+              - java.lang.String: 
+                - ↑value: ./document/object/access_token/text()
+      key: oAuthAccessTokenGoogle
+    ↓DecodeJWT [steps.SimpleStep-1607691047339]: 
+      expression: |
+        '//imports
+        var xmlUtils = use("com.twinsoft.convertigo.engine.util.XMLUtils");
+        
+        //code
+        b64 = id_token.split(''.'')[1];
+        // hack of the hell (google gives us a JSON without ending)
+        try{
+        	db64 = JSON.parse(com.twinsoft.convertigo.engine.util.Base64.decodeToString(b64));
+        }
+        catch(e){
+        	db64 = JSON.parse(com.twinsoft.convertigo.engine.util.Base64.decodeToString(b64)+''}'');
+        }
+        // Convert JSON to XML and attach it to main document
+        var jsonObject = new org.codehaus.jettison.json.JSONObject(JSON.stringify(db64));
+        xmlUtils.jsonToXml(jsonObject, "object", dom.getDocumentElement(), false, true, "item");
+        gid = "google:" + db64.sub + ":" + db64.email;
+        '
+    ↓jElement [steps.ElementStep-1607691047345]: 
+      comment: Still there to support old api (replaced by authUser in new one)
+      expression: gid
+      nodeName: decodedToken
+    ↓jElement1 [steps.ElementStep-1607691047348]: 
+      expression: gid
+      nodeName: authUser
+  ↓jElse [steps.ElseStep-1607691047351]: 
+    ↓Copy [steps.XMLCopyStep-1607691047354]: 
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1607691047306
+            - java.lang.String: 
+              - ↑value: ./document/object
+↓code [variables.RequestableVariable-1607691047357]: 
+↓keySecret [variables.RequestableVariable-1607691047360]: 
+  value: 
+    - ↑ciphered: true
+    - ↑traceable: false
+    - →→: xe3e8d34ac6f50dd03fb1b49b167dde8acf4e108275aa6607ecdc1742b13dc0f244477d0843c75b183120fdd6a8e52211
+  visibility: '-1'
+↓redirect_uri [variables.RequestableVariable-1607691047363]: 
+  value: https://www.convertigo.com/authorize
+↓client_id [variables.RequestableVariable-1607691047366]: 
+  value: ${lib_oauth.google.clientid}

@@ -1,0 +1,48 @@
+↑isRoot: true
+segment: path-to-page
+title: Title for Page
+↓Header [mobile.components.UIDynamicElement-1607690723592]: 
+  beanData: '{"ionBean":"Header"}'
+  tagName: ion-header
+  ↓NavBar [mobile.components.UIDynamicElement-1607690900306]: 
+    beanData: '{"ionBean":"NavBar"}'
+    tagName: ion-navbar
+    ↓BarTitle [mobile.components.UIDynamicElement-1607690900309]: 
+      beanData: '{"ionBean":"BarTitle"}'
+      tagName: ion-title
+      ↓Text [mobile.components.UIText-1607690900312]: 
+        textValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - MobileSmartSourceType: plain:My First App
+    ↓Button [mobile.components.UIDynamicElement-1607690900315]: 
+      beanData: '{"ionBean":"Button","MenuMode":"plain:menuToggle"}'
+      comment: A button to toggle the menu
+      tagName: button
+      ↓Icon [mobile.components.UIDynamicElement-1607690900318]: 
+        beanData: '{"ionBean":"Icon","IconName":"plain:menu"}'
+        tagName: ion-icon
+    ↓ButtonSet [mobile.components.UIDynamicElement-1607690900321]: 
+      beanData: '{"ionBean":"ButtonSet","SetPosition":"plain:right"}'
+      tagName: ion-buttons
+      ↓Button [mobile.components.UIDynamicElement-1607690900324]: 
+        beanData: '{"ionBean":"Button"}'
+        tagName: button
+        ↓Icon [mobile.components.UIDynamicElement-1607690900327]: 
+          beanData: '{"ionBean":"Icon","IconName":"plain:more"}'
+          tagName: ion-icon
+↓Content [mobile.components.UIDynamicElement-1607690710121]: 
+  beanData: '{"ionBean":"Content"}'
+  tagName: ion-content
+  ↓Button [mobile.components.UIDynamicElement-1607690923303]: 
+    beanData: '{"ionBean":"Button"}'
+    tagName: button
+    ↓Text [mobile.components.UIText-1607690957954]: 
+      textValue: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+          - MobileSmartSourceType: plain:Browse Sheets
+    ↓Event [mobile.components.UIControlEvent-1607691095562]: 
+      ↓InvokeSharedAction [mobile.components.UIDynamicInvoke-1607691143560]: 
+        beanData: '{"ionBean":"InvokeAction"}'
+        stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker

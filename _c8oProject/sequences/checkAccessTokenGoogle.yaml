@@ -1,0 +1,33 @@
+comment: |
+  Checks is a valid access token is held by the current users' session for Google
+  
+  This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
+  
+  
+↓GetTokenFromUserSession [steps.SessionGetStep-1607691398179]: 
+  key: oAuthAccessTokenGoogle
+  output: false
+↓IfExistThenElse [steps.IfExistStep-1607691398182]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1607691398179
+        - java.lang.String: 
+          - ↑value: ./expression/text()
+  ↓login [steps.XMLElementStep-1607691398185]: 
+    nodeName: token
+    nodeText: ok
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1607691398179
+          - java.lang.String: 
+            - ↑value: ./expression/text()
+  ↓Return [steps.ReturnStep-1607691398188]: 
+↓login [steps.XMLElementStep-1607691398191]: 
+  nodeName: notoken
+  nodeText: true
