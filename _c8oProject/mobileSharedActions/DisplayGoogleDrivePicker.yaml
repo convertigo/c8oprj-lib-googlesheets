@@ -1,3 +1,15 @@
+comment: |
+  'Displays the Google Drive fille picker to browse available spread sheets
+  This needs an API key to be configured in the symbols :
+  
+  ib_GoogleSheet.picker.apikey.secret
+  
+  The Api key can be found at : 
+  
+  https://console.developers.google.com/apis/credentials?organizationId=22050485893&project=convertigo-form-builder
+  
+  
+  '
 ↓CallSequence [mobile.components.UIDynamicAction-1607700598598]: 
   beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_OAuth.GetOAuthCredentials"}'
   ↓OAuthLogin [mobile.components.UIDynamicAction-1607700598601]: 
@@ -99,11 +111,13 @@
                     - java.lang.String: 
                       - ↑value: load-script
           ↓oauthToken [mobile.components.UIControlVariable-1607700828657]: 
+            comment: the Google OAuth token coming from an OAuth/OpenID login action
             varValue: 
               - xmlizable: 
                 - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
                 - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607704146076},{"priority":1607693309128},{"priority":1607700598598},{"priority":1607700598601}],"path":"?.out?.token","prefix":"","suffix":"","custom":"","useCustom":false}}
           ↓apiKey [mobile.components.UIControlVariable-1607707300948]: 
+            comment: The Display Picker API Key
             varValue: 
               - xmlizable: 
                 - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
