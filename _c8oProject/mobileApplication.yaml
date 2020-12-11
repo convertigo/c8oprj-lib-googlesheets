@@ -24,7 +24,5 @@ componentScriptContent:
         	/*End_c8o_AppFunction*/
         
 tplProjectName: mobilebuilder_tpl_7_9_0
-↓AuthenticateToGoogle [mobile.components.UIActionStack-1607691117020]: 🗏 mobileSharedActions/AuthenticateToGoogle.yaml
 ↓DisplayGoogleDrivePicker [mobile.components.UIActionStack-1607693309128]: 🗏 mobileSharedActions/DisplayGoogleDrivePicker.yaml
-↓GoogleDriveBrowser [mobile.components.UISharedComponent-1607691008631]: 🗏 mobileSharedComponents/GoogleDriveBrowser.yaml
 ↓Page [mobile.components.PageComponent-1607690643768]: 🗏 mobilePages/Page.yaml

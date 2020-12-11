@@ -1,14 +1,14 @@
 comment: Get a range of cells from a Google Sheet.
-↓GetTokenFromUserSession [steps.SessionGetStep-1607519410325]: 
-  key: oAuthAccessToken
+↓GetTokenFromUserSession [steps.SessionGetStep-1607709284701]: 
+  key: oAuthAccessTokenGoogle
   output: false
-↓gGreds [steps.SimpleSourceStep-1607519428991]: 
+↓jSimpleSource [steps.SimpleSourceStep-1607709321592]: 
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
       - com.twinsoft.convertigo.beans.common.XMLVector: 
         - java.lang.String: 
-          - ↑value: 1607519410325
+          - ↑value: 1607709284701
         - java.lang.String: 
           - ↑value: ./expression/text()
   variableName: gCreds
@@ -51,6 +51,8 @@ comment: Get a range of cells from a Google Sheet.
             .setApplicationName("Convertigo Form Builder")
             .build();
     
+    	setError = null;
+    
     	try {
     		response = service.spreadsheets().values()
     	        .get(SheetID, Range)
@@ -72,7 +74,7 @@ comment: Get a range of cells from a Google Sheet.
     }
     '
 ↓jIfThenElse [steps.IfThenElseStep-1607623986642]: 
-  condition: setError != undefined
+  condition: setError != null
   ↓jThen [steps.ThenStep-1607623987085]: 
     ↓Error_structure [steps.XMLErrorStep-1607624010022]: 
       details: 

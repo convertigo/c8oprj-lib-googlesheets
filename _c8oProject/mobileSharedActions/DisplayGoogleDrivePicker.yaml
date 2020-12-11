@@ -15,99 +15,96 @@
       }'
     ↓CallSequence1 [mobile.components.UIDynamicAction-1607704146076]: 
       beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.checkAccessTokenGoogle"}'
-      ↓DisplayPicker [mobile.components.UICustomAction-1607693339370]: 
-        actionValue: 
-          - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
-            - com.twinsoft.convertigo.beans.common.FormatedContent: 
-              →: |
-                '		    // The Browser API key obtained from the Google API Console.
-                		    // Replace with your own Browser API key, or your own key.
-                		    var developerKey = ''AIzaSyATv7Gw98XkLPFlo5g425S1GVuOoCEw--8'';
-                		
-                		    // The Client ID obtained from the Google API Console. Replace with your own Client ID.
-                		    var clientId = "439803111105-kcois3h1frd2s9snsk877jkud90vtolb.apps.googleusercontent.com"
-                		
-                		    // Replace with your own project number from console.developers.google.com.
-                		    // See "Project number" under "IAM & Admin" > "Settings"
-                		    var appId = "439803111105";
-                		
-                		    // Scope to use to access user''s Drive items.
-                		    var scope = [''https://www.googleapis.com/auth/drive.file''];
-                
-                
-                		    var pickerApiLoaded = false;
-                		    var oauthToken;
-                		
-                		    // Use the Google API Loader script to load the google.picker script.
-                
-                		    var onPickerApiLoad = function () {
-                			      pickerApiLoaded = true;
-                			      createPicker();
-                		    }
-                
-                		    // Create and render a Picker object for searching images.
-                		    var createPicker = function () {
-                		      if (pickerApiLoaded && vars.oauthToken) {
-                		        var view = new window["google"].picker.View(window["google"].picker.ViewId.DOCS);
-                		        view.setMimeTypes("application/vnd.google-apps.spreadsheet");
-                		        var picker = new window["google"].picker.PickerBuilder()
-                		            .enableFeature(window["google"].picker.Feature.NAV_HIDDEN)
-                		            .enableFeature(window["google"].picker.Feature.MULTISELECT_ENABLED)
-                		            .setAppId(appId)
-                		            .setOAuthToken(vars.oauthToken)
-                		            .addView(view)
-                		            .addView(new window["google"].picker.DocsUploadView())
-                		            .setDeveloperKey(developerKey)
-                		            .setCallback(pickerCallback)
-                		            .build();
-                		         picker.setVisible(true);
-                		      }
-                		    }
-                
-                		    // A simple callback implementation.
-                		    var pickerCallback =  function (data) {
-                		      if (data.action == window["google"].picker.Action.PICKED) {
-                		        var fileId = data.docs[0].id;
-                		        alert(''The user selected: '' + fileId);
-                		      }
-                		    }					
-                
-                			// Load the Google Apis  and when load finished, start installation process..
-                			load(''https://apis.google.com/js/api.js'', function (err, script) {
-                				if (err) {
-                					page.c8o.log.error(''[IntallStripe] ''+ err);
-                				}
-                				else {
-                			      window["gapi"].load(''picker'', {''callback'': onPickerApiLoad});
-                				}
-                			});			
-                			resolve();
-                '
-        package_dependencies: 
-          - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-            - com.twinsoft.convertigo.beans.common.XMLVector: 
-              - xmlizable: 
-                - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-                - com.twinsoft.convertigo.beans.common.XMLVector: 
-                  - java.lang.String: 
-                    - ↑value: load-script
-                  - java.lang.String: 
-                    - ↑value: 1.0.0
-        page_ts_imports: 
-          - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-            - com.twinsoft.convertigo.beans.common.XMLVector: 
-              - xmlizable: 
-                - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-                - com.twinsoft.convertigo.beans.common.XMLVector: 
-                  - java.lang.String: 
-                    - ↑value: '* as load'
-                  - java.lang.String: 
-                    - ↑value: load-script
-        ↓oauthToken [mobile.components.UIControlVariable-1607700828657]: 
-          varValue: 
+      ↓CallSequence [mobile.components.UIDynamicAction-1607707263696]: 
+        beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.getApiKey"}'
+        ↓DisplayPicker [mobile.components.UICustomAction-1607693339370]: 
+          actionValue: 
             - xmlizable: 
-              - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
-              - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607704146076},{"priority":1607693309128},{"priority":1607700598598},{"priority":1607700598601}],"path":"?.out?.token","prefix":"","suffix":"","custom":"","useCustom":false}}
+              - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+              - com.twinsoft.convertigo.beans.common.FormatedContent: 
+                →: |
+                  '		    // The Browser API key obtained from the Google API Console.
+                  		    // Replace with your own Browser API key, or your own key.
+                  		    var developerKey = vars.apiKey;
+                  
+                  		    // Replace with your own project number from console.developers.google.com.
+                  		    // See "Project number" under "IAM & Admin" > "Settings"
+                  		    var appId = "439803111105";
+                  
+                  		    var pickerApiLoaded = false;
+                  		
+                  		    // Use the Google API Loader script to load the google.picker script.
+                  		    var onPickerApiLoad = function () {
+                  			      pickerApiLoaded = true;
+                  			      createPicker();
+                  		    }
+                  
+                  		    // Create and render a Picker object for searching images.
+                  		    var createPicker = function () {
+                  		      if (pickerApiLoaded && vars.oauthToken) {
+                  		        var view = new window["google"].picker.View(window["google"].picker.ViewId.DOCS);
+                  		        view.setMimeTypes("application/vnd.google-apps.spreadsheet");
+                  		        var picker = new window["google"].picker.PickerBuilder()
+                  		            .enableFeature(window["google"].picker.Feature.NAV_HIDDEN)
+                  		            .enableFeature(window["google"].picker.Feature.MULTISELECT_ENABLED)
+                  		            .setAppId(appId)
+                  		            .setOAuthToken(vars.oauthToken)
+                  		            .addView(view)
+                  		            .addView(new window["google"].picker.DocsUploadView())
+                  		            .setDeveloperKey(developerKey)
+                  		            .setCallback(pickerCallback)
+                  		            .build();
+                  		         picker.setVisible(true);
+                  		      }
+                  		    }
+                  
+                  		    // A simple callback implementation.
+                  		    var pickerCallback =  function (data) {
+                  		      if (data.action == window["google"].picker.Action.PICKED) {
+                  		        var fileId = data.docs[0].id;
+                  				resolve(fileId);
+                  		      }
+                  		    }					
+                  
+                  			// Load the Google Apis  and when load finished, start installation process..
+                  			load(''https://apis.google.com/js/api.js'', function (err, script) {
+                  				if (err) {
+                  					page.c8o.log.error(''[IntallStripe] ''+ err);
+                  				}
+                  				else {
+                  			      window["gapi"].load(''picker'', {''callback'': onPickerApiLoad});
+                  				}
+                  			});			
+                  '
+          package_dependencies: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                  - com.twinsoft.convertigo.beans.common.XMLVector: 
+                    - java.lang.String: 
+                      - ↑value: load-script
+                    - java.lang.String: 
+                      - ↑value: 1.0.0
+          page_ts_imports: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                  - com.twinsoft.convertigo.beans.common.XMLVector: 
+                    - java.lang.String: 
+                      - ↑value: '* as load'
+                    - java.lang.String: 
+                      - ↑value: load-script
+          ↓oauthToken [mobile.components.UIControlVariable-1607700828657]: 
+            varValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607704146076},{"priority":1607693309128},{"priority":1607700598598},{"priority":1607700598601}],"path":"?.out?.token","prefix":"","suffix":"","custom":"","useCustom":false}}
+          ↓apiKey [mobile.components.UIControlVariable-1607707300948]: 
+            varValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607707263696},{"priority":1607693309128},{"priority":1607700598598},{"priority":1607700598601},{"priority":1607704146076}],"path":"?.out?.apiKey","prefix":"","suffix":"","custom":"","useCustom":false}}

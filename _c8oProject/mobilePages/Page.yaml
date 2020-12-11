@@ -34,6 +34,26 @@ title: Title for Page
 ↓Content [mobile.components.UIDynamicElement-1607690710121]: 
   beanData: '{"ionBean":"Content"}'
   tagName: ion-content
+  ↓Form [mobile.components.UIForm-1607708098382]: 
+    ↓FormItem [mobile.components.UIDynamicElement-1607708162196]: 
+      beanData: '{"ionBean":"FormItem"}'
+      tagName: ion-item
+      ↓TextInput [mobile.components.UIDynamicElement-1607708065307]: 
+        beanData: |
+          '{
+           "ionBean": "Input",
+           "FormControlName": "plain:range",
+           "Value": "plain:A1:K24"
+          }'
+        tagName: ion-input
+      ↓Label [mobile.components.UIDynamicElement-1607708154509]: 
+        beanData: '{"ionBean":"Label"}'
+        tagName: ion-label
+        ↓Text [mobile.components.UIText-1607708188123]: 
+          textValue: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+              - MobileSmartSourceType: plain:Range
   ↓Button [mobile.components.UIDynamicElement-1607690923303]: 
     beanData: '{"ionBean":"Button"}'
     tagName: button
@@ -41,8 +61,28 @@ title: Title for Page
       textValue: 
         - xmlizable: 
           - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
-          - MobileSmartSourceType: plain:Browse Sheets
+          - MobileSmartSourceType: plain:Browse Sheets and get Range
     ↓Event [mobile.components.UIControlEvent-1607691095562]: 
       ↓InvokeSharedAction [mobile.components.UIDynamicInvoke-1607691143560]: 
         beanData: '{"ionBean":"InvokeAction"}'
         stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
+        ↓CallSequence [mobile.components.UIDynamicAction-1607707852515]: 
+          beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.SheetGetRange"}'
+          ↓SheetID [mobile.components.UIControlVariable-1607707980038]: 
+            comment: new variable
+            varValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607691143560}],"path":"?.out","prefix":"","suffix":"","custom":"","useCustom":false}}
+          ↓Range [mobile.components.UIControlVariable-1607707980040]: 
+            comment: new variable
+            varValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - MobileSmartSourceType: source:{"filter":"Form","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607708098382}],"path":"?.controls['range']?.value","prefix":"","suffix":"","custom":"","useCustom":false}}
+          ↓FirstRowHeader [mobile.components.UIControlVariable-1607707980042]: 
+            comment: new variable
+            varValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - MobileSmartSourceType: plain:true
