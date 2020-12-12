@@ -7,7 +7,7 @@
   ↓getApiKey [sequences.GenericSequence]: 🗏 sequences/getApiKey.yaml
   ↓loginGoogleWithCode [sequences.GenericSequence]: 🗏 sequences/loginGoogleWithCode.yaml
   ↓SheetGetRange [sequences.GenericSequence]: 🗏 sequences/SheetGetRange.yaml
-  ↓Project_reference [references.ProjectSchemaReference]: 
+  ↓lib_OAuth_reference [references.ProjectSchemaReference]: 
     projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master
   ↓MobileApplication [core.MobileApplication]: 
     comment: Describes the mobile application global properties
