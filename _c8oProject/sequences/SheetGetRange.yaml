@@ -63,9 +63,6 @@ comment: Get a range of cells from a Google Sheet.
     			log.warn("[Google Sreadsheet Connector] no data found");
     	    } else {
     			rows = values.toArray();
-    	        for (i=0; i< rows.length; i++) {
-    				log.warn("[Google Sreadsheet Connector] " + rows[i].get(0) + "," + rows[i].get(4));
-    	        }
     	    }
     	} catch (error) {
     		setError = error;
