@@ -10,6 +10,8 @@
   ↓SheetGetRange [sequences.GenericSequence]: 🗏 sequences/SheetGetRange.yaml
   ↓lib_OAuth_reference [references.ProjectSchemaReference]: 
     projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master
+  ↓Project_reference [references.ProjectSchemaReference]: 
+    projectName: lib_ExtendedComponents=https://github.com/convertigo/c8oprj-lib-extended-components.git:branch=feature/angularx-qrcode
   ↓MobileApplication [core.MobileApplication]: 
     comment: Describes the mobile application global properties
     splashRemoveMode: beforeUpdate
