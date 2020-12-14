@@ -37,7 +37,8 @@ comment: Get a range of cells from a Google Sheet.
       java.io.InputStreamReader,
       java.security.GeneralSecurityException,
       java.util.Collections,
-      java.util.List
+      java.util.List,
+      java.util.ArrayList
     );
     
     with (GSheetAPI) {
@@ -54,16 +55,27 @@ comment: Get a range of cells from a Google Sheet.
     	setError = null;
     
     	try {
-    		response = service.spreadsheets().values()
-    	        .get(SheetID, Range)
-    	        .execute();
+    		log.warn("[Google Sreadsheet Connector] start...");				
+     		requestBody = new ValueRange();
+    	
+    		sheetData = new ArrayList();
+    		row = new ArrayList();
+    		for (i=0; i < dataRow.length; i++) {
+    			log.warn("[Google Sreadsheet Connector] add " + dataRow[i]);				
+    			row.add(dataRow[i])
+    		}
+    		sheetData.add(row);
+    		requestBody.setValues(sheetData);
     		
-    	    values = response.getValues();
-    	    if (values == null || values.isEmpty()) {
-    			log.warn("[Google Sreadsheet Connector] no data found");
-    	    } else {
-    			rows = values.toArray();
-    	    }
+    			
+    		response = service.spreadsheets().values()
+    			.append(SheetID, Range, requestBody)
+    	        .setValueInputOption("RAW")
+    			.setInsertDataOption("OVERWRITE")
+    	        .execute();
+    
+    		log.warning("[Google Sreadsheet Connector] response" + response);				
+    		
     	} catch (error) {
     		setError = error;
     		log.error("[Google Sreadsheet Connector] Error occured " + error);				
@@ -87,56 +99,24 @@ comment: Get a range of cells from a Google Sheet.
             - ↑mode: PLAIN
             - →→: GoogleSheet connector error
   ↓jElse [steps.ElseStep-1607870066666]: 
-    ↓Complex [steps.XMLComplexStep-1607870066669]: 
-      nodeName: sheet
-      ↓Complexh [steps.XMLComplexStep-1607870066672]: 
-        nodeName: columns
-        ↓Attribute [steps.XMLAttributeStep-1607870066675]: 
-          nodeName: type
-          nodeText: array
-        ↓jIterator [steps.SimpleIteratorStep-1607870066678]: 
-          expression: rows[0]
-          ↓Complex [steps.XMLComplexStep-1607870066681]: 
-            nodeName: def
-            ↓Attribute [steps.XMLAttributeStep-1607870066684]: 
-              nodeName: type
-              nodeText: object
-            ↓jElement [steps.ElementStep-1607870066687]: 
-              expression: 'FirstRowHeader ? item : "col" + index'
-              nodeName: field
-      ↓Complex [steps.XMLComplexStep-1607870066690]: 
-        nodeName: data
-        ↓Attribute [steps.XMLAttributeStep-1607870066693]: 
-          nodeName: type
-          nodeText: array
-        ↓jIterator [steps.SimpleIteratorStep-1607870066696]: 
-          expression: rows
-          startIndex: 'FirstRowHeader ? 1: 0'
-          ↓Complex [steps.XMLComplexStep-1607870066699]: 
-            nodeName: row
-            ↓Attribute [steps.XMLAttributeStep-1607870066702]: 
-              nodeName: type
-              nodeText: object
-            ↓jIterator [steps.SimpleIteratorStep-1607870066705]: 
-              expression: item
-              ↓jElement [steps.ElementStep-1607870066708]: 
-                expression: item
-                nodeName: cell
-                ↓Attribute [steps.XMLAttributeStep-1607870066711]: 
-                  nodeName: type
-                  nodeText: string
-                ↓jAttribute [steps.AttributeStep-1607870066714]: 
-                  expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
-                  nodeName: originalKeyName
 ↓SheetID [variables.RequestableVariable-1607870066717]: 
   comment: The Sheet id as found in the google  sheet URL
 ↓Range [variables.RequestableVariable-1607870066720]: 
   comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
-↓FirstRowHeader [variables.RequestableVariable-1607870066723]: 
-  comment: Set this to true if the first row a header
-  value: true
+↓dataRow [variables.RequestableMultiValuedVariable-1607967884873]: 
 ↓TestOk [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607870066727]: 
     value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
   ↓Range [variables.TestCaseVariable-1607870066730]: 
     value: Class Data!A2:E
+  ↓dataRow [variables.TestCaseMultiValuedVariable-1607967611629]: 
+    value: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: val1
+          - java.lang.String: 
+            - ↑value: val2
+          - java.lang.String: 
+            - ↑value: val3

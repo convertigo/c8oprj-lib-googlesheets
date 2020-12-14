@@ -86,6 +86,47 @@ title: Title for Page
                 - xmlizable: 
                   - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
                   - MobileSmartSourceType: plain:true
+    ↓Button1 [mobile.components.UIDynamicElement-1607955557230]: 
+      beanData: '{"ionBean":"Button"}'
+      tagName: button
+      ↓Text [mobile.components.UIText-1607955557233]: 
+        textValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - MobileSmartSourceType: plain:Browse sheets and add row
+      ↓Event [mobile.components.UIControlEvent-1607955557236]: 
+        ↓InvokeSharedAction [mobile.components.UIDynamicInvoke-1607955557239]: 
+          beanData: '{"ionBean":"InvokeAction"}'
+          stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
+          ↓CallSequence [mobile.components.UIDynamicAction-1607955557242]: 
+            beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.SheetAddRow"}'
+            ↓SheetID [mobile.components.UIControlVariable-1607955557245]: 
+              comment: new variable
+              varValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607955557239}],"path":"?.out","prefix":"","suffix":"","custom":"","useCustom":false}}
+            ↓Range [mobile.components.UIControlVariable-1607955557248]: 
+              comment: new variable
+              varValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - MobileSmartSourceType: source:{"filter":"Form","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607708098382}],"path":"?.controls['range']?.value","prefix":"","suffix":"","custom":"","useCustom":false}}
+            ↓dataRow [mobile.components.UIControlVariable-1607968061573]: 
+              comment: new variable
+              varValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - MobileSmartSourceType: |
+                      'script:[
+                      	''jhgjhgjhg jhgjhg jhg'',
+                      	''jhkjh kljh kljh kljhkljhkh kjh '',
+                      	''kjhkljh kjh kjhkjhjkAAAAAAA'',
+                      	7987987,
+                      	54654654,
+                      	45E12
+                      ]
+                      '
   ↓Directive [mobile.components.UIControlDirective-1607797627267]: 
     directiveName: If
     directiveSource: 
@@ -123,7 +164,17 @@ title: Title for Page
         varValue: 
           - xmlizable: 
             - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
-            - MobileSmartSourceType: 'script:{hide: false, editable: true, sortable: true, resizable: true, filter: true, checkboxSelection: false, singleClickEdit: false}'
+            - MobileSmartSourceType: |
+                'script:{
+                	hide: false,
+                	editable: true,
+                	sortable: true,
+                	resizable: true,
+                	filter: true,
+                	checkboxSelection: false,
+                	singleClickEdit: false
+                }
+                '
       ↓columnDefs [mobile.components.UIControlVariable-1607797553174]: 
         comment: 'Array of columnDef {headerName: ''headerName'', field: ''fieldName''} objects'
         varValue: 
