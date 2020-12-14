@@ -105,7 +105,7 @@ title: Title for Page
         varValue: 
           - xmlizable: 
             - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
-            - MobileSmartSourceType: script:10
+            - MobileSmartSourceType: script:50
       ↓rowSelection [mobile.components.UIControlVariable-1607797553168]: 
         comment: 'string: ''single'' (default) or ''multiple'''
         varValue: 

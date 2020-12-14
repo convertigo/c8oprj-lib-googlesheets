@@ -1,18 +1,18 @@
 comment: Get a range of cells from a Google Sheet.
-↓GetTokenFromUserSession [steps.SessionGetStep-1607709284701]: 
+↓GetTokenFromUserSession [steps.SessionGetStep-1607870066648]: 
   key: oAuthAccessTokenGoogle
   output: false
-↓jSimpleSource [steps.SimpleSourceStep-1607709321592]: 
+↓jSimpleSource [steps.SimpleSourceStep-1607870066651]: 
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
       - com.twinsoft.convertigo.beans.common.XMLVector: 
         - java.lang.String: 
-          - ↑value: 1607709284701
+          - ↑value: 1607870066648
         - java.lang.String: 
           - ↑value: ./expression/text()
   variableName: gCreds
-↓GetRange [steps.SimpleStep-1607519254611]: 
+↓AddRow [steps.SimpleStep-1607870066654]: 
   expression: |
     ' var GSheetAPI = JavaImporter(
       com.google.api.client.auth.oauth2.Credential,
@@ -63,18 +63,6 @@ comment: Get a range of cells from a Google Sheet.
     			log.warn("[Google Sreadsheet Connector] no data found");
     	    } else {
     			rows = values.toArray();
-    			types = [];
-    			
-    //			//log.warn("[Google Sreadsheet Connector] Dumping data");
-    //			for (i=0; i< rows.length; i++ ) {
-    //				//log.warn("[Google Sreadsheet Connector] Dumping Row" + i);
-    //				rowTypes = [];
-    //				for (j=0; j < rows[i].size(); j++ ) {
-    //					//log.warn("[Google Sreadsheet Connector] cell : " + rows[i].get(j));
-    //					rowTypes.push(typeof rows[i].get(j));
-    //				}
-    //				types.push(rowTypes);
-    //			}
     	    }
     	} catch (error) {
     		setError = error;
@@ -82,10 +70,10 @@ comment: Get a range of cells from a Google Sheet.
     	}
     }
     '
-↓jIfThenElse [steps.IfThenElseStep-1607623986642]: 
+↓jIfThenElse [steps.IfThenElseStep-1607870066657]: 
   condition: setError != null
-  ↓jThen [steps.ThenStep-1607623987085]: 
-    ↓Error_structure [steps.XMLErrorStep-1607624010022]: 
+  ↓jThen [steps.ThenStep-1607870066660]: 
+    ↓Error_structure [steps.XMLErrorStep-1607870066663]: 
       details: 
         - xmlizable: 
           - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
@@ -98,63 +86,57 @@ comment: Get a range of cells from a Google Sheet.
           - SmartType: 
             - ↑mode: PLAIN
             - →→: GoogleSheet connector error
-  ↓jElse [steps.ElseStep-1607623987087]: 
-    ↓Complex [steps.XMLComplexStep-1607604822203]: 
+  ↓jElse [steps.ElseStep-1607870066666]: 
+    ↓Complex [steps.XMLComplexStep-1607870066669]: 
       nodeName: sheet
-      ↓Complexh [steps.XMLComplexStep-1607606245567]: 
+      ↓Complexh [steps.XMLComplexStep-1607870066672]: 
         nodeName: columns
-        ↓Attribute [steps.XMLAttributeStep-1607606284708]: 
+        ↓Attribute [steps.XMLAttributeStep-1607870066675]: 
           nodeName: type
           nodeText: array
-        ↓jIterator [steps.SimpleIteratorStep-1607606387785]: 
+        ↓jIterator [steps.SimpleIteratorStep-1607870066678]: 
           expression: rows[0]
-          ↓Complex [steps.XMLComplexStep-1607606297810]: 
+          ↓Complex [steps.XMLComplexStep-1607870066681]: 
             nodeName: def
-            ↓Attribute [steps.XMLAttributeStep-1607606312976]: 
+            ↓Attribute [steps.XMLAttributeStep-1607870066684]: 
               nodeName: type
               nodeText: object
-            ↓jElement [steps.ElementStep-1607606419732]: 
+            ↓jElement [steps.ElementStep-1607870066687]: 
               expression: 'FirstRowHeader ? item : "col" + index'
               nodeName: field
-      ↓Complex [steps.XMLComplexStep-1607606181102]: 
+      ↓Complex [steps.XMLComplexStep-1607870066690]: 
         nodeName: data
-        ↓Attribute [steps.XMLAttributeStep-1607604837429]: 
+        ↓Attribute [steps.XMLAttributeStep-1607870066693]: 
           nodeName: type
           nodeText: array
-        ↓jIterator [steps.SimpleIteratorStep-1607604349367]: 
+        ↓jIterator [steps.SimpleIteratorStep-1607870066696]: 
           expression: rows
           startIndex: 'FirstRowHeader ? 1: 0'
-          ↓Complex [steps.XMLComplexStep-1607604364354]: 
+          ↓Complex [steps.XMLComplexStep-1607870066699]: 
             nodeName: row
-            ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
+            ↓Attribute [steps.XMLAttributeStep-1607870066702]: 
               nodeName: type
               nodeText: object
-            ↓rowType [steps.SimpleStep-1607876817377]: 
-              expression: |
-                rowType = types[index];
-                
-              isEnabled: false
-            ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
+            ↓jIterator [steps.SimpleIteratorStep-1607870066705]: 
               expression: item
-              ↓jElement [steps.ElementStep-1607604404519]: 
+              ↓jElement [steps.ElementStep-1607870066708]: 
                 expression: item
                 nodeName: cell
-                ↓jAttribute1 [steps.AttributeStep-1607875567941]: 
-                  expression: rowType[index]
+                ↓Attribute [steps.XMLAttributeStep-1607870066711]: 
                   nodeName: type
                   nodeText: string
-                ↓jAttribute [steps.AttributeStep-1607613234128]: 
+                ↓jAttribute [steps.AttributeStep-1607870066714]: 
                   expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
                   nodeName: originalKeyName
-↓SheetID [variables.RequestableVariable-1607603766200]: 
+↓SheetID [variables.RequestableVariable-1607870066717]: 
   comment: The Sheet id as found in the google  sheet URL
-↓Range [variables.RequestableVariable-1607603780863]: 
+↓Range [variables.RequestableVariable-1607870066720]: 
   comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
-↓FirstRowHeader [variables.RequestableVariable-1607621396129]: 
+↓FirstRowHeader [variables.RequestableVariable-1607870066723]: 
   comment: Set this to true if the first row a header
   value: true
 ↓TestOk [core.TestCase]: 
-  ↓SheetID [variables.TestCaseVariable-1607603826140]: 
+  ↓SheetID [variables.TestCaseVariable-1607870066727]: 
     value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
-  ↓Range [variables.TestCaseVariable-1607603826142]: 
+  ↓Range [variables.TestCaseVariable-1607870066730]: 
     value: Class Data!A2:E
