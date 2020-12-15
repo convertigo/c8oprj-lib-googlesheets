@@ -1,6 +1,6 @@
 ↑convertigo: 7.9.0.m006
 ↓lib_GoogleSheet [core.Project]: 
-  comment: Mashup Sequencer project
+  comment: The Google Sheet Connector for Convertigo
   version: 1.0
   ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
@@ -9,11 +9,13 @@
   ↓SheetAddRow [sequences.GenericSequence]: 🗏 sequences/SheetAddRow.yaml
   ↓SheetGetRange [sequences.GenericSequence]: 🗏 sequences/SheetGetRange.yaml
   ↓lib_OAuth_reference [references.ProjectSchemaReference]: 
+    comment: Used to get the Google OAuth token
     projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master
   ↓Project_reference [references.ProjectSchemaReference]: 
+    comment: Used for the Demo App only
     projectName: lib_ExtendedComponents=https://github.com/convertigo/c8oprj-lib-extended-components.git:branch=feature/angularx-qrcode:autoPull=true
   ↓MobileApplication [core.MobileApplication]: 
-    comment: Describes the mobile application global properties
+    comment: Test and demo app to show Google Sheet capacities
     splashRemoveMode: beforeUpdate
     ↓Android [mobileplatforms.Android]: 
       comment: Android platform

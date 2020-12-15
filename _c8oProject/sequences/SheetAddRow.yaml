@@ -1,4 +1,4 @@
-comment: Get a range of cells from a Google Sheet.
+comment: Add a row of cells to a Google Sheet.
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607870066648]: 
   key: oAuthAccessTokenGoogle
   output: false
@@ -104,6 +104,7 @@ comment: Get a range of cells from a Google Sheet.
 ↓Range [variables.RequestableVariable-1607870066720]: 
   comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
 ↓dataRow [variables.RequestableMultiValuedVariable-1607967884873]: 
+  comment: The data to be added 
 ↓TestOk [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607870066727]: 
     value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
