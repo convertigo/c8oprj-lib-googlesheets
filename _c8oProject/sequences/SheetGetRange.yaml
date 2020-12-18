@@ -129,18 +129,12 @@ comment: Get a range of cells from a Google Sheet.
             ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
               nodeName: type
               nodeText: object
-            ↓rowType [steps.SimpleStep-1607876817377]: 
-              expression: |
-                rowType = types[index];
-                
-              isEnabled: false
             ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
               expression: item
               ↓jElement [steps.ElementStep-1607604404519]: 
                 expression: item
                 nodeName: cell
-                ↓jAttribute1 [steps.AttributeStep-1607875567941]: 
-                  expression: rowType[index]
+                ↓Attribute [steps.XMLAttributeStep-1608311645907]: 
                   nodeName: type
                   nodeText: string
                 ↓jAttribute [steps.AttributeStep-1607613234128]: 
