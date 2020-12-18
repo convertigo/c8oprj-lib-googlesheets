@@ -10,19 +10,29 @@ This is the Google Sheet connector for Convertigo platform. Install this library
         lib_GoogleSheet=https://github.com/convertigo/c8oprj-lib-googlesheets.git
 
 * And click the 'Finish' button
+* This will also automatically import the lib_OAuth project
+* Create all 'Undefined Global Symbols' when prompted
 
 # Usage
 
 ## Configuring your Google OAuth and API Keys
 
-This connector uses the OAuth authentication protocol to exchange data with Google Sheets. You must configure this in your Google API Portal:
+This connector uses the OAuth authentication protocol to exchange data with Google Sheets. You must configure this in your Google APIs Console:
 
-* Connect to https://developers.google.com/sheets/api/quickstart/js
-* Click on "Enable the google Sheet API", enter a project name and click Next
-* Copy the Client ID and the Client Secret values as you will have to configure them in symbols later.
-* Close this Dialog, and then click  on the "Create API Key" Button
-* Again enter a project name (The same of course..) and click Next.
-* Copy the API key as you will have to configure it n symbols later.
+* Connect to https://console.developers.google.com/apis/dashboard
+* Create a New Project and select it
+* Click **ENABLE APIS AND SERVICES** button
+* Search for *Google Sheets API* and *Google Picker API* and enable them
+* Click on **Credentials** from Google left menu
+* Click on **CREATE CREDENTIALS** button and select **API key**
+* Copy this API key and paste it in **lib_GoogleSheet.picker.apikey.secret** symbol value via Convertigo Administration Console
+* Click on **CREATE CREDENTIALS** button and select **OAuth client ID** (Configure consent screen if asked)
+* Choose **Web application** in drop-down list
+* In **Authorised JavaScript origins**, add **http://localhost:18080** and **http://localhost:8100** URIs (Convertigo Studio dev/test mode) and **https://\<your site\>.convertigo.net** (Convertigo Server prod mode)
+* In **Authorised redirect URIs**, add https://c8ocloud.convertigo.net/convertigo/projects/lib_OAuth/getTokenGoogle.html
+* Click **CREATE** button
+* Copy the *Client ID* key and paste it in **lib_oauth.google.clientid** symbol value via Convertigo Administration Console
+* Copy the *Client Secret* key and paste it in **lib_oauth.google.keysecret.secret** symbol value via Convertigo Administration Console
 
 ## Configuring Convertigo Symbols
 
@@ -31,9 +41,9 @@ __lib_GoogleSheet__ needs some symbols to be configured. You configure them trou
 
 Symbol  | value
 ------| ------
-lib_oauth.google.clientid | The client ID value you copied in the previous step
-lib_oauth.google.keysecret.secret | the Client Secret value you copied in the previous step.
-lib_GoogleSheet.picker.apikey.secret | the API Key value you copied in the previous Step.
+lib_oauth.google.clientid | The **client ID** value you copied in the previous step
+lib_oauth.google.keysecret.secret | the **Client Secret** value you copied in the previous step.
+lib_GoogleSheet.picker.apikey.secret | the **API Key** value you copied in the previous Step.
 
 ## Sequences
 
@@ -48,7 +58,7 @@ These sequences will only work if you performed a OAuth Authentication to Google
 
 ## Shared Actions
 
-In order to authenticate with Google and browse the availables documents in a Google Drive, the librbay proides a Shared Action you can use in your client apps.
+In order to authenticate with Google and browse the availables documents in a Google Drive, the library provides a Shared Action you can use in your client apps.
 
 Shared Action  | Usage
 ------| ------
@@ -57,8 +67,8 @@ DisplayGoogleDrivePicker   | This will display a Google Driver Picker widget in 
 
 ## Sample Application
 
-You will find in this project a sample application using the Google Sheet Library, Use this a reference and tutrial about using the library. This demonstrates :
+You will find in this project a sample application using the Google Sheet Library, Use this as a reference and tutorial about using the library. This demonstrates :
 - Use of the DisplayPicker Shared Action
 - use of the SheetAddRow Sequence
-- use of the SheerGetRange Sequence
+- use of the SheetGetRange Sequence
 
