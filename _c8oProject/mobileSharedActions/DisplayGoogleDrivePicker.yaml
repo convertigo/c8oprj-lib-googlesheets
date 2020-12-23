@@ -18,7 +18,7 @@ comment: |
        "ionBean": "OAuthLoginAction",
        "provider": "plain:openid",
        "clientid": "source:{\"filter\":\"Sequence\",\"project\":\"GoogleSpeadSheetDemo\",\"input\":\"\",\"model\":{\"data\":[{\"sequence\":\"lib_OAuth.GetOAuthCredentials\",\"marker\":\"\"}],\"path\":\"?.GoogleClientID\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}",
-       "scope": "plain:openid https:\/\/www.googleapis.com\/auth\/userinfo.email https:\/\/www.googleapis.com\/auth\/userinfo.profile https:\/\/www.googleapis.com\/auth\/spreadsheets https:\/\/www.googleapis.com\/auth\/drive.file",
+       "scope": "plain:https:\/\/www.googleapis.com\/auth\/userinfo.email https:\/\/www.googleapis.com\/auth\/userinfo.profile https:\/\/www.googleapis.com\/auth\/spreadsheets https:\/\/www.googleapis.com\/auth\/drive.file&access_type=offline",
        "response_type": "plain:code",
        "loginRequestable": "plain:lib_GoogleSheet.loginGoogleWithCode",
        "checkAccessTokenRequestable": "plain:lib_GoogleSheet.checkAccessTokenGoogle",

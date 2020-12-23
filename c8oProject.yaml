@@ -11,6 +11,9 @@
   ↓lib_OAuth_reference [references.ProjectSchemaReference]: 
     comment: Used to get the Google OAuth token
     projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master
+  ↓MobileBuilderTemplate [references.ProjectSchemaReference]: 
+    comment: mobile builder template
+    projectName: mobilebuilder_tpl_7_9_0=https://github.com/convertigo/c8oprj-mobilebuilder-tpl/archive/mobilebuilder_tpl_7_9_0.zip
   ↓Project_reference [references.ProjectSchemaReference]: 
     comment: Used for the Demo App only
     projectName: lib_ExtendedComponents=https://github.com/convertigo/c8oprj-lib-extended-components.git:branch=feature/angularx-qrcode:autoPull=true
