@@ -8,9 +8,12 @@
   ↓loginGoogleWithCode [sequences.GenericSequence]: 🗏 sequences/loginGoogleWithCode.yaml
   ↓SheetAddRow [sequences.GenericSequence]: 🗏 sequences/SheetAddRow.yaml
   ↓SheetGetRange [sequences.GenericSequence]: 🗏 sequences/SheetGetRange.yaml
+  ↓TestLogin [sequences.GenericSequence]: 🗏 sequences/TestLogin.yaml
   ↓lib_OAuth_reference [references.ProjectSchemaReference]: 
     comment: Used to get the Google OAuth token
     projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master
+  ↓lib_UserManager_reference [references.ProjectSchemaReference]: 
+    projectName: lib_UserManager=https://github.com/convertigo/c8oprj-lib-user-manager.git:branch=7.9.0
   ↓MobileBuilderTemplate [references.ProjectSchemaReference]: 
     comment: mobile builder template
     projectName: mobilebuilder_tpl_7_9_0=https://github.com/convertigo/c8oprj-mobilebuilder-tpl/archive/mobilebuilder_tpl_7_9_0.zip

@@ -1,0 +1,8 @@
+comment: This only to have the test application logged in to be able to add Attributes to user accounts
+↓Set_authenticated_user [steps.SetAuthenticatedUserStep-1608743679264]: 
+  userid: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: DEMOUSER

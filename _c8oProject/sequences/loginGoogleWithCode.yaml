@@ -117,6 +117,41 @@ comment: |
     ↓jElement1 [steps.ElementStep-1607691047348]: 
       expression: gid
       nodeName: authUser
+    ↓IfExist [steps.IfExistStep-1608742987764]: 
+      comment: Handle Refresh tokens and store it as an Account Attribute
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1607691047306
+            - java.lang.String: 
+              - ↑value: ./document/object/refresh_token
+      ↓Get_authenticated_user [steps.GetAuthenticatedUserStep-1608745230342]: 
+      ↓Call_Sequence1 [steps.SequenceStep-1608742866087]: 
+        sourceSequence: lib_UserManager.SetUserAttribute
+        ↓user [variables.StepVariable-1608742866090]: 
+          sourceDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1608745230342
+                - java.lang.String: 
+                  - ↑value: ./text()
+        ↓attribute [variables.StepVariable-1608742892822]: 
+          comment: The attribute name
+          value: GoogleOAuthRefreshToken
+        ↓value [variables.StepVariable-1608742892824]: 
+          comment: The attribute value
+          sourceDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1607691047306
+                - java.lang.String: 
+                  - ↑value: ./document/object/refresh_token/text()
   ↓jElse [steps.ElseStep-1607691047351]: 
     ↓Copy [steps.XMLCopyStep-1607691047354]: 
       sourceDefinition: 

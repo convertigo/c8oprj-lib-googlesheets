@@ -7,7 +7,7 @@ comment: |
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607691398179]: 
   key: oAuthAccessTokenGoogle
   output: false
-↓IfExistThenElse [steps.IfExistStep-1607691398182]: 
+↓IfExistThenElse [steps.IfExistThenElseStep-1608745385084]: 
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
@@ -16,18 +16,80 @@ comment: |
           - ↑value: 1607691398179
         - java.lang.String: 
           - ↑value: ./expression/text()
-  ↓login [steps.XMLElementStep-1607691398185]: 
-    nodeName: token
-    nodeText: ok
-    sourceDefinition: 
-      - xmlizable: 
-        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-        - com.twinsoft.convertigo.beans.common.XMLVector: 
-          - java.lang.String: 
-            - ↑value: 1607691398179
-          - java.lang.String: 
-            - ↑value: ./expression/text()
-  ↓Return [steps.ReturnStep-1607691398188]: 
-↓login [steps.XMLElementStep-1607691398191]: 
-  nodeName: notoken
-  nodeText: true
+  ↓jThen [steps.ThenStep-1608745385086]: 
+    ↓login [steps.XMLElementStep-1607691398185]: 
+      nodeName: token
+      nodeText: ok
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1607691398179
+            - java.lang.String: 
+              - ↑value: ./expression/text()
+    ↓Return [steps.ReturnStep-1607691398188]: 
+  ↓jElse [steps.ElseStep-1608745385088]: 
+    ↓Get_authenticated_user [steps.GetAuthenticatedUserStep-1608745429916]: 
+    ↓Call_Sequence [steps.SequenceStep-1608745455777]: 
+      sourceSequence: lib_UserManager.GetUserAttribute
+      ↓user [variables.StepVariable-1608745474603]: 
+        comment: The user where we have to set the attribute on
+        sourceDefinition: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+            - com.twinsoft.convertigo.beans.common.XMLVector: 
+              - java.lang.String: 
+                - ↑value: 1608745429916
+              - java.lang.String: 
+                - ↑value: ./text()
+      ↓attribute [variables.StepVariable-1608745474605]: 
+        comment: The attribute name
+        value: GoogleOAuthRefreshToken
+    ↓IfExistThenElse [steps.IfExistThenElseStep-1608745524150]: 
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1608745455777
+            - java.lang.String: 
+              - ↑value: ./document/value
+      ↓jThen [steps.ThenStep-1608745524704]: 
+        ↓Element [steps.XMLElementStep-1608746015260]: 
+          nodeName: TokenEndpoint
+          nodeText: https://oauth2.googleapis.com/token
+        ↓Call_Transaction [steps.TransactionStep-1608745882803]: 
+          connectionStringDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1608746015260
+                - java.lang.String: 
+                  - ↑value: ./text()
+          sourceTransaction: lib_OAuth.GoogleOAuth.GetToken
+          ↓client_id [variables.StepVariable-1608745882809]: 
+            value: ${lib_oauth.google.clientid}
+          ↓client_secret [variables.StepVariable-1608745882812]: 
+            value: 
+              - ↑ciphered: true
+              - ↑traceable: false
+              - →→: xe3e8d34ac6f50dd03fb1b49b167dde8acf4e108275aa6607ecdc1742b13dc0f244477d0843c75b183120fdd6a8e52211
+            visibility: '-1'
+          ↓grant_type [variables.StepVariable-1608745882818]: 
+            value: refresh_token
+          ↓refresh_token [variables.StepVariable-1608746755925]: 
+            sourceDefinition: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                - com.twinsoft.convertigo.beans.common.XMLVector: 
+                  - java.lang.String: 
+                    - ↑value: 1608745455777
+                  - java.lang.String: 
+                    - ↑value: ./document/value/text()
+            value: refresh_token
+      ↓jElse [steps.ElseStep-1608745524706]: 
+        ↓login [steps.XMLElementStep-1607691398191]: 
+          nodeName: notoken
+          nodeText: true
