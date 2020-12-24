@@ -1,16 +1,15 @@
 comment: Add a row of cells to a Google Sheet.
-↓GetTokenFromUserSession [steps.SessionGetStep-1607870066648]: 
-  key: oAuthAccessTokenGoogle
-  output: false
+↓Call_Sequence [steps.SequenceStep-1608803967930]: 
+  sourceSequence: lib_GoogleSheet.checkAccessTokenGoogle
 ↓jSimpleSource [steps.SimpleSourceStep-1607870066651]: 
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
       - com.twinsoft.convertigo.beans.common.XMLVector: 
         - java.lang.String: 
-          - ↑value: 1607870066648
+          - ↑value: 1608803967930
         - java.lang.String: 
-          - ↑value: ./expression/text()
+          - ↑value: ./document/token/text()
   variableName: gCreds
 ↓AddRow [steps.SimpleStep-1607870066654]: 
   expression: |

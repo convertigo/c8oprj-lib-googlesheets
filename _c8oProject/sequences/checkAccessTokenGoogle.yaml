@@ -17,6 +17,9 @@ comment: |
         - java.lang.String: 
           - ↑value: ./expression/text()
   ↓jThen [steps.ThenStep-1608745385086]: 
+    ↓Log [steps.LogStep-1608802467238]: 
+      expression: '"We found a token in user session, so return it"'
+      level: WARN
     ↓login [steps.XMLElementStep-1607691398185]: 
       nodeName: token
       nodeText: ok
@@ -31,6 +34,7 @@ comment: |
     ↓Return [steps.ReturnStep-1607691398188]: 
   ↓jElse [steps.ElseStep-1608745385088]: 
     ↓Get_authenticated_user [steps.GetAuthenticatedUserStep-1608745429916]: 
+      output: false
     ↓Call_Sequence [steps.SequenceStep-1608745455777]: 
       sourceSequence: lib_UserManager.GetUserAttribute
       ↓user [variables.StepVariable-1608745474603]: 
@@ -56,19 +60,11 @@ comment: |
             - java.lang.String: 
               - ↑value: ./document/value
       ↓jThen [steps.ThenStep-1608745524704]: 
-        ↓Element [steps.XMLElementStep-1608746015260]: 
-          nodeName: TokenEndpoint
-          nodeText: https://oauth2.googleapis.com/token
+        ↓Log [steps.LogStep-1608803200792]: 
+          expression: '"A refresh token is available, requesting from it an acess token..."'
+          level: WARN
         ↓Call_Transaction [steps.TransactionStep-1608745882803]: 
-          connectionStringDefinition: 
-            - xmlizable: 
-              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-              - com.twinsoft.convertigo.beans.common.XMLVector: 
-                - java.lang.String: 
-                  - ↑value: 1608746015260
-                - java.lang.String: 
-                  - ↑value: ./text()
-          sourceTransaction: lib_OAuth.GoogleOAuth.GetToken
+          sourceTransaction: lib_GoogleSheet.GoogleOAuth.RefreshToken
           ↓client_id [variables.StepVariable-1608745882809]: 
             value: ${lib_oauth.google.clientid}
           ↓client_secret [variables.StepVariable-1608745882812]: 
@@ -89,7 +85,34 @@ comment: |
                   - java.lang.String: 
                     - ↑value: ./document/value/text()
             value: refresh_token
+        ↓login [steps.XMLElementStep-1608803265338]: 
+          nodeName: token
+          nodeText: ok
+          sourceDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1608745882803
+                - java.lang.String: 
+                  - ↑value: ./document/object/access_token/text()
+        ↓SetOAuthTokenInSession [steps.SessionSetStep-1608803530793]: 
+          expression: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: SOURCE
+                - com.twinsoft.convertigo.beans.common.XMLVector: 
+                  - java.lang.String: 
+                    - ↑value: 1608803265338
+                  - java.lang.String: 
+                    - ↑value: ./text()
+          key: oAuthAccessTokenGoogle
+        ↓Return [steps.ReturnStep-1608803265341]: 
       ↓jElse [steps.ElseStep-1608745524706]: 
+        ↓Log [steps.LogStep-1608802298245]: 
+          expression: '"No refresh token avilable for this user, So return no token"'
+          level: WARN
         ↓login [steps.XMLElementStep-1607691398191]: 
           nodeName: notoken
           nodeText: true

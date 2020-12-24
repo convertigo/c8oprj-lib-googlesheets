@@ -1,16 +1,15 @@
 comment: Get a range of cells from a Google Sheet.
-↓GetTokenFromUserSession [steps.SessionGetStep-1607709284701]: 
-  key: oAuthAccessTokenGoogle
-  output: false
+↓Call_Sequence [steps.SequenceStep-1608803826547]: 
+  sourceSequence: lib_GoogleSheet.checkAccessTokenGoogle
 ↓jSimpleSource [steps.SimpleSourceStep-1607709321592]: 
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
       - com.twinsoft.convertigo.beans.common.XMLVector: 
         - java.lang.String: 
-          - ↑value: 1607709284701
+          - ↑value: 1608803826547
         - java.lang.String: 
-          - ↑value: ./expression/text()
+          - ↑value: ./document/token/text()
   variableName: gCreds
 ↓GetRange [steps.SimpleStep-1607519254611]: 
   expression: |
