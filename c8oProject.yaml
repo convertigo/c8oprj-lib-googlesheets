@@ -1,7 +1,7 @@
 ↑convertigo: 7.9.0.m006
 ↓lib_GoogleSheet [core.Project]: 
   comment: The Google Sheet Connector for Convertigo
-  version: 1.0
+  version: 1.1
   ↓GoogleOAuth [connectors.HttpConnector]: 🗏 connectors/GoogleOAuth.yaml
   ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
@@ -14,7 +14,7 @@
     comment: Used to get the Google OAuth token
     projectName: lib_OAuth=https://github.com/convertigo/c8oprj-lib-oauth.git:branch=master
   ↓lib_UserManager_reference [references.ProjectSchemaReference]: 
-    projectName: lib_UserManager=https://github.com/convertigo/c8oprj-lib-user-manager.git:branch=7.9.0
+    projectName: lib_UserManager=https://github.com/convertigo/c8oprj-lib-user-manager.git:branch=7.9.0:autoPull=true
   ↓MobileBuilderTemplate [references.ProjectSchemaReference]: 
     comment: mobile builder template
     projectName: mobilebuilder_tpl_7_9_0=https://github.com/convertigo/c8oprj-mobilebuilder-tpl/archive/mobilebuilder_tpl_7_9_0.zip
