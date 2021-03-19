@@ -56,22 +56,6 @@ SheetGetRange | Read a Range of values form a Google Sheet
 
 These sequences will only work if you performed a OAuth Authentication to Google first. To help you with this, the library provides a Shared action you can use in your Apps. 
 
-## Shared Actions
-
-In order to authenticate with Google and browse the available documents in a Google Drive, the library provides a Shared Action you can use in your client apps.
-
-Shared Action  | Usage
-------| ------
-DisplayGoogleDrivePicker   | This will display a Google Driver Picker widget in your Mobile or desktop app. If you are not already authenticated to Google, a Google Login will be displayed followed by a consent page. When all pages are filled by the user, the Google Driver picker will appear. When the user selects a document and hits the ok button, the SharedAction will return in the __out__ object the ID of the document picked. You can use this __out__ bound to the __SheetID__ variable when calling the SheetXXXX sequences. 
-
-
-## Sample Application
-
-You will find in this project a sample application using the Google Sheet Library, Use this as a reference and tutorial about using the library. This demonstrates :
-- Use of the DisplayPicker Shared Action
-- use of the SheetAddRow Sequence
-- use of the SheetGetRange Sequence
-
 ## Using in a Backend only environment.
 
 If you want to run the Sequences headless (by APIs or within a scheduled job) then the connector will need to authenticate to Google with no end user Interaction.
