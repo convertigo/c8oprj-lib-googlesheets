@@ -23,21 +23,6 @@ componentScriptContent:
         /*Begin_c8o_AppFunction*/
         	/*End_c8o_AppFunction*/
         
-tplProjectName: mobilebuilder_tpl_7_9_0
-↓DisplayGoogleDrivePicker [mobile.components.UIActionStack-1607693309128]: 🗏 mobileSharedActions/DisplayGoogleDrivePicker.yaml
-↓Page [mobile.components.PageComponent-1607690643768]: 🗏 mobilePages/Page.yaml
-↓AgGridStyle [mobile.components.UIStyle-1607797412354]: 
-  comment: You can add some global application styles here
-  styleContent: 
-    - xmlizable: 
-      - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
-      - com.twinsoft.convertigo.beans.common.FormatedContent: 
-        →: |
-          '.custom-header-weel {
-          	background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7);
-          	background-repeat: no-repeat;
-          	background-position: center;
-          }
-          @import "../../node_modules/ag-grid-community/dist/styles/ag-grid.scss";
-          @import "../../node_modules/ag-grid-community/dist/styles/ag-theme-balham/sass/ag-theme-balham.scss";
-          '
+tplProjectName: mobilebuilder_tpl_8_0_0_ngx
+↓DisplayGoogleDrivePicker [ngx.components.UIActionStack-1607693309128]: 🗏 mobileSharedActions/DisplayGoogleDrivePicker.yaml
+↓Page [ngx.components.PageComponent-1607690643768]: 🗏 mobilePages/Page.yaml

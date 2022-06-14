@@ -1,122 +1,125 @@
 ↑isRoot: true
 segment: path-to-page
 title: Title for Page
-↓Header [mobile.components.UIDynamicElement-1607690723592]: 
+↓Header [ngx.components.UIDynamicElement-1607690723592]: 
   beanData: '{"ionBean":"Header"}'
   tagName: ion-header
-  ↓NavBar [mobile.components.UIDynamicElement-1607690900306]: 
-    beanData: '{"ionBean":"NavBar"}'
-    tagName: ion-navbar
-    ↓BarTitle [mobile.components.UIDynamicElement-1607690900309]: 
+  ↓ToolBar [ngx.components.UIDynamicElement-1607690900306]: 
+    beanData: '{"ionBean":"ToolBar"}'
+    tagName: ion-toolbar
+    ↓BarTitle [ngx.components.UIDynamicElement-1607690900309]: 
       beanData: '{"ionBean":"BarTitle"}'
       tagName: ion-title
-      ↓Text [mobile.components.UIText-1607690900312]: 
+      ↓Text [ngx.components.UIText-1607690900312]: 
+        i18n: true
         textValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: plain:Google Sheet Demo App
-    ↓Button [mobile.components.UIDynamicElement-1607690900315]: 
-      beanData: '{"ionBean":"Button","MenuMode":"plain:menuToggle"}'
+    ↓Button [ngx.components.UIDynamicElement-1607690900315]: 
+      beanData: '{"ionBean":"MenuButton"}'
       comment: A button to toggle the menu
-      tagName: button
-      ↓Icon [mobile.components.UIDynamicElement-1607690900318]: 
-        beanData: '{"ionBean":"Icon","IconName":"plain:menu"}'
-        tagName: ion-icon
-    ↓ButtonSet [mobile.components.UIDynamicElement-1607690900321]: 
-      beanData: '{"ionBean":"ButtonSet","SetPosition":"plain:right"}'
+      tagName: ion-menu-button
+    ↓ButtonSet [ngx.components.UIDynamicElement-1607690900321]: 
+      beanData: '{"ionBean":"ButtonSet","SetPosition":"plain:end"}'
       tagName: ion-buttons
-      ↓Button [mobile.components.UIDynamicElement-1607690900324]: 
+      ↓Button [ngx.components.UIDynamicElement-1607690900324]: 
         beanData: '{"ionBean":"Button"}'
-        tagName: button
-        ↓Icon [mobile.components.UIDynamicElement-1607690900327]: 
-          beanData: '{"ionBean":"Icon","IconName":"plain:more"}'
+        tagName: ion-button
+        ↓Icon [ngx.components.UIDynamicElement-1607690900327]: 
+          beanData: '{"ionBean":"Icon","IconName":"plain:ellipsis-vertical-outline"}'
           tagName: ion-icon
-↓Content [mobile.components.UIDynamicElement-1607690710121]: 
+↓Content [ngx.components.UIDynamicElement-1607690710121]: 
   beanData: '{"ionBean":"Content"}'
   tagName: ion-content
-  ↓Form [mobile.components.UIForm-1607708098382]: 
-    ↓FormItem [mobile.components.UIDynamicElement-1607708162196]: 
+  ↓Form [ngx.components.UIForm-1607708098382]: 
+    identifier: form1607708098382
+    ↓FormItem [ngx.components.UIDynamicElement-1607708162196]: 
       beanData: '{"ionBean":"FormItem"}'
       tagName: ion-item
-      ↓TextInput [mobile.components.UIDynamicElement-1607708065307]: 
+      ↓TextInput [ngx.components.UIDynamicElement-1607708065307]: 
         beanData: |
           '{
            "ionBean": "Input",
-           "FormControlName": "plain:range",
+           "ControlName": "plain:range",
+           "Debounce": "plain:0",
            "Value": "plain:A1:K24"
           }'
         tagName: ion-input
-      ↓Label [mobile.components.UIDynamicElement-1607708154509]: 
+      ↓Label [ngx.components.UIDynamicElement-1607708154509]: 
         beanData: '{"ionBean":"Label"}'
         tagName: ion-label
-        ↓Text [mobile.components.UIText-1607708188123]: 
+        ↓Text [ngx.components.UIText-1607708188123]: 
+          i18n: true
           textValue: 
             - xmlizable: 
-              - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+              - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
               - MobileSmartSourceType: plain:Range
-    ↓Button [mobile.components.UIDynamicElement-1607690923303]: 
+    ↓Button [ngx.components.UIDynamicElement-1607690923303]: 
       beanData: '{"ionBean":"Button"}'
-      tagName: button
-      ↓Text [mobile.components.UIText-1607690957954]: 
+      tagName: ion-button
+      ↓Text [ngx.components.UIText-1607690957954]: 
+        i18n: true
         textValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: plain:Browse Sheets and get Range
-      ↓Event [mobile.components.UIControlEvent-1607691095562]: 
-        ↓InvokeSharedAction [mobile.components.UIDynamicInvoke-1607691143560]: 
+      ↓Event [ngx.components.UIControlEvent-1607691095562]: 
+        ↓InvokeSharedAction [ngx.components.UIDynamicInvoke-1607691143560]: 
           beanData: '{"ionBean":"InvokeAction"}'
           stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
-          ↓CallSequence [mobile.components.UIDynamicAction-1607707852515]: 
+          ↓CallSequence [ngx.components.UIDynamicAction-1607707852515]: 
             beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.SheetGetRange"}'
-            ↓SheetID [mobile.components.UIControlVariable-1607707980038]: 
+            ↓SheetID [ngx.components.UIControlVariable-1607707980038]: 
               comment: new variable
               varValue: 
                 - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                   - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607691143560}],"path":"?.out","prefix":"","suffix":"","custom":"","useCustom":false}}
-            ↓Range [mobile.components.UIControlVariable-1607707980040]: 
+            ↓Range [ngx.components.UIControlVariable-1607707980040]: 
               comment: new variable
               varValue: 
                 - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                   - MobileSmartSourceType: source:{"filter":"Form","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607708098382}],"path":"?.controls['range']?.value","prefix":"","suffix":"","custom":"","useCustom":false}}
-            ↓FirstRowHeader [mobile.components.UIControlVariable-1607707980042]: 
+            ↓FirstRowHeader [ngx.components.UIControlVariable-1607707980042]: 
               comment: new variable
               varValue: 
                 - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                   - MobileSmartSourceType: plain:true
-    ↓Button1 [mobile.components.UIDynamicElement-1607955557230]: 
+    ↓Button1 [ngx.components.UIDynamicElement-1607955557230]: 
       beanData: '{"ionBean":"Button"}'
-      tagName: button
-      ↓Text [mobile.components.UIText-1607955557233]: 
+      tagName: ion-button
+      ↓Text [ngx.components.UIText-1607955557233]: 
+        i18n: true
         textValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: plain:Browse sheets and add row
-      ↓Event [mobile.components.UIControlEvent-1607955557236]: 
-        ↓InvokeSharedAction [mobile.components.UIDynamicInvoke-1607955557239]: 
+      ↓Event [ngx.components.UIControlEvent-1607955557236]: 
+        ↓InvokeSharedAction [ngx.components.UIDynamicInvoke-1607955557239]: 
           beanData: '{"ionBean":"InvokeAction"}'
           stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
-          ↓CallSequence [mobile.components.UIDynamicAction-1607955557242]: 
+          ↓CallSequence [ngx.components.UIDynamicAction-1607955557242]: 
             beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.SheetAddRow"}'
-            ↓SheetID [mobile.components.UIControlVariable-1607955557245]: 
+            ↓SheetID [ngx.components.UIControlVariable-1607955557245]: 
               comment: new variable
               varValue: 
                 - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                   - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607955557239}],"path":"?.out","prefix":"","suffix":"","custom":"","useCustom":false}}
-            ↓Range [mobile.components.UIControlVariable-1607955557248]: 
+            ↓Range [ngx.components.UIControlVariable-1607955557248]: 
               comment: new variable
               varValue: 
                 - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                   - MobileSmartSourceType: source:{"filter":"Form","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607708098382}],"path":"?.controls['range']?.value","prefix":"","suffix":"","custom":"","useCustom":false}}
-            ↓dataRow [mobile.components.UIControlVariable-1607968061573]: 
+            ↓dataRow [ngx.components.UIControlVariable-1607968061573]: 
               comment: new variable
               varValue: 
                 - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                   - MobileSmartSourceType: |
                       'script:[
                       	''jhgjhgjhg jhgjhg jhg'',
@@ -127,43 +130,43 @@ title: Title for Page
                       	45E12
                       ]
                       '
-  ↓Directive [mobile.components.UIControlDirective-1607797627267]: 
+  ↓Directive [ngx.components.UIControlDirective-1607797627267]: 
     directiveName: If
     directiveSource: 
       - xmlizable: 
-        - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+        - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
         - MobileSmartSourceType: source:{"filter":"Sequence","project":"lib_GoogleSheet","input":"","model":{"data":[{"sequence":"lib_GoogleSheet.SheetGetRange","marker":""}],"path":"?.sheet","prefix":"","suffix":"","custom":"","useCustom":false}}
-    ↓UseSharedComponent [mobile.components.UIUseShared-1607796970843]: 
-      sharedcomponent: lib_ExtendedComponents.MobileApplication.Application.agGrid
-      ↓pagination [mobile.components.UIControlVariable-1607797553164]: 
+    ↓UseSharedComponent [ngx.components.UIUseShared-1607796970843]: 
+      sharedcomponent: lib_ExtendedComponents_ui_ngx.MobileApplication.Application.agGrid
+      ↓pagination [ngx.components.UIUseVariable-1607797553164]: 
         comment: 'boolean: true (default) or false'
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:true
-      ↓paginationPageSize [mobile.components.UIControlVariable-1607797553166]: 
+      ↓paginationPageSize [ngx.components.UIUseVariable-1607797553166]: 
         comment: 'integer: 10 by default'
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:50
-      ↓rowSelection [mobile.components.UIControlVariable-1607797553168]: 
+      ↓rowSelection [ngx.components.UIUseVariable-1607797553168]: 
         comment: 'string: ''single'' (default) or ''multiple'''
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:'single'
-      ↓rowDeselection [mobile.components.UIControlVariable-1607797553170]: 
+      ↓rowDeselection [ngx.components.UIUseVariable-1607797553170]: 
         comment: 'boolean: true (default) or false'
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:true
-      ↓defaultColDef [mobile.components.UIControlVariable-1607797553172]: 
+      ↓defaultColDef [ngx.components.UIUseVariable-1607797553172]: 
         comment: 'default is {hide: false, editable: true, sortable: true, resizable: true, filter: true, checkboxSelection: false, singleClickEdit: false}'
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: |
                 'script:{
                 	hide: false,
@@ -175,31 +178,31 @@ title: Title for Page
                 	singleClickEdit: false
                 }
                 '
-      ↓columnDefs [mobile.components.UIControlVariable-1607797553174]: 
+      ↓columnDefs [ngx.components.UIUseVariable-1607797553174]: 
         comment: 'Array of columnDef {headerName: ''headerName'', field: ''fieldName''} objects'
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: source:{"filter":"Sequence","project":"lib_GoogleSheet","input":"","model":{"data":[{"sequence":"lib_GoogleSheet.SheetGetRange","marker":""}],"path":"?.sheet?.columns","prefix":"","suffix":"","custom":"","useCustom":false}}
-      ↓rowData [mobile.components.UIControlVariable-1607797553176]: 
+      ↓rowData [ngx.components.UIUseVariable-1607797553176]: 
         comment: 'Array of row { fieldName1: ''value1'', fieldName2: ''value2'', fieldName3: true, ...} objects'
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: source:{"filter":"Sequence","project":"lib_GoogleSheet","input":"","model":{"data":[{"sequence":"lib_GoogleSheet.SheetGetRange","marker":""}],"path":"?.sheet?.data","prefix":"","suffix":"","custom":"","useCustom":false}}
-      ↓width [mobile.components.UIControlVariable-1607797553178]: 
+      ↓width [ngx.components.UIUseVariable-1607797553178]: 
         comment: width value in % or px
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:'100%'
-      ↓height [mobile.components.UIControlVariable-1607797553180]: 
+      ↓height [ngx.components.UIUseVariable-1607797553180]: 
         comment: height is 'auto' or value in % or px
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:'auto'
-      ↓class [mobile.components.UIControlVariable-1607797553182]: 
+      ↓class [ngx.components.UIUseVariable-1607797553182]: 
         comment: |
           'One of the themes provided here :
           
@@ -214,8 +217,8 @@ title: Title for Page
           '
         varValue: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:'ag-theme-balham'
-↓PageEvent [mobile.components.UIPageEvent-1608743702416]: 
-  ↓CallSequence [mobile.components.UIDynamicAction-1608743710188]: 
+↓PageEvent [ngx.components.UIPageEvent-1608743702416]: 
+  ↓CallSequence [ngx.components.UIDynamicAction-1608743710188]: 
     beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.TestLogin"}'

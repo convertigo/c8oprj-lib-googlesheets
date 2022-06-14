@@ -3,6 +3,7 @@ port: 443
 server: oauth2.googleapis.com
 ↓RefreshToken [transactions.JsonHttpTransaction]: 
   ↑default: true
+  accessibility: Public
   httpPool: global
   httpVerb: POST
   subDir: token

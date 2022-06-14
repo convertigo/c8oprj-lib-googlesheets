@@ -1,0 +1,205 @@
+
+# ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/core/images/project_color_16x16.png?raw=true "Project") lib_GoogleSheet
+
+The Google Sheet Connector for Convertigo
+
+<details><summary><span style="color:DarkGoldenRod"><i>References</i></span></summary><blockquote><p>
+
+
+<details><summary><b>lib_ExtendedComponents_ui_ngx</b></summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_ExtendedComponents_ui_ngx
+
+
+see [documentation](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx/tree/8.0.0)
+</p></blockquote></details>
+
+<details><summary><b>lib_OAuth</b> : Used to get the Google OAuth token</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
+
+Used to get the Google OAuth token
+see [documentation](https://github.com/convertigo/c8oprj-lib-oauth/tree/master)
+</p></blockquote></details>
+
+<details><summary><b>lib_UserManager</b></summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_UserManager
+
+
+see [documentation](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0)
+</p></blockquote></details>
+</p></blockquote></details>
+
+<details><summary><span style="color:DarkGoldenRod"><i>Connectors</i></span></summary><blockquote><p>
+
+
+<details><summary><b>GoogleOAuth</b></summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/connectors/images/httpconnector_color_16x16.png?raw=true "HttpConnector") GoogleOAuth
+
+
+
+<details><summary><span style="color:DarkGoldenRod"><i>Transactions</i></span></summary><blockquote><p>
+
+
+### ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/transactions/images/jsonhttptransaction_color_16x16.png?raw=true "JsonHttpTransaction") RefreshToken
+
+
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+| name | comment |
+|---|---|
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableHttpVariable") client_id |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableHttpVariable") client_secret |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableHttpVariable") grant_type |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableHttpVariable") redirect_uri |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableHttpVariable") refresh_token |  |
+
+</p></blockquote></details>
+</p></blockquote></details>
+
+<details><summary><b>void</b> : void connector, replace or don't use it</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/connectors/images/sqlconnector_color_16x16.png?raw=true "SqlConnector") void
+
+void connector, replace or don't use it
+
+<details><summary><span style="color:DarkGoldenRod"><i>Transactions</i></span></summary><blockquote><p>
+
+
+### ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/transactions/images/sqltransaction_color_16x16.png?raw=true "SqlTransaction") void
+
+does nothing
+</p></blockquote></details>
+</p></blockquote></details>
+</p></blockquote></details>
+
+<details><summary><span style="color:DarkGoldenRod"><i>Sequences</i></span></summary><blockquote><p>
+
+
+<details><summary><b>checkAccessTokenGoogle</b> : Checks is a valid access token is held by the current users' session for Google</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") checkAccessTokenGoogle
+
+Checks is a valid access token is held by the current users' session for Google
+
+This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
+
+
+</p></blockquote></details>
+
+<details><summary><b>getApiKey</b> : Utility to get from the server the Googler Drive picker api key</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") getApiKey
+
+Utility to get from the server the Googler Drive picker api key
+</p></blockquote></details>
+
+<details><summary><b>loginGoogleWithCode</b> : Perform the OAuth flow for Google</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") loginGoogleWithCode
+
+Perform the OAuth flow for Google
+
+If the token is valid, it will be stored in the user's session to be used when calling Microsoft APIs.
+
+Also if the token is valid, setAuthenticatedUser step is executed to flag this session as authenticated.
+
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+| name | comment |
+|---|---|
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") client_id |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") code |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") keySecret |  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") redirect_uri |  |
+
+</p></blockquote></details>
+
+<details><summary><b>SheetAddRow</b> : Add a row of cells to a Google Sheet</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") SheetAddRow
+
+Add a row of cells to a Google Sheet.
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+| name | comment |
+|---|---|
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/multivaluedvariable_color_16x16.png?raw=true "RequestableMultiValuedVariable") dataRow | The data to be added  |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") Range | The Cell range to read. (examples, A1:D7 or  Class Data!A2:E) |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") SheetID | The Sheet id as found in the google  sheet URL |
+
+</p></blockquote></details>
+
+<details><summary><b>SheetGetRange</b> : Get a range of cells from a Google Sheet</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") SheetGetRange
+
+Get a range of cells from a Google Sheet.
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+| name | comment |
+|---|---|
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") FirstRowHeader | Set this to true if the first row a header |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") Range | The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data |
+| ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "RequestableVariable") SheetID | The Sheet id as found in the google  sheet URL |
+
+</p></blockquote></details>
+
+<details><summary><b>TestLogin</b> : This only to have the test application logged in to be able to add Attributes to user accounts</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") TestLogin
+
+This only to have the test application logged in to be able to add Attributes to user accounts
+</p></blockquote></details>
+</p></blockquote></details>
+
+<details><summary><span style="color:DarkGoldenRod"><i>Mobile Application</i></span></summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/core/images/mobileapplication_color_16x16.png?raw=true "MobileApplication") MobileApplication
+
+Test and demo app to show Google Sheet capacities
+
+<details><summary><span style="color:DarkGoldenRod"><i>Pages</i></span></summary><blockquote><p>
+
+
+### ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/ngx/components/images/pagecomponent_color_16x16.png?raw=true "PageComponent") Page
+
+
+</p></blockquote></details>
+
+<details><summary><span style="color:DarkGoldenRod"><i>Shared Actions</i></span></summary><blockquote><p>
+
+
+### ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/ngx/components/images/uiactionstack_color_16x16.png?raw=true "UIActionStack") DisplayGoogleDrivePicker
+
+Displays the Google Drive fille picker to browse available spread sheets
+This needs an API key to be configured in the symbols :
+
+ib_GoogleSheet.picker.apikey.secret
+
+The Api key can be found at : 
+
+https://console.developers.google.com/apis/credentials?organizationId=22050485893&project=convertigo-form-builder
+
+
+
+</p></blockquote></details>
+</p></blockquote></details>

@@ -10,9 +10,9 @@ comment: |
   
   
   '
-↓CallSequence [mobile.components.UIDynamicAction-1607700598598]: 
+↓CallSequence [ngx.components.UIDynamicAction-1607700598598]: 
   beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_OAuth.GetOAuthCredentials"}'
-  ↓OAuthLogin [mobile.components.UIDynamicAction-1607700598601]: 
+  ↓OAuthLogin [ngx.components.UIDynamicAction-1607700598601]: 
     beanData: |
       '{
        "ionBean": "OAuthLoginAction",
@@ -25,11 +25,11 @@ comment: |
        "authorization_endpoint": "plain:https:\/\/accounts.google.com\/o\/oauth2\/v2\/auth",
        "callbackurl": "plain:https:\/\/c8ocloud.convertigo.net\/convertigo\/projects\/lib_OAuth\/getTokenGoogle.html"
       }'
-    ↓CallSequence1 [mobile.components.UIDynamicAction-1607704146076]: 
+    ↓CallSequence1 [ngx.components.UIDynamicAction-1607704146076]: 
       beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.checkAccessTokenGoogle"}'
-      ↓CallSequence [mobile.components.UIDynamicAction-1607707263696]: 
+      ↓CallSequence [ngx.components.UIDynamicAction-1607707263696]: 
         beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.getApiKey"}'
-        ↓DisplayPicker [mobile.components.UICustomAction-1607693339370]: 
+        ↓DisplayPicker [ngx.components.UICustomAction-1607693339370]: 
           actionValue: 
             - xmlizable: 
               - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
@@ -110,15 +110,15 @@ comment: |
                       - ↑value: '* as load'
                     - java.lang.String: 
                       - ↑value: load-script
-          ↓oauthToken [mobile.components.UIControlVariable-1607700828657]: 
+          ↓oauthToken [ngx.components.UIControlVariable-1607700828657]: 
             comment: the Google OAuth token coming from an OAuth/OpenID login action
             varValue: 
               - xmlizable: 
-                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                 - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607704146076},{"priority":1607693309128},{"priority":1607700598598},{"priority":1607700598601}],"path":"?.out?.token","prefix":"","suffix":"","custom":"","useCustom":false}}
-          ↓apiKey [mobile.components.UIControlVariable-1607707300948]: 
+          ↓apiKey [ngx.components.UIControlVariable-1607707300948]: 
             comment: The Display Picker API Key
             varValue: 
               - xmlizable: 
-                - ↑classname: com.twinsoft.convertigo.beans.mobile.components.MobileSmartSourceType
+                - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                 - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1607707263696},{"priority":1607693309128},{"priority":1607700598598},{"priority":1607700598601},{"priority":1607704146076}],"path":"?.out?.apiKey","prefix":"","suffix":"","custom":"","useCustom":false}}
