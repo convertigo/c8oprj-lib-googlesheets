@@ -1,3 +1,4 @@
+accessibility: Hidden
 comment: Get a range of cells from a Google Sheet.
 ↓Call_Sequence [steps.SequenceStep-1608803826547]: 
   sourceSequence: lib_GoogleSheet.checkAccessTokenGoogle

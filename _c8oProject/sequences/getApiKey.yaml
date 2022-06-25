@@ -1,3 +1,4 @@
+accessibility: Hidden
 comment: Utility to get from the server the Googler Drive picker api key
 ↓Element [steps.XMLElementStep-1607707107451]: 
   nodeName: apiKey
