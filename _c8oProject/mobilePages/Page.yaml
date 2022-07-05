@@ -219,6 +219,6 @@ title: Title for Page
           - xmlizable: 
             - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
             - MobileSmartSourceType: script:'ag-theme-balham'
-↓PageEvent [ngx.components.UIPageEvent-1608743702416]: 
-  ↓CallSequence [ngx.components.UIDynamicAction-1608743710188]: 
+↓PageEvent [ngx.components.UIPageEvent-1657014408559]: 
+  ↓CallSequence [ngx.components.UIDynamicAction-1657014418481]: 
     beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.TestLogin"}'

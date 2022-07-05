@@ -1,0 +1,33 @@
+↓Input_variables [steps.InputVariablesStep-1656935557353]: 
+↓Call_Sequence [steps.SequenceStep-1656935544428]: 
+  sourceSequence: lib_GoogleSheet.SheetGetRange
+  ↓SheetID [variables.StepVariable-1656935544430]: 
+    comment: The Sheet id as found in the google  sheet URL
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1656935557353
+          - java.lang.String: 
+            - ↑value: ./forms_SheetID/text()
+  ↓Range [variables.StepVariable-1656935544432]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1656935557353
+          - java.lang.String: 
+            - ↑value: ./forms_Range/text()
+  ↓FirstRowHeader [variables.StepVariable-1656935544434]: 
+    comment: Set this to true if the first row a header
+    value: true
+↓forms_SheetID [variables.RequestableVariable-1656935427008]: 
+↓forms_Range [variables.RequestableVariable-1656935471054]: 
+↓TestOK [core.TestCase]: 
+  ↓forms_SheetID [variables.TestCaseVariable-1656935652610]: 
+    value: 1QXWcg-x49U8isyj8JzugS5ZEWKNNNW-k4P_s9J30tUU
+  ↓forms_Range [variables.TestCaseVariable-1656935652612]: 
+    value: A1:K24
