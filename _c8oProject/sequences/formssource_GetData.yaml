@@ -24,10 +24,26 @@
   ↓FirstRowHeader [variables.StepVariable-1656935544434]: 
     comment: Set this to true if the first row a header
     value: true
+  ↓formssourceMode [variables.StepVariable-1657039935918]: 
+    value: true
+↓Copy [steps.XMLCopyStep-1657039956055]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1656935544428
+        - java.lang.String: 
+          - ↑value: ./document/Array
 ↓forms_SheetID [variables.RequestableVariable-1656935427008]: 
+  comment: Configure here the Sheet ID you want to use as datasource.
+  description: configure=lib_GoogleSheet/DisplayObjects/mobile/configure
 ↓forms_Range [variables.RequestableVariable-1656935471054]: 
+  comment: |
+    Configure here the data range you want to read from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document.
+    
 ↓TestOK [core.TestCase]: 
   ↓forms_SheetID [variables.TestCaseVariable-1656935652610]: 
-    value: 1QXWcg-x49U8isyj8JzugS5ZEWKNNNW-k4P_s9J30tUU
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
   ↓forms_Range [variables.TestCaseVariable-1656935652612]: 
-    value: A1:K24
+    value: A1:G10

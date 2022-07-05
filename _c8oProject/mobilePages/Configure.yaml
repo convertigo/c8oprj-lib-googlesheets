@@ -1,0 +1,61 @@
+comment: The configuration page is called by Forms when the users clicks on the "Configure" Button. This is supposed to be held in a IFRAME
+segment: configure
+title: Title for Configure
+↓Content [ngx.components.UIDynamicElement-1657031783874]: 
+  beanData: '{"ionBean":"Content"}'
+  tagName: ion-content
+  ↓Grid [ngx.components.UIDynamicElement-1657032213651]: 
+    beanData: '{"ionBean":"Grid"}'
+    tagName: ion-grid
+    ↓GridRow [ngx.components.UIDynamicElement-1657032213653]: 
+      beanData: '{"ionBean":"GridRow","FlexAlignement":"plain:ion-align-items-center"}'
+      tagName: ion-row
+      ↓GridCol [ngx.components.UIDynamicElement-1657032213655]: 
+        beanData: '{"ionBean":"GridCol"}'
+        tagName: ion-col
+        ↓H1 [ngx.components.UIDynamicElement-1657031806560]: 
+          beanData: '{"ionBean":"Heading1"}'
+          tagName: h1
+          ↓Text [ngx.components.UIText-1657031806562]: 
+            textValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                - MobileSmartSourceType: plain:Choose the Google Sheet you want to use as a data source.
+        ↓Button [ngx.components.UIDynamicElement-1657032150971]: 
+          beanData: '{"ionBean":"Button"}'
+          tagName: ion-button
+          ↓Label [ngx.components.UIDynamicElement-1657032150974]: 
+            beanData: '{"ionBean":"Label"}'
+            tagName: ion-label
+            ↓Text [ngx.components.UIText-1657032150977]: 
+              textValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                  - MobileSmartSourceType: plain:Click here to select Sheet
+          ↓Event [ngx.components.UIControlEvent-1657032150980]: 
+            ↓InvokeSharedAction [ngx.components.UIDynamicInvoke-1657032321171]: 
+              beanData: '{"ionBean":"InvokeAction"}'
+              stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
+              ↓NotifyParent [ngx.components.UICustomAction-1657033079088]: 
+                actionValue: 
+                  - xmlizable: 
+                    - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+                    - com.twinsoft.convertigo.beans.common.FormatedContent: 
+                      →: |
+                        '		if(parent) {
+                        			page.c8o.log.debug(''A parent window is found, we will notify the setDataSheetSource() function.. '' + vars.sheet);
+                        			parent["setDataSheetSource"](vars.sheet)
+                        		} else {
+                        			page.c8o.log.debug(''No parent window is found, just log th info here : '' + vars.sheet);
+                        		}
+                        		resolve();
+                        '
+                comment: Notifies the IFrame parent  by calling the setDataSheetSource() function
+                ↓sheet [ngx.components.UIControlVariable-1657033093648]: 
+                  varValue: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                      - MobileSmartSourceType: script:out
+        ↓FormatLayout [ngx.components.UIDynamicAttr-1657032116139]: 
+          beanData: '{"ionBean":"FormatLayout","TextAlignment":"plain:ion-text-center"}'
+          selfClose: false

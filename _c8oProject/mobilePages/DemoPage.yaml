@@ -1,5 +1,6 @@
 ↑isRoot: true
-segment: path-to-page
+comment: Just a demo page, not used
+segment: path-to-demopage
 title: Title for Page
 ↓Header [ngx.components.UIDynamicElement-1607690723592]: 
   beanData: '{"ionBean":"Header"}'

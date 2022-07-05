@@ -98,47 +98,73 @@ comment: Get a range of cells from a Google Sheet.
             - ↑mode: PLAIN
             - →→: GoogleSheet connector error
   ↓jElse [steps.ElseStep-1607623987087]: 
-    ↓Complex [steps.XMLComplexStep-1607604822203]: 
-      nodeName: sheet
-      ↓Complexh [steps.XMLComplexStep-1607606245567]: 
-        nodeName: columns
-        ↓Attribute [steps.XMLAttributeStep-1607606284708]: 
-          nodeName: type
-          nodeText: array
-        ↓jIterator [steps.SimpleIteratorStep-1607606387785]: 
-          expression: rows[0]
-          ↓Complex [steps.XMLComplexStep-1607606297810]: 
-            nodeName: def
-            ↓Attribute [steps.XMLAttributeStep-1607606312976]: 
-              nodeName: type
-              nodeText: object
-            ↓jElement [steps.ElementStep-1607606419732]: 
-              expression: 'FirstRowHeader ? item : "col" + index'
-              nodeName: field
-      ↓Complex [steps.XMLComplexStep-1607606181102]: 
-        nodeName: data
-        ↓Attribute [steps.XMLAttributeStep-1607604837429]: 
-          nodeName: type
-          nodeText: array
-        ↓jIterator [steps.SimpleIteratorStep-1607604349367]: 
-          expression: rows
-          startIndex: 'FirstRowHeader ? 1: 0'
-          ↓Complex [steps.XMLComplexStep-1607604364354]: 
-            nodeName: row
-            ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
-              nodeName: type
-              nodeText: object
-            ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
-              expression: item
-              ↓jElement [steps.ElementStep-1607604404519]: 
+    ↓jIfThenElse_1 [steps.IfThenElseStep-1657038807550]: 
+      condition: formssourceMode == 'true'
+      ↓jThen [steps.ThenStep-1657038808099]: 
+        ↓Array [steps.JsonArrayStep-1657038864761]: 
+          key: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: PLAIN
+                - →→: data
+          ↓jIterator [steps.SimpleIteratorStep-1657038889586]: 
+            expression: rows
+            startIndex: 'FirstRowHeader ? 1: 0'
+            ↓Object [steps.JsonObjectStep-1657038905250]: 
+              ↓jIterator [steps.SimpleIteratorStep-1657038919917]: 
                 expression: item
-                nodeName: cell
-                ↓Attribute [steps.XMLAttributeStep-1608311645907]: 
+                ↓jElement [steps.ElementStep-1657038919920]: 
+                  expression: item
+                  nodeName: cell
+                  ↓Attribute [steps.XMLAttributeStep-1657038919923]: 
+                    nodeName: type
+                    nodeText: string
+                  ↓jAttribute [steps.AttributeStep-1657038919926]: 
+                    expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
+                    nodeName: originalKeyName
+      ↓jElse [steps.ElseStep-1657038808101]: 
+        ↓Complex [steps.XMLComplexStep-1607604822203]: 
+          nodeName: sheet
+          ↓Complexh [steps.XMLComplexStep-1607606245567]: 
+            nodeName: columns
+            ↓Attribute [steps.XMLAttributeStep-1607606284708]: 
+              nodeName: type
+              nodeText: array
+            ↓jIterator [steps.SimpleIteratorStep-1607606387785]: 
+              expression: rows[0]
+              ↓Complex [steps.XMLComplexStep-1607606297810]: 
+                nodeName: def
+                ↓Attribute [steps.XMLAttributeStep-1607606312976]: 
                   nodeName: type
-                  nodeText: string
-                ↓jAttribute [steps.AttributeStep-1607613234128]: 
-                  expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
-                  nodeName: originalKeyName
+                  nodeText: object
+                ↓jElement [steps.ElementStep-1607606419732]: 
+                  expression: 'FirstRowHeader ? item : "col" + index'
+                  nodeName: field
+          ↓Complex [steps.XMLComplexStep-1607606181102]: 
+            nodeName: data
+            ↓Attribute [steps.XMLAttributeStep-1607604837429]: 
+              nodeName: type
+              nodeText: array
+            ↓jIterator [steps.SimpleIteratorStep-1607604349367]: 
+              expression: rows
+              startIndex: 'FirstRowHeader ? 1: 0'
+              ↓Complex [steps.XMLComplexStep-1607604364354]: 
+                nodeName: row
+                ↓Attribute [steps.XMLAttributeStep-1607604785229]: 
+                  nodeName: type
+                  nodeText: object
+                ↓jIterator [steps.SimpleIteratorStep-1607604717464]: 
+                  expression: item
+                  ↓jElement [steps.ElementStep-1607604404519]: 
+                    expression: item
+                    nodeName: cell
+                    ↓Attribute [steps.XMLAttributeStep-1608311645907]: 
+                      nodeName: type
+                      nodeText: string
+                    ↓jAttribute [steps.AttributeStep-1607613234128]: 
+                      expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
+                      nodeName: originalKeyName
 ↓SheetID [variables.RequestableVariable-1607603766200]: 
   comment: The Sheet id as found in the google  sheet URL
 ↓Range [variables.RequestableVariable-1607603780863]: 
@@ -146,8 +172,22 @@ comment: Get a range of cells from a Google Sheet.
 ↓FirstRowHeader [variables.RequestableVariable-1607621396129]: 
   comment: Set this to true if the first row a header
   value: true
-↓TestOk [core.TestCase]: 
+↓formssourceMode [variables.RequestableVariable-1657038772606]: 
+↓TestOkAgGrid [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607603826140]: 
-    value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
   ↓Range [variables.TestCaseVariable-1607603826142]: 
-    value: Class Data!A2:E
+    value: A1:G10
+  ↓FirstRowHeader [variables.TestCaseVariable-1657038995034]: 
+    value: true
+  ↓formssourceMode [variables.TestCaseVariable-1657038995036]: 
+    value: false
+↓TestOkFromsSource [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1657038966078]: 
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
+  ↓Range [variables.TestCaseVariable-1657038966081]: 
+    value: A1:G10
+  ↓FirstRowHeader [variables.TestCaseVariable-1657039010458]: 
+    value: true
+  ↓formssourceMode [variables.TestCaseVariable-1657039010460]: 
+    value: true
