@@ -131,12 +131,12 @@ This as to be called by client apps to decide whenever or not they have to displ
 
 </p></blockquote></details>
 
-<details><summary><b>formssource_GetData</b></summary><blockquote><p>
+<details><summary><b>formssource_GetData</b> : Gets data from a GoogleSheet</summary><blockquote><p>
 
 
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") formssource_GetData
 
-
+Gets data from a GoogleSheet. 
 
 <span style="color:DarkGoldenRod">Variables</span>
 

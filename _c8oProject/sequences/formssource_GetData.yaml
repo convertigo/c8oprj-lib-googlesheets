@@ -1,3 +1,4 @@
+comment: Gets data from a GoogleSheet. 
 ↓Input_variables [steps.InputVariablesStep-1656935557353]: 
 ↓Call_Sequence [steps.SequenceStep-1656935544428]: 
   sourceSequence: lib_GoogleSheet.SheetGetRange
