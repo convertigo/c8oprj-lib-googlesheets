@@ -59,7 +59,7 @@ comment: Gets data from a GoogleSheet.
     	},
     	"fr": {
     		"displayName":"Plage",
-    		"comment":"Configurez ici la plage de cellules que vou vouslez récupérer sou la fome ''Sheet1!A1:Z100''  (Lire de la feuille Sheet1 à partir de la celllule A1 jusqu''a la cellule Z100). Le nom ''Sheet1'' est optionnel. Si omis les données seront lues à partir de la première feuille disponible dans le document. "
+    		"comment":"Configurez ici la plage de cellules que vou voulez récupérer sous la fome ''Sheet1!A1:Z100''  (Lire de la feuille Sheet1 à partir de la celllule A1 jusqu''a la cellule Z100). Le nom ''Sheet1'' est optionnel. Si omis, les données seront lues à partir de la première feuille disponible dans le document."
     	}
     }
     '
