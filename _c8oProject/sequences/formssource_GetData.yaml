@@ -40,11 +40,11 @@ comment: Gets data from a GoogleSheet.
   comment: |
     '{
     	"en": {
-    		"display": "SheetID",
+    		"displayName": "SheetID",
     		"comment":"Configure here the Sheet ID you want to use as datasource."
     	},
     	"fr": {
-    		"display":"SheetID",
+    		"displayName":"SheetID",
     		"comment":"Configurez ici le document Google Sheet que vous voulez utiliser comme source de données."
     	}
     }
@@ -53,15 +53,12 @@ comment: Gets data from a GoogleSheet.
 ↓forms_Range [variables.RequestableVariable-1656935471054]: 
   comment: |
     '{
-    	"en":"Configure here the data range you want to read from the Google Sheet.  This has to be such as ''Sheet1!A1:Z100'' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document."
-    }
-    {
     	"en": {
-    		"display": "Range",
+    		"displayName": "Range",
     		"comment":"Configure here the data range you want to read from the Google Sheet.  This has to be such as ''Sheet1!A1:Z100'' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document"
     	},
     	"fr": {
-    		"display":"Plage",
+    		"displayName":"Plage",
     		"comment":"Configurez ici la plage de cellules que vou vouslez récupérer sou la fome ''Sheet1!A1:Z100''  (Lire de la feuille Sheet1 à partir de la celllule A1 jusqu''a la cellule Z100). Le nom ''Sheet1'' est optionnel. Si omis les données seront lues à partir de la première feuille disponible dans le document. "
     	}
     }
