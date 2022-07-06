@@ -37,12 +37,19 @@ comment: Gets data from a GoogleSheet.
         - java.lang.String: 
           - ↑value: ./document/Array
 ↓forms_SheetID [variables.RequestableVariable-1656935427008]: 
-  comment: Configure here the Sheet ID you want to use as datasource.
+  comment: |
+    '{
+    	"en":"Configure here the Sheet ID you want to use as datasource.",
+    	"fr":"Configurez ici le document Google Sheet que vous voulez utiliser comme source de données"
+    }
+    '
   description: configure=lib_GoogleSheet/DisplayObjects/mobile/configure
 ↓forms_Range [variables.RequestableVariable-1656935471054]: 
   comment: |
-    Configure here the data range you want to read from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document.
-    
+    '{
+    	"en":"Configure here the data range you want to read from the Google Sheet.  This has to be such as ''Sheet1!A1:Z100'' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document."
+    }
+    '
 ↓TestOK [core.TestCase]: 
   ↓forms_SheetID [variables.TestCaseVariable-1656935652610]: 
     value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98

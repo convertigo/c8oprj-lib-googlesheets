@@ -21,7 +21,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
 
 Used to get the Google OAuth token
-see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/7.9.0#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/334a638363d83d83bfed756b025f96226751e50e#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_UserManager</b></summary><blockquote><p>
@@ -30,7 +30,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/7.9.0#readme)
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_UserManager
 
 
-see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0.1#readme)
 </p></blockquote></details>
 </p></blockquote></details>
 
@@ -156,7 +156,9 @@ comment
 <img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_Range
 </td>
 <td>
-Configure here the data range you want to read from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document.
+{
+	"en":"Configure here the data range you want to read from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document."
+}
 
 </td>
 </tr>
@@ -165,7 +167,11 @@ Configure here the data range you want to read from the Google Sheet.  This has 
 <img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_SheetID
 </td>
 <td>
-Configure here the Sheet ID you want to use as datasource.
+{
+	"en":"Configure here the Sheet ID you want to use as datasource.",
+	"fr":"Configurez ici le document Google Sheet que vous voulez utiliser comme source de données"
+}
+
 </td>
 </tr>
 </table>
