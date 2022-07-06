@@ -339,6 +339,68 @@ The Sheet id as found in the google  sheet URL
 
 </p></blockquote></details>
 
+<details><summary><b>SheetQueryTable</b> : Get a range of cells from a Google Sheet</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") SheetQueryTable
+
+Get a range of cells from a Google Sheet.
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+<table>
+<tr>
+<th>
+name
+</th>
+<th>
+comment
+</th>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;FirstRowHeader
+</td>
+<td>
+Set this to true if the first row a header
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;formssourceMode
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;Query
+</td>
+<td>
+The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;Range
+</td>
+<td>
+The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;SheetID
+</td>
+<td>
+The Sheet id as found in the google  sheet URL
+</td>
+</tr>
+</table>
+
+</p></blockquote></details>
+
 <details><summary><b>TestLogin</b> : This only to have the test application logged in to be able to add Attributes to user accounts</summary><blockquote><p>
 
 

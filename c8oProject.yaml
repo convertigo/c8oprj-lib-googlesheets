@@ -10,6 +10,7 @@
   ↓loginGoogleWithCode [sequences.GenericSequence]: 🗏 sequences/loginGoogleWithCode.yaml
   ↓SheetAddRow [sequences.GenericSequence]: 🗏 sequences/SheetAddRow.yaml
   ↓SheetGetRange [sequences.GenericSequence]: 🗏 sequences/SheetGetRange.yaml
+  ↓SheetQueryTable [sequences.GenericSequence]: 🗏 sequences/SheetQueryTable.yaml
   ↓TestLogin [sequences.GenericSequence]: 🗏 sequences/TestLogin.yaml
   ↓lib_ExtendedComponents_ui_ngx_reference [references.ProjectSchemaReference]: 
     projectName: lib_ExtendedComponents_ui_ngx=https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx.git:branch=8.0.0

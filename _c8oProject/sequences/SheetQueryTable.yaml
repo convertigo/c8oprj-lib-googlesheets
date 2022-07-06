@@ -1,0 +1,245 @@
+comment: Get a range of cells from a Google Sheet.
+↓Call_Sequence [steps.SequenceStep-1657121570437]: 
+  sourceSequence: lib_GoogleSheet.checkAccessTokenGoogle
+↓jSimpleSource [steps.SimpleSourceStep-1657121570440]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1657121570437
+        - java.lang.String: 
+          - ↑value: ./document/token/text()
+  variableName: gCreds
+↓ExecuteQuery [steps.SimpleStep-1657121570443]: 
+  expression: |
+    ' var GSheetAPI = JavaImporter(
+      com.google.api.client.auth.oauth2.Credential,
+      com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp,
+      com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver,
+      com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow,
+      com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets,
+      com.google.api.client.googleapis.javanet.GoogleNetHttpTransport,
+      com.google.api.client.http.javanet.NetHttpTransport,
+      com.google.api.client.json.JsonFactory,
+      com.google.api.client.json.jackson2.JacksonFactory,
+      com.google.api.client.util.store.FileDataStoreFactory,
+      com.google.api.services.sheets.v4.Sheets,
+      com.google.api.services.sheets.v4.SheetsScopes,
+      com.google.api.services.sheets.v4.model.Request,
+      com.google.api.services.sheets.v4.model.ValueRange,
+      com.google.api.services.sheets.v4.model.AddSheetRequest,
+      com.google.api.services.sheets.v4.model.SheetProperties,
+      com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest,
+      com.google.api.client.googleapis.auth.oauth2.GoogleCredential,
+    
+      java.io.FileNotFoundException,
+      java.io.IOException,
+      java.io.InputStream,
+      java.io.ByteArrayInputStream,
+      java.io.InputStreamReader,
+      java.security.GeneralSecurityException,
+      java.util.Collections,
+      java.util.Arrays,
+      java.util.ArrayList,
+      java.util.List
+    );
+    
+    with (GSheetAPI) {
+    	APPLICATION_NAME = "Convertigo Form Builder";
+    	JSON_FACTORY = JacksonFactory.getDefaultInstance();	
+        HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    
+    	credential = new GoogleCredential().setAccessToken(gCreds);
+    	
+    	service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+            .setApplicationName("Convertigo Form Builder")
+            .build();
+    
+    	setError = null;
+    
+    	try {
+    		appendBody = new ValueRange()
+    	        .setValues(
+    				Collections.singletonList(
+    					Arrays.asList(
+    						"=QUERY(" + Range  + ", \"" + Query + "\")"
+    					)
+    			)
+    		);
+    		
+    		  /**
+    		   * Adds a new tab to an existing GoogleSheet document.
+    		   * @param service An authenticated GoogleSheet service
+    		   * @param sheetName The GoogleSheet name of the document
+    		   * @param tabName The name of the tab you wish to add to the GoogleSheet document
+    		   * @return The response from adding the sheet.
+    		   * @throws IOException Throws an IOException if anything goes wrong.
+    		   */
+    		  function AddTabToGoogleSheet(service, sheetName, tabName) {
+    			  requests = new ArrayList();
+    			  requests.add(new Request()
+    			  	.setAddSheet(
+    					new AddSheetRequest()
+    						.setProperties(
+    							new SheetProperties()
+    			    				.setTitle(tabName)
+    			    			)
+    			    )
+    			  );
+    			  body = new BatchUpdateSpreadsheetRequest().setRequests(requests);
+    			  return service.spreadsheets().batchUpdate(sheetName, body).execute();
+    		  }
+    		
+    		AddTabToGoogleSheet(service, "C8OFormulas", SheetID)
+    		response = service.spreadsheets().values()
+    			.append(SheetID, "C8OFormulas", appendBody)
+    			.setValueInputOption("USER_ENTERED")
+                .setInsertDataOption("INSERT_ROWS")
+                .setIncludeValuesInResponse(true)			
+    			.execute();
+    			
+    			
+    		response = service.spreadsheets().values()
+    	        .get(SheetID, "C8OFormulas!A1:ZZ")
+    	        .execute();
+    		
+    	    values = response.getValues();
+    	    
+    	    if (values == null || values.isEmpty()) {
+    			log.warn("[Google Sreadsheet Connector] no data found");
+    	    } else {
+    			rows = values.toArray();
+    			types = [];
+    			
+    //			//log.warn("[Google Sreadsheet Connector] Dumping data");
+    //			for (i=0; i< rows.length; i++ ) {
+    //				//log.warn("[Google Sreadsheet Connector] Dumping Row" + i);
+    //				rowTypes = [];
+    //				for (j=0; j < rows[i].size(); j++ ) {
+    //					//log.warn("[Google Sreadsheet Connector] cell : " + rows[i].get(j));
+    //					rowTypes.push(typeof rows[i].get(j));
+    //				}
+    //				types.push(rowTypes);
+    //			}
+    	    }
+    	} catch (error) {
+    		setError = error;
+    		log.error("[Google Sreadsheet Connector] Error occured " + error);				
+    	}
+    }
+    '
+↓jIfThenElse [steps.IfThenElseStep-1657121570446]: 
+  condition: setError != null
+  ↓jThen [steps.ThenStep-1657121570449]: 
+    ↓Error_structure [steps.XMLErrorStep-1657121570452]: 
+      details: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: JS
+            - →→: setError
+      message: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: PLAIN
+            - →→: GoogleSheet connector error
+  ↓jElse [steps.ElseStep-1657121570455]: 
+    ↓jIfThenElse_1 [steps.IfThenElseStep-1657121570458]: 
+      condition: formssourceMode == 'true'
+      ↓jThen [steps.ThenStep-1657121570461]: 
+        ↓Array [steps.JsonArrayStep-1657121570464]: 
+          key: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: PLAIN
+                - →→: data
+          ↓jIterator [steps.SimpleIteratorStep-1657121570467]: 
+            expression: rows
+            startIndex: 'FirstRowHeader ? 1: 0'
+            ↓Object [steps.JsonObjectStep-1657121570470]: 
+              ↓jIterator [steps.SimpleIteratorStep-1657121570473]: 
+                expression: item
+                ↓jElement [steps.ElementStep-1657121570476]: 
+                  expression: item
+                  nodeName: cell
+                  ↓Attribute [steps.XMLAttributeStep-1657121570479]: 
+                    nodeName: type
+                    nodeText: string
+                  ↓jAttribute [steps.AttributeStep-1657121570482]: 
+                    expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
+                    nodeName: originalKeyName
+      ↓jElse [steps.ElseStep-1657121570485]: 
+        ↓Complex [steps.XMLComplexStep-1657121570488]: 
+          nodeName: sheet
+          ↓Complexh [steps.XMLComplexStep-1657121570491]: 
+            nodeName: columns
+            ↓Attribute [steps.XMLAttributeStep-1657121570494]: 
+              nodeName: type
+              nodeText: array
+            ↓jIterator [steps.SimpleIteratorStep-1657121570497]: 
+              expression: rows[0]
+              ↓Complex [steps.XMLComplexStep-1657121570500]: 
+                nodeName: def
+                ↓Attribute [steps.XMLAttributeStep-1657121570503]: 
+                  nodeName: type
+                  nodeText: object
+                ↓jElement [steps.ElementStep-1657121570506]: 
+                  expression: 'FirstRowHeader ? item : "col" + index'
+                  nodeName: field
+          ↓Complex [steps.XMLComplexStep-1657121570509]: 
+            nodeName: data
+            ↓Attribute [steps.XMLAttributeStep-1657121570512]: 
+              nodeName: type
+              nodeText: array
+            ↓jIterator [steps.SimpleIteratorStep-1657121570515]: 
+              expression: rows
+              startIndex: 'FirstRowHeader ? 1: 0'
+              ↓Complex [steps.XMLComplexStep-1657121570518]: 
+                nodeName: row
+                ↓Attribute [steps.XMLAttributeStep-1657121570521]: 
+                  nodeName: type
+                  nodeText: object
+                ↓jIterator [steps.SimpleIteratorStep-1657121570524]: 
+                  expression: item
+                  ↓jElement [steps.ElementStep-1657121570527]: 
+                    expression: item
+                    nodeName: cell
+                    ↓Attribute [steps.XMLAttributeStep-1657121570530]: 
+                      nodeName: type
+                      nodeText: string
+                    ↓jAttribute [steps.AttributeStep-1657121570533]: 
+                      expression: 'FirstRowHeader ? rows[0].get(index) : "col" + index'
+                      nodeName: originalKeyName
+↓SheetID [variables.RequestableVariable-1657121570536]: 
+  comment: The Sheet id as found in the google  sheet URL
+↓Range [variables.RequestableVariable-1657121570539]: 
+  comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+↓Query [variables.RequestableVariable-1657121644472]: 
+  comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+↓FirstRowHeader [variables.RequestableVariable-1657121570542]: 
+  comment: Set this to true if the first row a header
+  value: true
+↓formssourceMode [variables.RequestableVariable-1657121570545]: 
+↓TestOkAgGrid [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1657121570549]: 
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
+  ↓Range [variables.TestCaseVariable-1657121570552]: 
+    value: '''My Explo''!A1:G100'
+  ↓FirstRowHeader [variables.TestCaseVariable-1657121570555]: 
+    value: true
+  ↓formssourceMode [variables.TestCaseVariable-1657121570558]: 
+    value: false
+  ↓Query [variables.TestCaseVariable-1657122725139]: 
+    value: SELECT  * where A like '%nicolas%'
+↓TestOkFromsSource [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1657121570562]: 
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
+  ↓Range [variables.TestCaseVariable-1657121570565]: 
+    value: A1:G10
+  ↓FirstRowHeader [variables.TestCaseVariable-1657121570568]: 
+    value: true
+  ↓formssourceMode [variables.TestCaseVariable-1657121570571]: 
+    value: true
