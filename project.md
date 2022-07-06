@@ -21,7 +21,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
 
 Used to get the Google OAuth token
-see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/334a638363d83d83bfed756b025f96226751e50e#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/7.9.0#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_UserManager</b></summary><blockquote><p>
@@ -30,7 +30,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/334a638363d83d8
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_UserManager
 
 
-see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0.1#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0#readme)
 </p></blockquote></details>
 </p></blockquote></details>
 
@@ -119,14 +119,16 @@ does nothing
 <details><summary><span style="color:DarkGoldenRod"><i>Sequences</i></span></summary><blockquote><p>
 
 
-<details><summary><b>checkAccessTokenGoogle</b> : Checks is a valid access token is held by the current users' session for Google</summary><blockquote><p>
+<details><summary><b>checkAccessTokenGoogle</b> : Checks is a valid access token is held by the current user's session for Google</summary><blockquote><p>
 
 
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") checkAccessTokenGoogle
 
-Checks is a valid access token is held by the current users' session for Google
+Checks is a valid access token is held by the current user's session for Google. If the token is not present, will use the current Convertigo user profile to get the refresh_token and use it to regenerate a valid acess token.
 
-This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
+
+
+
 
 
 </p></blockquote></details>
@@ -185,9 +187,10 @@ Utility to get from the server the Googler Drive picker api key
 
 Perform the OAuth flow for Google
 
-If the token is valid, it will be stored in the user's session to be used when calling Microsoft APIs.
+If the token is valid, it will be stored in the user's session to be used when calling Google APIs.
 
-Also if the token is valid, setAuthenticatedUser step is executed to flag this session as authenticated.
+If a refresh_token is found, (This is the case when a First OAuth flow is performed and Google pops the Consent sreen.. )  this token is saved in the user profile so that the checkAcessTokenGoogle sequence can use it to regenerate a new acess Token.
+
 
 
 <span style="color:DarkGoldenRod">Variables</span>

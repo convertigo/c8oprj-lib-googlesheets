@@ -1,11 +1,15 @@
+authenticatedContextRequired: true
 comment: |
-  Checks is a valid access token is held by the current users' session for Google
+  Checks is a valid access token is held by the current user's session for Google. If the token is not present, will use the current Convertigo user profile to get the refresh_token and use it to regenerate a valid acess token.
   
-  This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
+  
+  
+  
   
   
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607691398179]: 
-  key: oAuthAccessTokenGoogle
+  comment: Get the google Sheet oAuth token form current user session
+  key: oAuthAccessTokenGoogleSheet
   output: false
 ↓IfExistThenElse [steps.IfExistThenElseStep-1608745385084]: 
   sourceDefinition: 
@@ -17,6 +21,7 @@ comment: |
         - java.lang.String: 
           - ↑value: ./expression/text()
   ↓jThen [steps.ThenStep-1608745385086]: 
+    comment: We got the token, use it
     ↓Log [steps.LogStep-1608802467238]: 
       expression: '"We found a token in user session, so return it"'
       level: WARN
@@ -33,9 +38,12 @@ comment: |
               - ↑value: ./expression/text()
     ↓Return [steps.ReturnStep-1607691398188]: 
   ↓jElse [steps.ElseStep-1608745385088]: 
+    comment: No token found in session.. Try to get a new one using the refresh_token
     ↓Get_authenticated_user [steps.GetAuthenticatedUserStep-1608745429916]: 
+      comment: We need to know wo we are to retrieb the user profile
       output: false
     ↓Call_Sequence [steps.SequenceStep-1608745455777]: 
+      comment: Get the Resfesh token attribute form the user profile
       sourceSequence: lib_UserManager.GetUserAttribute
       ↓user [variables.StepVariable-1608745474603]: 
         comment: The user where we have to set the attribute on
@@ -51,6 +59,7 @@ comment: |
         comment: The attribute name
         value: GoogleOAuthRefreshToken
     ↓IfExistThenElse [steps.IfExistThenElseStep-1608745524150]: 
+      comment: If we have one ...
       sourceDefinition: 
         - xmlizable: 
           - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
@@ -60,10 +69,12 @@ comment: |
             - java.lang.String: 
               - ↑value: ./document/value
       ↓jThen [steps.ThenStep-1608745524704]: 
+        comment: Use it
         ↓Log [steps.LogStep-1608803200792]: 
           expression: '"A refresh token is available, requesting from it an acess token..."'
           level: WARN
         ↓Call_Transaction [steps.TransactionStep-1608745882803]: 
+          comment: Use google API to regenerate an Acess token from the refresh token
           sourceTransaction: lib_GoogleSheet.GoogleOAuth.RefreshToken
           ↓client_id [variables.StepVariable-1608745882809]: 
             value: ${lib_oauth.google.clientid}
@@ -95,7 +106,9 @@ comment: |
                 - java.lang.String: 
                   - ↑value: ./document/object/access_token/text()
           ↓jThen [steps.ThenStep-1657028506859]: 
+            comment: Sucess !
             ↓login [steps.XMLElementStep-1608803265338]: 
+              comment: Use the new Acess token
               nodeName: token
               nodeText: ok
               sourceDefinition: 
@@ -107,6 +120,7 @@ comment: |
                     - java.lang.String: 
                       - ↑value: ./document/object/access_token/text()
             ↓SetOAuthTokenInSession [steps.SessionSetStep-1608803530793]: 
+              comment: Save the new Acess token in session
               expression: 
                 - xmlizable: 
                   - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
@@ -119,16 +133,20 @@ comment: |
                         - ↑value: ./text()
               key: oAuthAccessTokenGoogle
             ↓Return [steps.ReturnStep-1608803265341]: 
+              comment: Stop
           ↓jElse [steps.ElseStep-1657028506861]: 
+            comment: Error
             ↓SetOAuthTokenInSession [steps.SessionSetStep-1657028686587]: 
+              comment: Save a Null token
               expression: 
                 - xmlizable: 
                   - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
                   - SmartType: 
                     - ↑mode: JS
                     - →→: null
-              key: oAuthAccessTokenGoogle
+              key: oAuthAccessTokenGoogleSheet
             ↓Error_structure [steps.XMLErrorStep-1657028528190]: 
+              comment: Signal
               details: 
                 - xmlizable: 
                   - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
@@ -144,14 +162,51 @@ comment: |
                   - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
                   - SmartType: 
                     - ↑mode: PLAIN
-                    - →→: No Token has been refreshed
+                    - →→: No Token has been refreshed, API error
             ↓Log [steps.LogStep-1657028727493]: 
+              comment: Log
               expression: '"Token was not refreshed"'
               level: ERROR
+            ↓Return [steps.ReturnStep-1657086784049]: 
+              comment: Stop
       ↓jElse [steps.ElseStep-1608745524706]: 
+        comment: No refresh token  available ...
+        ↓SetOAuthTokenInSession [steps.SessionSetStep-1657086967390]: 
+          comment: Save a Null token
+          expression: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: JS
+                - →→: null
+          key: oAuthAccessTokenGoogleSheet
         ↓Log [steps.LogStep-1608802298245]: 
+          comment: No refresh token available
           expression: '"No refresh token avilable for this user, So return no token"'
           level: WARN
         ↓login [steps.XMLElementStep-1607691398191]: 
+          comment: So we stop there, OAuth Failed
           nodeName: notoken
           nodeText: true
+        ↓Log1 [steps.LogStep-1657086864220]: 
+          comment: Log
+          expression: '"No refresh token is available in user profile"'
+          level: ERROR
+        ↓Error_structure [steps.XMLErrorStep-1657086910365]: 
+          comment: Signal
+          details: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: SOURCE
+                - com.twinsoft.convertigo.beans.common.XMLVector: 
+                  - java.lang.String: 
+                    - ↑value: 1608745882803
+                  - java.lang.String: 
+                    - ↑value: ./document/object/error_description/text()
+          message: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: PLAIN
+                - →→: No refresh token is available in user profile

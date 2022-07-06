@@ -1,9 +1,11 @@
+authenticatedContextRequired: true
 comment: |
   Perform the OAuth flow for Google
   
-  If the token is valid, it will be stored in the user's session to be used when calling Microsoft APIs.
+  If the token is valid, it will be stored in the user's session to be used when calling Google APIs.
   
-  Also if the token is valid, setAuthenticatedUser step is executed to flag this session as authenticated.
+  If a refresh_token is found, (This is the case when a First OAuth flow is performed and Google pops the Consent sreen.. )  this token is saved in the user profile so that the checkAcessTokenGoogle sequence can use it to regenerate a new acess Token.
+  
   
 ↓Input_variables [steps.InputVariablesStep-1607691047300]: 
 ↓Call_Transaction2 [steps.TransactionStep-1607691047303]: 
@@ -90,7 +92,7 @@ comment: |
                 - ↑value: 1607691047306
               - java.lang.String: 
                 - ↑value: ./document/object/access_token/text()
-      key: oAuthAccessTokenGoogle
+      key: oAuthAccessTokenGoogleSheet
     ↓DecodeJWT [steps.SimpleStep-1607691047339]: 
       expression: |
         '//imports
