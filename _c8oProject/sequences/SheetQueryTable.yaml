@@ -29,6 +29,7 @@ comment: Get a range of cells from a Google Sheet.
       com.google.api.services.sheets.v4.model.Request,
       com.google.api.services.sheets.v4.model.ValueRange,
       com.google.api.services.sheets.v4.model.AddSheetRequest,
+      com.google.api.services.sheets.v4.model.DeleteSheetRequest,
       com.google.api.services.sheets.v4.model.SheetProperties,
       com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest,
       com.google.api.client.googleapis.auth.oauth2.GoogleCredential,
@@ -68,30 +69,81 @@ comment: Get a range of cells from a Google Sheet.
     			)
     		);
     		
-    		  /**
+    		/**
     		   * Adds a new tab to an existing GoogleSheet document.
     		   * @param service An authenticated GoogleSheet service
     		   * @param sheetName The GoogleSheet name of the document
     		   * @param tabName The name of the tab you wish to add to the GoogleSheet document
     		   * @return The response from adding the sheet.
-    		   * @throws IOException Throws an IOException if anything goes wrong.
-    		   */
-    		  function AddTabToGoogleSheet(service, sheetName, tabName) {
+    		*/
+    		function AddTabToGoogleSheet(service, spreadsheetId, tabName) {
     			  requests = new ArrayList();
-    			  requests.add(new Request()
-    			  	.setAddSheet(
-    					new AddSheetRequest()
-    						.setProperties(
-    							new SheetProperties()
-    			    				.setTitle(tabName)
+    			  requests.add(
+    				new Request()
+    			  		.setAddSheet(
+    						new AddSheetRequest()
+    							.setProperties(
+    								new SheetProperties()
+    			    					.setTitle(tabName)
     			    			)
-    			    )
+    			    	)
     			  );
     			  body = new BatchUpdateSpreadsheetRequest().setRequests(requests);
-    			  return service.spreadsheets().batchUpdate(sheetName, body).execute();
-    		  }
+    			  return service
+    			  			.spreadsheets()
+    			  			.batchUpdate(spreadsheetId, body)
+    			  			.execute();
+    		}
     		
-    		AddTabToGoogleSheet(service, "C8OFormulas", SheetID)
+    		
+    		/**
+    		   * Remove a tab from an existing GoogleSheet document.
+    		   * @param service An authenticated GoogleSheet service
+    		   * @param sheetName The GoogleSheet name of the document
+    		   * @param id The id of the tab you wish to add to the GoogleSheet document
+    		   * @return The response from adding the sheet.
+    		*/
+    		function DeleteTabFromGoogleSheet(service, spreadsheetId, id) {
+    			
+    			// Find the SheedID for the requedt TAB
+    			resp = service.spreadsheets()
+    				.get(spreadsheetId)
+    				.setIncludeGridData(false)
+    				.execute ();
+    
+    			SheetID = null;
+    			workSheetList = resp.getSheets().toArray();
+    			for (i=0; i< workSheetList.length; i++) {
+    				log.warn("Item " + i + " is : " + workSheetList[i].getProperties().getTitle())
+    				if (workSheetList[i].getProperties().getTitle() == id) {
+    					SheetID = workSheetList[i].getProperties().getSheetId()
+    				}
+    			}
+    
+    			// Use it to delete the TAB			
+    			if (SheetID != null) {
+    			    requests = new ArrayList();
+    				requests.add(
+    					new Request()
+    				  		.setDeleteSheet(
+    							new DeleteSheetRequest()
+    								.setSheetId(SheetID)
+    				    	)
+    				);
+    				body = new BatchUpdateSpreadsheetRequest().setRequests(requests);
+    				return service
+    		  			.spreadsheets()
+    		  			.batchUpdate(spreadsheetId, body)
+    		  			.execute();
+    	  		} else {
+    				log.error("Sheet ''" + id + "'' is not found in this document")
+    			}
+    		}
+    		
+    		// Add a Tab to the sheet. This Tab wil Hold the New Query Formula		
+    		AddTabToGoogleSheet(service, SheetID, "C8OFormulas")
+    		
+    		// Now add the formula in this new TAB...
     		response = service.spreadsheets().values()
     			.append(SheetID, "C8OFormulas", appendBody)
     			.setValueInputOption("USER_ENTERED")
@@ -99,29 +151,21 @@ comment: Get a range of cells from a Google Sheet.
                 .setIncludeValuesInResponse(true)			
     			.execute();
     			
-    			
+    		// Just read the response from the new TAB	
     		response = service.spreadsheets().values()
     	        .get(SheetID, "C8OFormulas!A1:ZZ")
     	        .execute();
     		
     	    values = response.getValues();
     	    
+       		// Now Cleanup and remove the TAB holding the Formula..
+    		DeleteTabFromGoogleSheet(service, SheetID, "C8OFormulas")
+    	    
     	    if (values == null || values.isEmpty()) {
     			log.warn("[Google Sreadsheet Connector] no data found");
     	    } else {
     			rows = values.toArray();
     			types = [];
-    			
-    //			//log.warn("[Google Sreadsheet Connector] Dumping data");
-    //			for (i=0; i< rows.length; i++ ) {
-    //				//log.warn("[Google Sreadsheet Connector] Dumping Row" + i);
-    //				rowTypes = [];
-    //				for (j=0; j < rows[i].size(); j++ ) {
-    //					//log.warn("[Google Sreadsheet Connector] cell : " + rows[i].get(j));
-    //					rowTypes.push(typeof rows[i].get(j));
-    //				}
-    //				types.push(rowTypes);
-    //			}
     	    }
     	} catch (error) {
     		setError = error;

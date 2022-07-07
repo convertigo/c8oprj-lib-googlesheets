@@ -1,0 +1,95 @@
+comment: Query table data from a GoogleSheet
+↓Input_variables [steps.InputVariablesStep-1657212044010]: 
+↓Call_Sequence [steps.SequenceStep-1657212044013]: 
+  sourceSequence: lib_GoogleSheet.SheetQueryTable
+  ↓SheetID [variables.StepVariable-1657212044016]: 
+    comment: The Sheet id as found in the google  sheet URL
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657212044010
+          - java.lang.String: 
+            - ↑value: ./forms_SheetID/text()
+  ↓Range [variables.StepVariable-1657212044019]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657212044010
+          - java.lang.String: 
+            - ↑value: ./forms_Range/text()
+  ↓Query [variables.StepVariable-1657212765614]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657212044010
+          - java.lang.String: 
+            - ↑value: ./forms_Query/text()
+  ↓FirstRowHeader [variables.StepVariable-1657212044022]: 
+    comment: Set this to true if the first row a header
+    value: true
+  ↓formssourceMode [variables.StepVariable-1657212044025]: 
+    value: true
+↓Copy [steps.XMLCopyStep-1657212044028]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1657212044013
+        - java.lang.String: 
+          - ↑value: ./document/Array
+↓forms_SheetID [variables.RequestableVariable-1657212044031]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "SheetID",
+    		"comment":"Configure here the Sheet ID you want to use as datasource."
+    	},
+    	"fr": {
+    		"displayName":"SheetID",
+    		"comment":"Configurez ici le document Google Sheet que vous voulez utiliser comme source de données."
+    	}
+    }
+    '
+  description: configure=lib_GoogleSheet/DisplayObjects/mobile/configure
+↓forms_Range [variables.RequestableVariable-1657212044034]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "Range",
+    		"comment":"Configure here the data range you want to query from the Google Sheet.  This has to be such as ''Sheet1!A1:Z100'' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document"
+    	},
+    	"fr": {
+    		"displayName":"Plage",
+    		"comment":"Configurez ici la plage de cellules que vous voulez requetter sous la fome ''Sheet1!A1:Z100''  (Lire de la feuille Sheet1 à partir de la celllule A1 jusqu''a la cellule Z100). Le nom ''Sheet1'' est optionnel. Si omis, les données seront lues à partir de la première feuille disponible dans le document."
+    	}
+    }
+    '
+↓forms_Query [variables.RequestableVariable-1657212139312]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "Query",
+    		"comment":"Write here the Query you would like to be execute on the range. Queries are based on the Google Sheet Query language; for example : SELECT  * WHERE A LIKE ''%mike%''   would select all the line from the range  where colon ''A'' contains the string ''mike''. More details on the Query language can be found  here : https://developers.google.com/chart/interactive/docs/querylanguage"
+    	},
+    	"fr": {
+    		"displayName":"Requête",
+    		"comment":"Écrivez ici la requête que vous souhaitez exécuter sur la plage. Les requêtes sont basées sur le Google Sheet Query language;  par exemple : SELECT * WHERE A LIKE ''%mike%'' sélectionnerait toute les ligne de la plage dont la colonne ''A'' contient la chaîne ''mike''. Plus de détails sur le langage de requête peuvent être trouvés ici : https://developers.google.com/chart/interactive/docs/querylanguage"
+    	}
+    }
+    '
+↓TestOK [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1657212844950]: 
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
+  ↓Range [variables.TestCaseVariable-1657212844953]: 
+    value: '''My Explo''!A:ZZ'
+  ↓Query [variables.TestCaseVariable-1657212844962]: 
+    value: SELECT  * where A like '%nicolas%'
