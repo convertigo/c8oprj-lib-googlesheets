@@ -60,15 +60,6 @@ comment: Get a range of cells from a Google Sheet.
     	setError = null;
     
     	try {
-    		appendBody = new ValueRange()
-    	        .setValues(
-    				Collections.singletonList(
-    					Arrays.asList(
-    						"=QUERY(" + Range  + ", \"" + Query + "\")"
-    					)
-    			)
-    		);
-    		
     		/**
     		   * Adds a new tab to an existing GoogleSheet document.
     		   * @param service An authenticated GoogleSheet service
@@ -92,8 +83,20 @@ comment: Get a range of cells from a Google Sheet.
     			  			.batchUpdate(spreadsheetId, body)
     			  			.execute();
     		}
+    
+    
+    		/**
+    		 * Find the name of the first Sheet in a document
+    		 */
+    		function getFirstSheetName(service, spreadSheetId) {
+    			resp = service.spreadsheets()
+    				.get(spreadSheetId)
+    				.setIncludeGridData(false)
+    				.execute ();
+    			return(resp.getSheets().toArray()[0].getProperties().getTitle());
+    		}
     		
-    		
+    		 
     		/**
     		   * Remove a tab from an existing GoogleSheet document.
     		   * @param service An authenticated GoogleSheet service
@@ -137,7 +140,21 @@ comment: Get a range of cells from a Google Sheet.
     				log.error("Sheet ''" + id + "'' is not found in this document")
     			}
     		}
-    		
+    
+    		// Prepare the Query
+    		if (Range.indexOf(''!'') == -1) {
+    			// There is no Sheet name in the range, Compute the range with the default sheet name
+    			Range = "''" + getFirstSheetName(service, SheetID) + "''!" + Range			
+    		}
+    		appendBody = new ValueRange()
+    	        .setValues(
+    				Collections.singletonList(
+    					Arrays.asList(
+    						"=QUERY(" + Range  + ", \"" + Query + "\")"
+    					)
+    			)
+    		);
+    				
     		// Add a Tab to the sheet. This Tab wil Hold the New Query Formula		
     		AddTabToGoogleSheet(service, SheetID, "C8OFormulas")
     		
@@ -275,6 +292,17 @@ comment: Get a range of cells from a Google Sheet.
   ↓formssourceMode [variables.TestCaseVariable-1657121570558]: 
     value: false
   ↓Query [variables.TestCaseVariable-1657122725139]: 
+    value: SELECT  * where A like '%nicolas%'
+↓TestOkAgGridWithNoSheetName [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1657291578185]: 
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
+  ↓Range [variables.TestCaseVariable-1657291578188]: 
+    value: A1:G100
+  ↓FirstRowHeader [variables.TestCaseVariable-1657291578191]: 
+    value: true
+  ↓formssourceMode [variables.TestCaseVariable-1657291578194]: 
+    value: false
+  ↓Query [variables.TestCaseVariable-1657291578197]: 
     value: SELECT  * where A like '%nicolas%'
 ↓TestOkFromsSource [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1657121570562]: 

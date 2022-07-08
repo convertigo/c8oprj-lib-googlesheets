@@ -1,7 +1,7 @@
 ↑convertigo: 8.0.0.m006
 ↓lib_GoogleSheet [core.Project]: 
   comment: The Google Sheet Connector for Convertigo
-  version: 1.0.1
+  version: 1.0.2
   ↓GoogleOAuth [connectors.HttpConnector]: 🗏 connectors/GoogleOAuth.yaml
   ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
