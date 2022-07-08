@@ -1,11 +1,12 @@
 ↑convertigo: 8.0.0.m006
 ↓lib_GoogleSheet [core.Project]: 
   comment: The Google Sheet Connector for Convertigo
-  version: 8.0
+  version: 1.0.1
   ↓GoogleOAuth [connectors.HttpConnector]: 🗏 connectors/GoogleOAuth.yaml
   ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
   ↓formssource_GetData [sequences.GenericSequence]: 🗏 sequences/formssource_GetData.yaml
+  ↓formssource_GetSelectData [sequences.GenericSequence]: 🗏 sequences/formssource_GetSelectData.yaml
   ↓formssource_QueryTable [sequences.GenericSequence]: 🗏 sequences/formssource_QueryTable.yaml
   ↓getApiKey [sequences.GenericSequence]: 🗏 sequences/getApiKey.yaml
   ↓loginGoogleWithCode [sequences.GenericSequence]: 🗏 sequences/loginGoogleWithCode.yaml

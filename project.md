@@ -171,6 +171,73 @@ Configure here the Sheet ID you want to use as datasource.
 
 </p></blockquote></details>
 
+<details><summary><b>formssource_GetSelectData</b> : {</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") formssource_GetSelectData
+
+{
+        "en": {
+            "displayName": "GetSheetData",
+            "comment": "Returns data from a gogle sheet as a source for this list"
+        },
+        // French support
+        "fr": {
+            "displayName": ""GetSheetData",",
+            "comment": "Renvoie une liste de valeurs à partir d'un google Sheet"
+        },
+        // Supported types 
+	 "types":["select"]
+}
+
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+<table>
+<tr>
+<th>
+name
+</th>
+<th>
+comment
+</th>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_colon
+</td>
+<td>
+Name of the google sheet colon to use to retrieve select data. Form example A, B or AM
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_filter
+</td>
+<td>
+Used to filter data from the Goole Sheet
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_Range
+</td>
+<td>
+Configure here the data range you want to query from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_SheetID
+</td>
+<td>
+Configure here the Sheet ID you want to use as datasource.
+</td>
+</tr>
+</table>
+
+</p></blockquote></details>
+
 <details><summary><b>formssource_QueryTable</b> : Query table data from a GoogleSheet</summary><blockquote><p>
 
 

@@ -79,8 +79,7 @@ comment: Get a range of cells from a Google Sheet.
     		function AddTabToGoogleSheet(service, spreadsheetId, tabName) {
     			  requests = new ArrayList();
     			  requests.add(
-    				new Request()
-    			  		.setAddSheet(
+    				new Request().setAddSheet(
     						new AddSheetRequest()
     							.setProperties(
     								new SheetProperties()
@@ -89,8 +88,7 @@ comment: Get a range of cells from a Google Sheet.
     			    	)
     			  );
     			  body = new BatchUpdateSpreadsheetRequest().setRequests(requests);
-    			  return service
-    			  			.spreadsheets()
+    			  return service.spreadsheets()
     			  			.batchUpdate(spreadsheetId, body)
     			  			.execute();
     		}

@@ -1,0 +1,128 @@
+comment: |
+  '{
+          "en": {
+              "displayName": "GetSheetData",
+              "comment": "Returns data from a gogle sheet as a source for this list"
+          },
+          // French support
+          "fr": {
+              "displayName": ""GetSheetData",",
+              "comment": "Renvoie une liste de valeurs à partir d''un google Sheet"
+          },
+          // Supported types 
+  	 "types":["select"]
+  }
+  '
+↓Input_variables [steps.InputVariablesStep-1657276491846]: 
+↓jElement [steps.ElementStep-1657277189592]: 
+  expression: '''SELECT '' + forms_colon +  '' WHERE '' + forms_colon + '' LIKE \''%'' + forms_filter + ''%\'''' '
+  nodeName: Query
+↓Call_Sequence [steps.SequenceStep-1657276491852]: 
+  sourceSequence: lib_GoogleSheet.SheetQueryTable
+  ↓SheetID [variables.StepVariable-1657276491855]: 
+    comment: The Sheet id as found in the google  sheet URL
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657276491846
+          - java.lang.String: 
+            - ↑value: ./forms_SheetID/text()
+  ↓Range [variables.StepVariable-1657276491858]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657276491846
+          - java.lang.String: 
+            - ↑value: ./forms_Range/text()
+  ↓Query [variables.StepVariable-1657276491861]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657277189592
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓FirstRowHeader [variables.StepVariable-1657276491864]: 
+    comment: Set this to true if the first row a header
+    value: true
+  ↓formssourceMode [variables.StepVariable-1657276491867]: 
+    value: true
+↓Copy [steps.XMLCopyStep-1657276491870]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1657276491852
+        - java.lang.String: 
+          - ↑value: ./document/Array
+↓forms_SheetID [variables.RequestableVariable-1657276491873]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "SheetID",
+    		"comment":"Configure here the Sheet ID you want to use as datasource."
+    	},
+    	"fr": {
+    		"displayName":"SheetID",
+    		"comment":"Configurez ici le document Google Sheet que vous voulez utiliser comme source de données."
+    	}
+    }
+    '
+  description: configure=lib_GoogleSheet/DisplayObjects/mobile/configure
+↓forms_Range [variables.RequestableVariable-1657276491876]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "Range",
+    		"comment":"Configure here the data range you want to query from the Google Sheet.  This has to be such as ''Sheet1!A1:Z100'' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document"
+    	},
+    	"fr": {
+    		"displayName":"Plage",
+    		"comment":"Configurez ici la plage de cellules que vous voulez requetter sous la fome ''Sheet1!A1:Z100''  (Lire de la feuille Sheet1 à partir de la celllule A1 jusqu''a la cellule Z100). Le nom ''Sheet1'' est optionnel. Si omis, les données seront lues à partir de la première feuille disponible dans le document."
+    	}
+    }
+    '
+↓forms_colon [variables.RequestableVariable-1657277007569]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "colon",
+    		"comment":"Name of the google sheet colon to use to retrieve select data. Form example A, B or AM" 
+    	},
+    	"fr": {
+    		"displayName":"colonne",
+    		"comment":"Nom de la colonne Google Sheet utilisée pour les donées. Par exemple A, B ou AM..."
+    	}
+    }
+    '
+↓forms_filter [variables.RequestableVariable-1657276759254]: 
+  comment: |
+    '{
+    	"en": {
+    		"displayName": "filter",
+    		"comment":"Used to filter data from the Goole Sheet"
+    	},
+    	"fr": {
+    		"displayName":"filter",
+    		"comment":"Utilisé pour filtrer les données de la google sheet"
+    	}
+    }
+    '
+↓TestOK [core.TestCase]: 
+  ↓forms_SheetID [variables.TestCaseVariable-1657276879665]: 
+    description: configure=lib_GoogleSheet/DisplayObjects/mobile/configure
+    value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
+  ↓forms_Range [variables.TestCaseVariable-1657276879667]: 
+    value: '''My Explo''!A:ZZ'
+  ↓forms_filter [variables.TestCaseVariable-1657276879669]: 
+    value: nicolas
+  ↓forms_colon [variables.TestCaseVariable-1657278754549]: 
+    value: A
