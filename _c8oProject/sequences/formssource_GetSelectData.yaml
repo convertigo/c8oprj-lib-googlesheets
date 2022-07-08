@@ -14,7 +14,7 @@ comment: |
   '
 ↓Input_variables [steps.InputVariablesStep-1657276491846]: 
 ↓jElement [steps.ElementStep-1657277189592]: 
-  expression: '''SELECT '' + forms_colons +  '' WHERE '' + forms_colon + '' LIKE \''%'' + forms_filter + ''%\'''' '
+  expression: '''SELECT '' + forms_colons +  '' WHERE '' + forms_colons + '' LIKE \''%'' + forms_filter + ''%\'''' '
   nodeName: Query
 ↓Call_Sequence [steps.SequenceStep-1657276491852]: 
   sourceSequence: lib_GoogleSheet.SheetQueryTable
