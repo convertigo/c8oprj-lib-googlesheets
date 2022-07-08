@@ -1,21 +1,20 @@
 comment: |
   '{
-          "en": {
-              "displayName": "GetSheetData",
-              "comment": "Returns data from a gogle sheet as a source for this list"
-          },
-          // French support
-          "fr": {
-              "displayName": ""GetSheetData",",
-              "comment": "Renvoie une liste de valeurs à partir d''un google Sheet"
-          },
-          // Supported types 
-  	 "types":["select"]
+  	"en": {
+  		"displayName": "GetSheetData",
+  		"comment": "Returns data from a gogle sheet as a source for this list"
+  	},
+  	"fr": {
+  		"displayName": "GetSheetData",
+  		"comment": "Renvoie une liste de valeurs à partir d''un google Sheet"
+  	},
+  	"types":["select"]
   }
+  
   '
 ↓Input_variables [steps.InputVariablesStep-1657276491846]: 
 ↓jElement [steps.ElementStep-1657277189592]: 
-  expression: '''SELECT '' + forms_colon +  '' WHERE '' + forms_colon + '' LIKE \''%'' + forms_filter + ''%\'''' '
+  expression: '''SELECT '' + forms_colons +  '' WHERE '' + forms_colon + '' LIKE \''%'' + forms_filter + ''%\'''' '
   nodeName: Query
 ↓Call_Sequence [steps.SequenceStep-1657276491852]: 
   sourceSequence: lib_GoogleSheet.SheetQueryTable
@@ -54,15 +53,33 @@ comment: |
     value: true
   ↓formssourceMode [variables.StepVariable-1657276491867]: 
     value: true
-↓Copy [steps.XMLCopyStep-1657276491870]: 
-  sourceDefinition: 
+↓Array [steps.JsonArrayStep-1657292926301]: 
+  key: 
     - xmlizable: 
-      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-      - com.twinsoft.convertigo.beans.common.XMLVector: 
-        - java.lang.String: 
-          - ↑value: 1657276491852
-        - java.lang.String: 
-          - ↑value: ./document/Array
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: value
+  ↓Iterator [steps.IteratorStep-1657292872861]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1657276491852
+          - java.lang.String: 
+            - ↑value: ./document/Array/Object
+    ↓Field [steps.JsonFieldStep-1657292957530]: 
+      value: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: SOURCE
+            - com.twinsoft.convertigo.beans.common.XMLVector: 
+              - java.lang.String: 
+                - ↑value: 1657292872861
+              - java.lang.String: 
+                - ↑value: ./cell/text()
 ↓forms_SheetID [variables.RequestableVariable-1657276491873]: 
   comment: |
     '{
@@ -90,16 +107,16 @@ comment: |
     	}
     }
     '
-↓forms_colon [variables.RequestableVariable-1657277007569]: 
+↓forms_colons [variables.RequestableVariable-1657277007569]: 
   comment: |
     '{
     	"en": {
-    		"displayName": "colon",
-    		"comment":"Name of the google sheet colon to use to retrieve select data. Form example A, B or AM" 
+    		"displayName": "colons",
+    		"comment":"Name of the google sheet column separated by a comma to use to retrieve select data. For example A, B or AM. If one column is specified, data the select list will be filled by values coming from this column. If 2 columns are specified, the first one will hold the select list display values and the 2nd one the list values." 
     	},
     	"fr": {
     		"displayName":"colonne",
-    		"comment":"Nom de la colonne Google Sheet utilisée pour les donées. Par exemple A, B ou AM..."
+    		"comment":"Nom des la colonnes Google Sheet utilisée pour les donées séparées par une virgule. Par exemple A,B ou AM ou D,E . Si une seule colonne est spécifiée, la liste sera alimentée par cette colonne. Si 2 colonnes sont spécifiées la premiere donnera les libellés de la liste, la deuxème la valeur pour chaque libellé."
     	}
     }
     '
@@ -121,8 +138,8 @@ comment: |
     description: configure=lib_GoogleSheet/DisplayObjects/mobile/configure
     value: 1bFiw2IWSWgOgxM4zUF7tcIneY_0vBjfPT4UzkjC-T98
   ↓forms_Range [variables.TestCaseVariable-1657276879667]: 
-    value: '''My Explo''!A:ZZ'
+    value: A:ZZ
   ↓forms_filter [variables.TestCaseVariable-1657276879669]: 
     value: nicolas
-  ↓forms_colon [variables.TestCaseVariable-1657278754549]: 
+  ↓forms_colons [variables.TestCaseVariable-1657278754549]: 
     value: A

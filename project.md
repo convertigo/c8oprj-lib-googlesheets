@@ -171,25 +171,12 @@ Configure here the Sheet ID you want to use as datasource.
 
 </p></blockquote></details>
 
-<details><summary><b>formssource_GetSelectData</b> : {</summary><blockquote><p>
+<details><summary><b>formssource_GetSelectData</b> : Returns data from a gogle sheet as a source for this list</summary><blockquote><p>
 
 
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") formssource_GetSelectData
 
-{
-        "en": {
-            "displayName": "GetSheetData",
-            "comment": "Returns data from a gogle sheet as a source for this list"
-        },
-        // French support
-        "fr": {
-            "displayName": ""GetSheetData",",
-            "comment": "Renvoie une liste de valeurs à partir d'un google Sheet"
-        },
-        // Supported types 
-	 "types":["select"]
-}
-
+Returns data from a gogle sheet as a source for this list
 
 <span style="color:DarkGoldenRod">Variables</span>
 
@@ -204,10 +191,10 @@ comment
 </tr>
 <tr>
 <td>
-<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_colon
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_colons
 </td>
 <td>
-Name of the google sheet colon to use to retrieve select data. Form example A, B or AM
+Name of the google sheet column separated by a comma to use to retrieve select data. For example A, B or AM. If one column is specified, data the select list will be filled by values coming from this column. If 2 columns are specified, the first one will hold the select list display values and the 2nd one the list values.
 </td>
 </tr>
 <tr>
