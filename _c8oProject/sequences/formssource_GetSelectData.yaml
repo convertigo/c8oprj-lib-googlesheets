@@ -87,23 +87,32 @@ comment: |
                   - ↑value: 1657292872861
                 - java.lang.String: 
                   - ↑value: ./cell[1]
-      ↓Field1 [steps.JsonFieldStep-1663584058341]: 
-        key: 
+      ↓IfExist [steps.IfExistStep-1663602570517]: 
+        sourceDefinition: 
           - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
-            - SmartType: 
-              - ↑mode: PLAIN
-              - →→: value
-        value: 
-          - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
-            - SmartType: 
-              - ↑mode: SOURCE
-              - com.twinsoft.convertigo.beans.common.XMLVector: 
-                - java.lang.String: 
-                  - ↑value: 1657292872861
-                - java.lang.String: 
-                  - ↑value: ./cell[2]
+            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+            - com.twinsoft.convertigo.beans.common.XMLVector: 
+              - java.lang.String: 
+                - ↑value: 1657292872861
+              - java.lang.String: 
+                - ↑value: ./cell[2]
+        ↓Field1 [steps.JsonFieldStep-1663584058341]: 
+          key: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: PLAIN
+                - →→: value
+          value: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: SOURCE
+                - com.twinsoft.convertigo.beans.common.XMLVector: 
+                  - java.lang.String: 
+                    - ↑value: 1657292872861
+                  - java.lang.String: 
+                    - ↑value: ./cell[2]
 ↓forms_SheetID [variables.RequestableVariable-1657276491873]: 
   comment: |
     '{

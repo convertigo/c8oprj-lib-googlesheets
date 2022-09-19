@@ -150,7 +150,7 @@ comment: Get a range of cells from a Google Sheet.
     	        .setValues(
     				Collections.singletonList(
     					Arrays.asList(
-    						"=QUERY(" + Range  + ", \"" + Query + "\")"
+    						"=QUERY(" + Range  + "; \"" + Query + "\")"
     					)
     			)
     		);
