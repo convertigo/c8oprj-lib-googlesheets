@@ -44,7 +44,7 @@ title: Title for Configure
                       →: |
                         '		if(parent) {
                         			page.c8o.log.debug(''A parent window is found, we will notify the setDataSheetSource() function.. '' + vars.sheet);
-                        			parent["setDataSheetSource"](vars.sheet)
+                        			parent["setConfigurationData"](vars.sheet)
                         		} else {
                         			page.c8o.log.debug(''No parent window is found, just log th info here : '' + vars.sheet);
                         		}
@@ -59,3 +59,27 @@ title: Title for Configure
         ↓FormatLayout [ngx.components.UIDynamicAttr-1657032116139]: 
           beanData: '{"ionBean":"FormatLayout","TextAlignment":"plain:ion-text-center"}'
           selfClose: false
+↓PageEvent [ngx.components.UIPageEvent-1663335624229]: 
+  ↓InvokeSharedAction [ngx.components.UIDynamicInvoke-1663335632397]: 
+    beanData: '{"ionBean":"InvokeAction"}'
+    stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
+    ↓NotifyParent [ngx.components.UICustomAction-1663335632400]: 
+      actionValue: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+          - com.twinsoft.convertigo.beans.common.FormatedContent: 
+            →: |
+              '		if(parent) {
+              			page.c8o.log.debug(''A parent window is found, we will notify the setDataSheetSource() function.. '' + vars.sheet);
+              			parent["setConfigurationData"](vars.sheet)
+              		} else {
+              			page.c8o.log.debug(''No parent window is found, just log th info here : '' + vars.sheet);
+              		}
+              		resolve();
+              '
+      comment: Notifies the IFrame parent  by calling the setDataSheetSource() function
+      ↓sheet [ngx.components.UIControlVariable-1663335632403]: 
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:out
