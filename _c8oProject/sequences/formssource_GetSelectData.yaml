@@ -14,7 +14,7 @@ comment: |
   '
 ↓Input_variables [steps.InputVariablesStep-1657276491846]: 
 ↓jElement [steps.ElementStep-1657277189592]: 
-  expression: '''SELECT '' + forms_colons +  '' WHERE '' + forms_colons + '' LIKE \''%'' + forms_filter + ''%\'''' '
+  expression: '''SELECT '' + forms_colons +  '' WHERE '' + forms_colons.split('','')[0] + '' LIKE \''%'' + forms_filter + ''%\'' LIMIT 1000'''
   nodeName: Query
 ↓Call_Sequence [steps.SequenceStep-1657276491852]: 
   sourceSequence: lib_GoogleSheet.SheetQueryTable
@@ -69,17 +69,41 @@ comment: |
             - ↑value: 1657276491852
           - java.lang.String: 
             - ↑value: ./document/Array/Object
-    ↓Field [steps.JsonFieldStep-1657292957530]: 
-      value: 
-        - xmlizable: 
-          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
-          - SmartType: 
-            - ↑mode: SOURCE
-            - com.twinsoft.convertigo.beans.common.XMLVector: 
-              - java.lang.String: 
-                - ↑value: 1657292872861
-              - java.lang.String: 
-                - ↑value: ./cell/text()
+    ↓Object [steps.JsonObjectStep-1663584031811]: 
+      ↓Field [steps.JsonFieldStep-1657292957530]: 
+        key: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+            - SmartType: 
+              - ↑mode: PLAIN
+              - →→: displayValue
+        value: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+            - SmartType: 
+              - ↑mode: SOURCE
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1657292872861
+                - java.lang.String: 
+                  - ↑value: ./cell[1]
+      ↓Field1 [steps.JsonFieldStep-1663584058341]: 
+        key: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+            - SmartType: 
+              - ↑mode: PLAIN
+              - →→: value
+        value: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+            - SmartType: 
+              - ↑mode: SOURCE
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1657292872861
+                - java.lang.String: 
+                  - ↑value: ./cell[2]
 ↓forms_SheetID [variables.RequestableVariable-1657276491873]: 
   comment: |
     '{
