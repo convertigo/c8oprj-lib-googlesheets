@@ -1,7 +1,58 @@
 
 # ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/core/images/project_color_16x16.png?raw=true "Project") lib_GoogleSheet
 
-The Google Sheet Connector for Convertigo
+This is the Google Sheet connector for Convertigo platform. Install this library to enable writing and reading from Google Sheets for your Convertigo applications
+
+## Configuring your Google OAuth and API Keys
+
+This connector uses the OAuth authentication protocol to exchange data with Google Sheets. You must configure this in your Google APIs Console:
+
+* Connect to https://console.developers.google.com/apis/dashboard
+* Create a New Project and select it
+* Click **ENABLE APIS AND SERVICES** button
+* Search for *Google Sheets API* and *Google Picker API* and enable them
+* Click on **Credentials** from Google left menu
+* Click on **CREATE CREDENTIALS** button and select **API key**
+* Copy this API key and paste it in **lib_GoogleSheet.picker.apikey.secret** symbol value via Convertigo Administration Console
+* Click on **CREATE CREDENTIALS** button and select **OAuth client ID** (Configure consent screen if asked)
+* Choose **Web application** in drop-down list
+* In **Authorised JavaScript origins**, add **http://localhost:18080** and **http://localhost:8100** URIs (Convertigo Studio dev/test mode) and **https://\<your site\>.convertigo.net** (Convertigo Server prod mode)
+* In **Authorised redirect URIs**, add https://c8ocloud.convertigo.net/convertigo/projects/lib_OAuth/getTokenGoogle.html
+* Click **CREATE** button
+* Copy the *Client ID* key and paste it in **lib_oauth.google.clientid** symbol value via Convertigo Administration Console
+* Copy the *Client Secret* key and paste it in **lib_oauth.google.keysecret.secret** symbol value via Convertigo Administration Console
+
+## Configuring Convertigo Symbols
+
+__lib_GoogleSheet__ needs some symbols to be configured. You configure them trough the Web Console: https://&lt;your site&gt;.convertigo.net/admin, hit the ___symbols___ button to get to the symbol configuration page.
+
+
+Symbol  | value
+------| ------
+lib_oauth.google.clientid | The **client ID** value you copied in the previous step
+lib_oauth.google.keysecret.secret | the **Client Secret** value you copied in the previous step.
+lib_GoogleSheet.picker.apikey.secret | the **API Key** value you copied in the previous Step.
+
+## Sample Application
+
+You will find in this project a sample application using the Google Sheet Library, Use this as a reference and tutorial about using the library. This demonstrates :
+- Use of the DisplayPicker Shared Action
+- use of the SheetAddRow Sequence
+- use of the SheetGetRange Sequence
+
+## Using in a Backend only environment.
+
+If you want to run the Sequences headless (by APIs or within a scheduled job) then the connector will need to authenticate to Google with no end user Interaction.
+
+This can be done in the following way :
+
+*  The connector will have to store a Refresh Token in a Convertigo user profile. To do this it will use the **lib_UserManager** to store the refresh token as an User attribute. This implies that a Convertigo user account must be created. You can do this by executing the **AddUser** Sequence in **lib_UserManager**
+* When the Shared Action **DisplayGoogleDrivePicker** is executed, it will check if the current Convertigo session is Authenticated (If the Step **SetAuthenticatedSession** has been executed for this session). If it is, the Google Refresh Token will be persisted as an attribute to the current Authenticated User. **Caution!** This will only occur the first time a User asks access to the Google resources causing the Google Consent Screen to be displayed.
+* If you want to run a Sequence such as **SheetGetRange** headless (from an API of from a Scheduled job): 
+
+    * Make sure that a Convertigo Account exists and that the Google refresh token for this user is set up for this account. (See previous step). 
+    * Authenticate with this user by having the **SetAuthenticatedUser** step called.
+    * Have the **SheetXXX** sequences called. The connector will automatically retrieve the refresh token from the authenticated user account, refresh the access token from google and perform the operation.
 
 <details><summary><span style="color:DarkGoldenRod"><i>References</i></span></summary><blockquote><p>
 
@@ -12,7 +63,7 @@ The Google Sheet Connector for Convertigo
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_ExtendedComponents_ui_ngx
 
 
-see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx/tree/8.0.0.1#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx/tree/8.0.0#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_OAuth</b> : Used to get the Google OAuth token</summary><blockquote><p>
@@ -21,7 +72,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
 
 Used to get the Google OAuth token
-see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/master#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/8.0.0#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_UserManager</b></summary><blockquote><p>
@@ -30,7 +81,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/master#readme)
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_UserManager
 
 
-see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0.1#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0#readme)
 </p></blockquote></details>
 </p></blockquote></details>
 
