@@ -1,19 +1,9 @@
+
+
+
 # lib_GoogleSheet
+
 This is the Google Sheet connector for Convertigo platform. Install this library to enable writing and reading from Google Sheets for your Convertigo applications
-
-# Installation
-
-* In your Convertigo Studio use File->Import->Convertigo->Convertigo Project and hit the 'Next' button
-
-* In the Dialog 'Project remote URL' field Paste :
-
-        lib_GoogleSheet=https://github.com/convertigo/c8oprj-lib-googlesheets.git
-
-* And click the 'Finish' button
-* This will also automatically import the lib_OAuth project
-* Create all 'Undefined Global Symbols' when prompted
-
-# Usage
 
 ## Configuring your Google OAuth and API Keys
 
@@ -45,26 +35,6 @@ lib_oauth.google.clientid | The **client ID** value you copied in the previous s
 lib_oauth.google.keysecret.secret | the **Client Secret** value you copied in the previous step.
 lib_GoogleSheet.picker.apikey.secret | the **API Key** value you copied in the previous Step.
 
-## Sequences
-
-__lib_GoogleSheets__ provides sequences you can call in your projects
-
-Sequence  | Action
-------| ------
-SheetAddRow   | Add a row of cells to a google Sheet
-SheetGetRange | Read a Range of values form a Google Sheet
-
-These sequences will only work if you performed a OAuth Authentication to Google first. To help you with this, the library provides a Shared action you can use in your Apps. 
-
-## Shared Actions
-
-In order to authenticate with Google and browse the available documents in a Google Drive, the library provides a Shared Action you can use in your client apps.
-
-Shared Action  | Usage
-------| ------
-DisplayGoogleDrivePicker   | This will display a Google Driver Picker widget in your Mobile or desktop app. If you are not already authenticated to Google, a Google Login will be displayed followed by a consent page. When all pages are filled by the user, the Google Driver picker will appear. When the user selects a document and hits the ok button, the SharedAction will return in the __out__ object the ID of the document picked. You can use this __out__ bound to the __SheetID__ variable when calling the SheetXXXX sequences. 
-
-
 ## Sample Application
 
 You will find in this project a sample application using the Google Sheet Library, Use this as a reference and tutorial about using the library. This demonstrates :
@@ -85,3 +55,253 @@ This can be done in the following way :
     * Make sure that a Convertigo Account exists and that the Google refresh token for this user is set up for this account. (See previous step). 
     * Authenticate with this user by having the **SetAuthenticatedUser** step called.
     * Have the **SheetXXX** sequences called. The connector will automatically retrieve the refresh token from the authenticated user account, refresh the access token from google and perform the operation.
+
+
+For more technical informations : [documentation](./project.md)
+
+- [Installation](#installation)
+- [Sequences](#sequences)
+    - [checkAccessTokenGoogle](#checkaccesstokengoogle)
+    - [formssource_GetData](#formssource_getdata)
+    - [formssource_GetSelectData](#formssource_getselectdata)
+    - [formssource_QueryTable](#formssource_querytable)
+    - [getApiKey](#getapikey)
+    - [loginGoogleWithCode](#logingooglewithcode)
+    - [SheetAddRow](#sheetaddrow)
+    - [SheetGetRange](#sheetgetrange)
+    - [SheetQueryTable](#sheetquerytable)
+    - [TestLogin](#testlogin)
+- [Mobile Library](#mobile-library)
+    - [Shared Actions](#shared-actions)
+        - [DisplayGoogleDrivePicker](#displaygoogledrivepicker)
+
+
+## Installation
+
+1. In your Convertigo Studio use `File->Import->Convertigo->Convertigo Project` and hit the `Next` button
+2. In the dialog `Project remote URL` field, paste the text below:
+   <table>
+     <tr><td>Usage</td><td>Click the copy button</td></tr>
+     <tr><td>To contribute</td><td>
+
+     ```
+     lib_GoogleSheet=https://github.com/convertigo/c8oprj-lib-googlesheets.git:branch=develop
+     ```
+     </td></tr>
+     <tr><td>To simply use</td><td>
+
+     ```
+     lib_GoogleSheet=https://github.com/convertigo/c8oprj-lib-googlesheets/archive/develop.zip
+     ```
+     </td></tr>
+    </table>
+3. Click the `Finish` button. This will automatically import the __lib_GoogleSheet__ project
+
+
+## Sequences
+
+### checkAccessTokenGoogle
+
+Checks is a valid access token is held by the current user's session for Google. If the token is not present, will use the current Convertigo user profile to get the refresh_token and use it to regenerate a valid acess token.
+
+
+
+
+
+
+
+### formssource_GetData
+
+Gets data from a GoogleSheet. 
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>forms_Range</td><td>Configure here the data range you want to read from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document</td>
+</tr>
+<tr>
+<td>forms_SheetID</td><td>Configure here the Sheet ID you want to use as datasource.</td>
+</tr>
+</table>
+
+### formssource_GetSelectData
+
+Returns data from a gogle sheet as a source for this list
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>forms_colons</td><td>Name of the google sheet column separated by a comma to use to retrieve select data. For example A, B or AM. If one column is specified, data the select list will be filled by values coming from this column. If 2 columns are specified, the first one will hold the select list display values and the 2nd one the list values.</td>
+</tr>
+<tr>
+<td>forms_filter</td><td>Used to filter data from the Goole Sheet</td>
+</tr>
+<tr>
+<td>forms_Range</td><td>Configure here the data range you want to query from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document</td>
+</tr>
+<tr>
+<td>forms_SheetID</td><td>Configure here the Sheet ID you want to use as datasource.</td>
+</tr>
+</table>
+
+### formssource_QueryTable
+
+Query table data from a GoogleSheet
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>forms_Query</td><td>Write here the Query you would like to be execute on the range. Queries are based on the Google Sheet Query language; for example : SELECT  * WHERE A LIKE '%mike%'   would select all the line from the range  where colon 'A' contains the string 'mike'. More details on the Query language can be found  here : https://developers.google.com/chart/interactive/docs/querylanguage</td>
+</tr>
+<tr>
+<td>forms_Range</td><td>Configure here the data range you want to query from the Google Sheet.  This has to be such as 'Sheet1!A1:Z100' (Read data from Sheet1, starting from colon A1 to colon Z on 100 lines). Sheet is optional. If omitted, the data will be read from the first available sheet in the document</td>
+</tr>
+<tr>
+<td>forms_SheetID</td><td>Configure here the Sheet ID you want to use as datasource.</td>
+</tr>
+</table>
+
+### getApiKey
+
+Utility to get from the server the Googler Drive picker api key
+
+### loginGoogleWithCode
+
+Perform the OAuth flow for Google
+
+If the token is valid, it will be stored in the user's session to be used when calling Google APIs.
+
+If a refresh_token is found, (This is the case when a First OAuth flow is performed and Google pops the Consent sreen.. )  this token is saved in the user profile so that the checkAcessTokenGoogle sequence can use it to regenerate a new acess Token.
+
+
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>client_id</td><td></td>
+</tr>
+<tr>
+<td>code</td><td></td>
+</tr>
+<tr>
+<td>keySecret</td><td></td>
+</tr>
+<tr>
+<td>redirect_uri</td><td></td>
+</tr>
+</table>
+
+### SheetAddRow
+
+Add a row of cells to a Google Sheet.
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>dataRow</td><td>The data to be added </td>
+</tr>
+<tr>
+<td>Range</td><td>The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)</td>
+</tr>
+<tr>
+<td>SheetID</td><td>The Sheet id as found in the google  sheet URL</td>
+</tr>
+</table>
+
+### SheetGetRange
+
+Get a range of cells from a Google Sheet.
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>FirstRowHeader</td><td>Set this to true if the first row a header</td>
+</tr>
+<tr>
+<td>formssourceMode</td><td></td>
+</tr>
+<tr>
+<td>Range</td><td>The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data</td>
+</tr>
+<tr>
+<td>SheetID</td><td>The Sheet id as found in the google  sheet URL</td>
+</tr>
+</table>
+
+### SheetQueryTable
+
+Get a range of cells from a Google Sheet.
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>FirstRowHeader</td><td>Set this to true if the first row a header</td>
+</tr>
+<tr>
+<td>formssourceMode</td><td></td>
+</tr>
+<tr>
+<td>Query</td><td>The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data</td>
+</tr>
+<tr>
+<td>Range</td><td>The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data</td>
+</tr>
+<tr>
+<td>SheetID</td><td>The Sheet id as found in the google  sheet URL</td>
+</tr>
+</table>
+
+### TestLogin
+
+This only to have the test application logged in to be able to add Attributes to user accounts
+
+## Mobile Library
+
+Test and demo app to show Google Sheet capacities
+
+### Shared Actions
+
+#### DisplayGoogleDrivePicker
+
+Displays the Google Drive fille picker to browse available spread sheets
+This needs an API key to be configured in the symbols :
+
+ib_GoogleSheet.picker.apikey.secret
+
+The Api key can be found at : 
+
+https://console.developers.google.com/apis/credentials?organizationId=22050485893&project=convertigo-form-builder
+
+
+
+
+
+

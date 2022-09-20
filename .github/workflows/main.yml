@@ -25,23 +25,51 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2.4.0
+      uses: actions/checkout@v3
       with:
         ssh-key: ${{ secrets.SSH_KEY }}
     - name: Setup Java
-      uses: actions/setup-java@v2.5.0
+      uses: actions/setup-java@v3
       with:
         java-version: '17'
-        distribution: 'adopt'
-    - name: Run Convertigo build
+        distribution: 'temurin'
+    - name: Cache Gradle Dependencies
+      uses: actions/cache@v3
+      with:
+          path: |
+             ~/.gradle/caches
+             ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-caches-v1-${{ hashFiles('**/*.gradle', '**/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-caches-v1-
+    - name: Convertigo generate application code
+      env:
+        C8O_SERVER: ${{ secrets.C8O_SERVER }}
+      run: |
+        echo "Generate Mobile Builder App" && \
+        sh gradlew --stacktrace --info generateMobileBuilder export -x compileMobileBuilder \
+          -Pconvertigo.load.mobileApplicationEndpoint=$C8O_SERVER
+    - name: Cache Node Modules
+      uses: actions/cache@v3
+      with:
+          path: |
+            ${{ github.workspace }}/_private/ionic/node_modules
+            ${{ github.workspace }}/_private/ionic/.angular
+            /home/runner/convertigo/nodes
+          key: ${{ runner.os }}-build-node-${{ hashFiles('**/package.json', '**/_private/ionic/version.json') }}
+          restore-keys: ${{ runner.os }}-build-node-
+    - name: Convertigo build, deploy to server and export the application
       env:
         C8O_SERVER: ${{ secrets.C8O_SERVER }}
         C8O_USER: ${{ secrets.C8O_USER }}
         C8O_PASSWORD: ${{ secrets.C8O_PASSWORD }}
       run: |
-        echo "Build the Mobile Application and deploy to $C8O_SERVER" && \
-        sh gradlew --no-daemon --stacktrace --info deploy \
+        echo "Build, deploy to $C8O_SERVER and export to project.zip the application" && \
+        sh gradlew --stacktrace --info car  -x generateMobileBuilder \
           -Pconvertigo.deploy.server=$C8O_SERVER \
           -Pconvertigo.deploy.user=$C8O_USER \
-          -Pconvertigo.deploy.password=$C8O_PASSWORD \
-          -Pconvertigo.load.mobileApplicationEndpoint=$C8O_SERVER
+          -Pconvertigo.deploy.password=$C8O_PASSWORD
+    - name: Save application project
+      uses: actions/upload-artifact@v3
+      with:
+        name: project
+        path: build/*.car
