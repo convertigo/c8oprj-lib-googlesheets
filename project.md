@@ -1,7 +1,7 @@
 
 # ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/core/images/project_color_16x16.png?raw=true "Project") lib_GoogleSheet
 
-The Google Sheet Connector for Convertigo
+This is the Google Sheet Connector for Convertigo. use this library to connect to your no code apps to Google Sheets
 
 <details><summary><span style="color:DarkGoldenRod"><i>References</i></span></summary><blockquote><p>
 
@@ -116,6 +116,53 @@ Checks is a valid access token is held by the current users' session for Google
 
 This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
 
+
+</p></blockquote></details>
+
+<details><summary><b>formssource_GetTableData</b> : Get data from a Google sheet table for a data grid</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") formssource_GetTableData
+
+Get data from a Google sheet table for a data grid. Each column of the Google Sheet  will be displayed as the same column in the data grid
+
+<span style="color:DarkGoldenRod">Variables</span>
+
+<table>
+<tr>
+<th>
+name
+</th>
+<th>
+comment
+</th>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_config
+</td>
+<td>
+Returns the rows of the table with a given configuration
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;forms_tableFilter
+</td>
+<td>
+Filters
+
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;model
+</td>
+<td>
+If true, just return one line of data so that No Code studio can compte the table model
+</td>
+</tr>
+</table>
 
 </p></blockquote></details>
 

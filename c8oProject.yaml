@@ -1,9 +1,21 @@
 ↑convertigo: 8.0.0.m006
 ↓lib_GoogleSheet [core.Project]: 
-  comment: The Google Sheet Connector for Convertigo
-  version: 1.2
+  comment: |
+    '{
+        "en": {
+            "displayName": "Google Sheet Connector",
+            "comment": "This is the Google Sheet Connector for Convertigo. use this library to connect to your no code apps to Google Sheets"
+        },
+        "fr": {
+            "displayName": "Connecteur Google Sheets",
+            "comment": "Ceci est le connecteur Google sheets pour Convertigo. Utilisez cette librairie pour connecter vos applications No Code à google Sheets"
+        }
+    }
+    '
+  version: 1.3
   ↓GoogleOAuth [connectors.HttpConnector]: 🗏 connectors/GoogleOAuth.yaml
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
+  ↓formssource_GetTableData [sequences.GenericSequence]: 🗏 sequences/formssource_GetTableData.yaml
   ↓getApiKey [sequences.GenericSequence]: 🗏 sequences/getApiKey.yaml
   ↓loginGoogleWithCode [sequences.GenericSequence]: 🗏 sequences/loginGoogleWithCode.yaml
   ↓SheetAddRow [sequences.GenericSequence]: 🗏 sequences/SheetAddRow.yaml

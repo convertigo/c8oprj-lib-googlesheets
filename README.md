@@ -3,7 +3,7 @@
 
 # lib_GoogleSheet
 
-The Google Sheet Connector for Convertigo
+This is the Google Sheet Connector for Convertigo. use this library to connect to your no code apps to Google Sheets
 
 
 For more technical informations : [documentation](./project.md)
@@ -11,6 +11,7 @@ For more technical informations : [documentation](./project.md)
 - [Installation](#installation)
 - [Sequences](#sequences)
     - [checkAccessTokenGoogle](#checkaccesstokengoogle)
+    - [formssource_GetTableData](#formssource_gettabledata)
     - [getApiKey](#getapikey)
     - [loginGoogleWithCode](#logingooglewithcode)
     - [SheetAddRow](#sheetaddrow)
@@ -56,6 +57,28 @@ Checks is a valid access token is held by the current users' session for Google
 This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
 
 
+
+### formssource_GetTableData
+
+Get data from a Google sheet table for a data grid. Each column of the Google Sheet  will be displayed as the same column in the data grid
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>forms_config</td><td>Returns the rows of the table with a given configuration</td>
+</tr>
+<tr>
+<td>forms_tableFilter</td><td>Filters
+</td>
+</tr>
+<tr>
+<td>model</td><td>If true, just return one line of data so that No Code studio can compte the table model</td>
+</tr>
+</table>
 
 ### getApiKey
 

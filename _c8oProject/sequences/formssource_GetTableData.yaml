@@ -1,0 +1,33 @@
+accessibility: Hidden
+authenticatedContextRequired: true
+comment: |
+  '{
+      "en": {
+          "displayName": "GetTableData",
+          "comment": "Get data from a Google sheet table for a data grid. Each column of the Google Sheet  will be displayed as the same column in the data grid"
+      },
+      "fr": {
+          "displayName": "GetTableData",
+          "comment": "Obtenez des données à partir d''une table Google Sheet pour une grille de données. Chaque colonne de la table Google Sheet sera affichée comme la même colonne dans la grille de données"
+      },
+      "types": ["grid"]
+  }
+  '
+↓forms_config [variables.RequestableVariable-1723646853562]: 
+  comment: |
+    '{
+    	"en": {
+    		"comment":"Returns the rows of the table with a given configuration",
+    		"displayName":"Configuration"
+    	}
+    }'
+  description: configure=lib_GoogleSheet/DisplayObjects/mobile/Page
+  required: true
+  value: 
+↓forms_tableFilter [variables.RequestableVariable-1723646853565]: 
+  comment: |
+    Filters
+    
+  description: filter
+↓model [variables.RequestableVariable-1723646853568]: 
+  comment: If true, just return one line of data so that No Code studio can compte the table model
