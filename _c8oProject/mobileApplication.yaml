@@ -1,0 +1,28 @@
+componentScriptContent: 
+  - xmlizable: 
+    - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+    - com.twinsoft.convertigo.beans.common.FormatedContent: 
+      →: |
+        /*Begin_c8o_AppImport*/
+        /*End_c8o_AppImport*/
+        /*Begin_c8o_AppDeclaration*/
+        	/*End_c8o_AppDeclaration*/
+        /*Begin_c8o_AppConstructor*/
+        		/*End_c8o_AppConstructor*/
+        /*Begin_c8o_AppInitialization*/
+                        /* Uncomment the following lines to enable the i18n feature.
+                         * You should add a json per language in the assets/i18n folder. */
+                        translate.setDefaultLang('en');
+                        translate.use(translate.getBrowserLang());
+                        
+                        /* Uncomment the following lines to enable the custom status bar color. */
+                        // statusBar.overlaysWebView(false);
+                        // statusBar.backgroundColorByHexString("#000000");
+                        // statusBar.styleBlackOpaque();
+        			/*End_c8o_AppInitialization*/
+        /*Begin_c8o_AppFunction*/
+        	/*End_c8o_AppFunction*/
+        
+tplProjectName: mobilebuilder_tpl_8_3_0_ngx
+↓DisplayGoogleDrivePicker [ngx.components.UIActionStack-1723642068753]: 🗏 mobileSharedActions/DisplayGoogleDrivePicker.yaml
+↓Page [ngx.components.PageComponent-1723642068777]: 🗏 mobilePages/Page.yaml

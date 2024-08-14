@@ -1,0 +1,23 @@
+{
+ "My_Menu": "Mon menu",
+ "First_page": "Première page",
+ "Select_the_Baserow_database_and_table_yo": "Sélectionnez la base de données et la table Baserow à partir desquelles vous souhaitez obtenir des données",
+ "Baserow_connector": "Connecteur Baserow",
+ "Select_a_database_and_table": "Sélectionnez une base de données et une table",
+ "Please_select_among_the_following_elemen": "Veuillez sélectionner parmi les éléments suivants une base de données et une table",
+ "Select": "Sélectionner",
+ "Select_Columns": "Sélectionnez les colonnes",
+ "Include": "Inclure",
+ "Hide": "Cacher",
+ "Confirm": "Confirmer",
+ "Select_columns_you_would_like_to_retriev": "Sélectionnez les colonnes que vous souhaitez récupérer à partir de la table sélectionnée dans la table. Vous pouvez également masquer de la grille les colonnes sélectionnées. Ils ne seront pas visibles mais vous pourrez utiliser les données de ces colonnes dans vos applications. Cochez pour sélectionner toutes les colonnes",
+ "notice2":"Veuillez sélectionner parmi les éléments suivants les colonnes que vous souhaitez récupérer à partir du tableau sélectionné dans la grille de données. Vous pouvez également masquer de la grille les colonnes sélectionnées. Ils ne seront pas visibles mais vous pourrez utiliser les données de ces colonnes dans vos applications.",
+ "Page": "Page",
+ "Action_1": "Action 1",
+ "Action_2": "Action 2",
+ "notice3":"Veuillez sélectionner parmi les éléments suivants les colonnes que vous souhaitez récupérer à partir du tableau sélectionné dans la sélection. La première colonne contiendra tous les champs sur lesquels vous pourrez filtrer. La deuxième colonne sera les valeurs d'affichage qui apparaîtront dans la sélection. Les troisièmes valeurs seront la valeur réelle derrière un élément sélectionné.",
+ "Display_value": "Valeur affichée",
+ "Use_a_different_column_for_the_value_and": "Utiliser une colonne différente pour la valeur et la valeur affichée",
+ "Value": "Valeur",
+ "Identifier": "Identifiant"
+}
