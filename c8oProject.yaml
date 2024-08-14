@@ -19,7 +19,7 @@
   ↓project2 [references.ProjectSchemaReference]: 
     projectName: lib_ExtendedComponents_ui_ngx=https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx.git:branch=8.3.0.0
   ↓MobileApplication [core.MobileApplication]: 
-    comment: Test and demo app to show Google Sheet capacities
+    comment: Test and demo app to show Google Sheet capacities 
     splashRemoveMode: beforeUpdate
     ↓Android [mobileplatforms.Android]: 
       comment: Android platform

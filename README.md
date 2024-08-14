@@ -9,6 +9,13 @@ The Google Sheet Connector for Convertigo
 For more technical informations : [documentation](./project.md)
 
 - [Installation](#installation)
+- [Sequences](#sequences)
+    - [checkAccessTokenGoogle](#checkaccesstokengoogle)
+    - [getApiKey](#getapikey)
+    - [loginGoogleWithCode](#logingooglewithcode)
+    - [SheetAddRow](#sheetaddrow)
+    - [SheetGetRange](#sheetgetrange)
+    - [TestLogin](#testlogin)
 - [Mobile Library](#mobile-library)
     - [Shared Actions](#shared-actions)
         - [DisplayGoogleDrivePicker](#displaygoogledrivepicker)
@@ -40,9 +47,98 @@ For more technical informations : [documentation](./project.md)
 3. Click the `Finish` button. This will automatically import the __lib_GoogleSheet__ project
 
 
+## Sequences
+
+### checkAccessTokenGoogle
+
+Checks is a valid access token is held by the current users' session for Google
+
+This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
+
+
+
+### getApiKey
+
+Utility to get from the server the Googler Drive picker api key
+
+### loginGoogleWithCode
+
+Perform the OAuth flow for Google
+
+If the token is valid, it will be stored in the user's session to be used when calling Microsoft APIs.
+
+Also if the token is valid, setAuthenticatedUser step is executed to flag this session as authenticated.
+
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>client_id</td><td></td>
+</tr>
+<tr>
+<td>code</td><td></td>
+</tr>
+<tr>
+<td>keySecret</td><td></td>
+</tr>
+<tr>
+<td>redirect_uri</td><td></td>
+</tr>
+</table>
+
+### SheetAddRow
+
+Add a row of cells to a Google Sheet.
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>dataRow</td><td>The data to be added </td>
+</tr>
+<tr>
+<td>Range</td><td>The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)</td>
+</tr>
+<tr>
+<td>SheetID</td><td>The Sheet id as found in the google  sheet URL</td>
+</tr>
+</table>
+
+### SheetGetRange
+
+Get a range of cells from a Google Sheet.
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>FirstRowHeader</td><td>Set this to true if the first row a header</td>
+</tr>
+<tr>
+<td>Range</td><td>The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data</td>
+</tr>
+<tr>
+<td>SheetID</td><td>The Sheet id as found in the google  sheet URL</td>
+</tr>
+</table>
+
+### TestLogin
+
+This only to have the test application logged in to be able to add Attributes to user accounts
+
 ## Mobile Library
 
-Test and demo app to show Google Sheet capacities
+Test and demo app to show Google Sheet capacities 
 
 ### Shared Actions
 
