@@ -13,6 +13,66 @@ comment: |
       "types": ["grid"]
   }
   '
+↓SheetID [steps.JsonFieldStep-1723654268069]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: SheetID
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: forms_config.sheet_id
+↓Range [steps.JsonFieldStep-1723654308135]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: Range
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: forms_config.range
+↓Call_Sequence [steps.SequenceStep-1723653737419]: 
+  sourceSequence: lib_GoogleSheet.SheetGetRange
+  ↓SheetID [variables.StepVariable-1723653737421]: 
+    comment: The Sheet id as found in the google  sheet URL
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1723654268069
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓Range [variables.StepVariable-1723653737423]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1723654308135
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓FirstRowHeader [variables.StepVariable-1723653737425]: 
+    comment: Set this to true if the first row a header
+    value: true
+↓Copy [steps.XMLCopyStep-1723653890931]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1723653737419
+        - java.lang.String: 
+          - ↑value: ./document/sheet
 ↓forms_config [variables.RequestableVariable-1723646853562]: 
   comment: |
     '{
@@ -21,7 +81,7 @@ comment: |
     		"displayName":"Configuration"
     	}
     }'
-  description: configure=lib_GoogleSheet/DisplayObjects/mobile/Page
+  description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
   required: true
   value: 
 ↓forms_tableFilter [variables.RequestableVariable-1723646853565]: 

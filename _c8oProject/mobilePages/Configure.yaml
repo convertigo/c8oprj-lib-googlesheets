@@ -1,0 +1,292 @@
+↑isRoot: true
+segment: Configure
+title: Title for Configure
+↓Content [ngx.components.UIDynamicElement-1723642068807]: 
+  beanData: '{"ionBean":"Content"}'
+  tagName: ion-content
+  ↓Paragraph [ngx.components.UIDynamicElement-1723649131454]: 
+    beanData: '{"ionBean":"Paragraph"}'
+    tagName: p
+    ↓Text [ngx.components.UIText-1723649131453]: 
+      textValue: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+          - MobileSmartSourceType: plain:Please select a Sheet and configure the range of the Google Sheet where the data resides. Ranges are defined by Google sheets A1 notations such as Sheet1!A1:E100. Then click the 'GET SAMPLE DATA' button to test if your range is targetting the correct data zone.
+  ↓Form [ngx.components.UIForm-1723642068810]: 
+    identifier: form1607708098382
+    ↓Grid [ngx.components.UIDynamicElement-1723648771375]: 
+      beanData: '{"ionBean":"Grid"}'
+      tagName: ion-grid
+      ↓GridRow [ngx.components.UIDynamicElement-1723648771362]: 
+        beanData: '{"ionBean":"GridRow"}'
+        tagName: ion-row
+        ↓GridCol [ngx.components.UIDynamicElement-1723648771364]: 
+          beanData: '{"ionBean":"GridCol"}'
+          tagName: ion-col
+          ↓FormItem [ngx.components.UIDynamicElement-1723642068813]: 
+            beanData: '{"ionBean":"FormItem","DetailIconName":"plain:chevron-forward"}'
+            tagName: ion-item
+            ↓Label [ngx.components.UIDynamicElement-1723642068819]: 
+              beanData: '{"ionBean":"Label","IconSlot":"plain:start"}'
+              tagName: ion-label
+              ↓Text [ngx.components.UIText-1723642068822]: 
+                textValue: 
+                  - xmlizable: 
+                    - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                    - MobileSmartSourceType: plain:SheetID:
+            ↓TextInput [ngx.components.UIDynamicElement-1723642068816]: 
+              beanData: |
+                '{
+                 "ionBean": "Input",
+                 "ControlName": "plain:SheetID",
+                 "DoubleBinding": "source:{\"filter\":\"Local\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"localObject\":\"local\"}],\"path\":\"?.SheetID\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}",
+                 "Debounce": "plain:0",
+                 "Value": "plain:Sheet1!A:A"
+                }'
+              tagName: ion-input
+        ↓GridCol1 [ngx.components.UIDynamicElement-1723648771370]: 
+          beanData: '{"ionBean":"GridCol"}'
+          tagName: ion-col
+          ↓Button [ngx.components.UIDynamicElement-1723642068825]: 
+            beanData: '{"ionBean":"Button"}'
+            tagName: ion-button
+            ↓Text [ngx.components.UIText-1723642068828]: 
+              textValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                  - MobileSmartSourceType: plain:Choose Google Sheet
+            ↓Event [ngx.components.UIControlEvent-1723642068831]: 
+              ↓InvokeSharedAction [ngx.components.UIDynamicInvoke-1723642068834]: 
+                beanData: '{"ionBean":"InvokeAction"}'
+                stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
+                ↓SetLocal [ngx.components.UIDynamicAction-1723651244524]: 
+                  beanData: |
+                    '{
+                     "ionBean": "SetLocalAction",
+                     "Property": "plain:SheetID",
+                     "Value": "source:{\"filter\":\"Action\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"priority\":1723642068834,\"rootEvent\":false,\"pageLocals\":false},{\"priority\":1723642068831,\"rootEvent\":true,\"pageLocals\":false}],\"path\":\"?.out\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}"
+                    }'
+          ↓FormatLayout [ngx.components.UIDynamicAttr-1723648835571]: 
+            beanData: '{"ionBean":"FormatLayout","TextAlignment":"plain:ion-text-right"}'
+            selfClose: false
+      ↓GridRow1 [ngx.components.UIDynamicElement-1723651002509]: 
+        beanData: '{"ionBean":"GridRow"}'
+        tagName: ion-row
+        ↓GridCol [ngx.components.UIDynamicElement-1723651002512]: 
+          beanData: '{"ionBean":"GridCol"}'
+          tagName: ion-col
+          ↓FormItem [ngx.components.UIDynamicElement-1723651002515]: 
+            beanData: '{"ionBean":"FormItem","DetailIconName":"plain:chevron-forward"}'
+            tagName: ion-item
+            ↓Label [ngx.components.UIDynamicElement-1723651002518]: 
+              beanData: '{"ionBean":"Label","IconSlot":"plain:start"}'
+              tagName: ion-label
+              ↓Text [ngx.components.UIText-1723651002521]: 
+                textValue: 
+                  - xmlizable: 
+                    - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                    - MobileSmartSourceType: plain:Range:
+            ↓TextInput [ngx.components.UIDynamicElement-1723651002524]: 
+              beanData: |
+                '{
+                 "ionBean": "Input",
+                 "ControlName": "plain:range",
+                 "DoubleBinding": "source:{\"filter\":\"Local\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"localObject\":\"local\"}],\"path\":\"?.Range\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}",
+                 "Debounce": "plain:0",
+                 "Value": "plain:A1:Z100"
+                }'
+              tagName: ion-input
+        ↓GridCol1 [ngx.components.UIDynamicElement-1723651002527]: 
+          beanData: '{"ionBean":"GridCol"}'
+          tagName: ion-col
+          ↓Button [ngx.components.UIDynamicElement-1723651002530]: 
+            beanData: '{"ionBean":"Button"}'
+            tagName: ion-button
+            ↓Text [ngx.components.UIText-1723651002533]: 
+              textValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                  - MobileSmartSourceType: plain:Get Sample Data
+            ↓Event [ngx.components.UIControlEvent-1723651002536]: 
+              ↓CallSequence [ngx.components.UIDynamicAction-1723651002542]: 
+                beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.SheetGetRange"}'
+                ↓SheetID [ngx.components.UIControlVariable-1723651002545]: 
+                  comment: new variable
+                  varValue: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                      - MobileSmartSourceType: source:{"filter":"Local","project":"lib_GoogleSheet","input":"","model":{"data":[{"localObject":"local"}],"path":"?.SheetID","prefix":"","suffix":"","custom":"","useCustom":false}}
+                ↓Range [ngx.components.UIControlVariable-1723651002548]: 
+                  comment: new variable
+                  varValue: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                      - MobileSmartSourceType: source:{"filter":"Form","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1723642068810,"identifier":"form1607708098382"}],"path":"?.controls['range']?.value","prefix":"","suffix":"","custom":"","useCustom":false}}
+                ↓FirstRowHeader [ngx.components.UIControlVariable-1723651002551]: 
+                  comment: new variable
+                  varValue: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                      - MobileSmartSourceType: plain:true
+          ↓FormatLayout [ngx.components.UIDynamicAttr-1723651002554]: 
+            beanData: '{"ionBean":"FormatLayout","TextAlignment":"plain:ion-text-right"}'
+            selfClose: false
+  ↓Directive [ngx.components.UIControlDirective-1723642068873]: 
+    directiveName: If
+    directiveSource: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+        - MobileSmartSourceType: source:{"filter":"Sequence","project":"lib_GoogleSheet_ui_ngx","input":"","model":{"data":[{"sequence":"lib_GoogleSheet.SheetGetRange","marker":""}],"path":"?.sheet","prefix":"","suffix":"","custom":"","useCustom":false}}
+    ↓UseSharedComponent [ngx.components.UIUseShared-1723642068876]: 
+      sharedcomponent: lib_ExtendedComponents_ui_ngx.MobileApplication.Application.agGrid
+      ↓pagination [ngx.components.UIUseVariable-1723642068879]: 
+        comment: 'boolean: true (default) or false'
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:true
+      ↓paginationPageSize [ngx.components.UIUseVariable-1723642068882]: 
+        comment: 'integer: 10 by default'
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:50
+      ↓rowSelection [ngx.components.UIUseVariable-1723642068885]: 
+        comment: 'string: ''single'' (default) or ''multiple'''
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:'single'
+      ↓rowDeselection [ngx.components.UIUseVariable-1723642068888]: 
+        comment: 'boolean: true (default) or false'
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:true
+      ↓defaultColDef [ngx.components.UIUseVariable-1723642068891]: 
+        comment: 'default is {hide: false, editable: true, sortable: true, resizable: true, filter: true, checkboxSelection: false, singleClickEdit: false}'
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: |
+                'script:{
+                	hide: false,
+                	editable: true,
+                	sortable: true,
+                	resizable: true,
+                	filter: true,
+                	checkboxSelection: false,
+                	singleClickEdit: false
+                }
+                '
+      ↓columnDefs [ngx.components.UIUseVariable-1723642068894]: 
+        comment: 'Array of columnDef {headerName: ''headerName'', field: ''fieldName''} objects'
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: source:{"filter":"Sequence","project":"lib_GoogleSheet_ui_ngx","input":"","model":{"data":[{"sequence":"lib_GoogleSheet.SheetGetRange","marker":""}],"path":"?.sheet?.columns","prefix":"","suffix":"","custom":"","useCustom":false}}
+      ↓rowData [ngx.components.UIUseVariable-1723642068897]: 
+        comment: 'Array of row { fieldName1: ''value1'', fieldName2: ''value2'', fieldName3: true, ...} objects'
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: source:{"filter":"Sequence","project":"lib_GoogleSheet_ui_ngx","input":"","model":{"data":[{"sequence":"lib_GoogleSheet.SheetGetRange","marker":""}],"path":"?.sheet?.data","prefix":"","suffix":"","custom":"","useCustom":false}}
+      ↓width [ngx.components.UIUseVariable-1723642068900]: 
+        comment: width value in % or px
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:'100%'
+      ↓height [ngx.components.UIUseVariable-1723642068903]: 
+        comment: height is 'auto' or value in % or px
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:'auto'
+      ↓class [ngx.components.UIUseVariable-1723642068906]: 
+        comment: |
+          'One of the themes provided here :
+          
+          https://www.ag-grid.com/javascript-grid-themes-provided/
+          
+          Also be shure to add the theme in the Theme object as :
+          
+          @import "../../node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark/sass/ag-theme-balham-dark.scss";
+          
+          
+          
+          '
+        varValue: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+            - MobileSmartSourceType: script:'ag-theme-balham'
+↓Footer [ngx.components.UIDynamicElement-1723652329776]: 
+  beanData: '{"ionBean":"Footer"}'
+  tagName: ion-footer
+  ↓ToolBar [ngx.components.UIDynamicElement-1723652329779]: 
+    beanData: '{"ionBean":"ToolBar"}'
+    tagName: ion-toolbar
+    ↓ButtonSet1 [ngx.components.UIDynamicElement-1723652329782]: 
+      beanData: '{"ionBean":"ButtonSet","SetPosition":"plain:end"}'
+      tagName: ion-buttons
+      ↓Button [ngx.components.UIDynamicElement-1723652329785]: 
+        beanData: |
+          '{
+           "ionBean": "Button",
+           "IonColor": "plain:primary",
+           "IonFill": "plain:solid"
+          }'
+        tagName: ion-button
+        ↓Icon [ngx.components.UIDynamicElement-1723652329788]: 
+          beanData: |
+            '{
+             "ionBean": "Icon",
+             "IconName": "plain:checkmark-outline",
+             "IconSlot": "plain:start"
+            }'
+          tagName: ion-icon
+        ↓Label [ngx.components.UIDynamicElement-1723652329791]: 
+          beanData: '{"ionBean":"Label"}'
+          tagName: ion-label
+          ↓Text [ngx.components.UIText-1723652329794]: 
+            i18n: true
+            textValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                - MobileSmartSourceType: plain:Confirm
+        ↓Event [ngx.components.UIControlEvent-1723652329797]: 
+          ↓ComputeGoogleSheetConfiguration [ngx.components.UICustomAction-1723652329800]: 
+            actionValue: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+                - com.twinsoft.convertigo.beans.common.FormatedContent: 
+                  →: |
+                    '		page.c8o.log.debug(''[MB] ''+ props.actionFunction +'': ''+ props.actionName);
+                    		
+                    		let conf : any = {
+                    			sheet_id: page.local.SheetID,
+                    			range: page.local.Range
+                    		}
+                    				
+                    		console.log("conf", conf);
+                    		
+                    		if (window.parent) {
+                    			window.parent["setConfigurationData"](JSON.stringify(conf))
+                    		}
+                    		resolve(conf);
+                    '
+            ↓Log [ngx.components.UIDynamicAction-1723652329803]: 
+              beanData: |
+                '{
+                 "ionBean": "LogAction",
+                 "message": "script:JSON.stringify(out)",
+                 "level": "plain:warn"
+                }'
+↓PageEvent [ngx.components.UIPageEvent-1723652548487]: 
+  ↓SetLocal [ngx.components.UIDynamicAction-1723652555863]: 
+    beanData: |
+      '{
+       "ionBean": "SetLocalAction",
+       "Property": "plain:Range",
+       "Value": "script:''A1:Z100''"
+      }'
