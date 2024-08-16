@@ -13,6 +13,10 @@ comment: |
       "types": ["grid"]
   }
   '
+↓ParseConfig [steps.SimpleStep-1723789002819]: 
+  expression: |
+    forms_config = JSON.parse(forms_config);
+    
 ↓SheetID [steps.JsonFieldStep-1723654268069]: 
   key: 
     - xmlizable: 
@@ -20,6 +24,7 @@ comment: |
       - SmartType: 
         - ↑mode: PLAIN
         - →→: SheetID
+  output: false
   value: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
@@ -33,6 +38,7 @@ comment: |
       - SmartType: 
         - ↑mode: PLAIN
         - →→: Range
+  output: false
   value: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
@@ -64,15 +70,53 @@ comment: |
   ↓FirstRowHeader [variables.StepVariable-1723653737425]: 
     comment: Set this to true if the first row a header
     value: true
-↓Copy [steps.XMLCopyStep-1723653890931]: 
-  sourceDefinition: 
+↓array [steps.JsonArrayStep-1723790732114]: 
+  key: 
     - xmlizable: 
-      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-      - com.twinsoft.convertigo.beans.common.XMLVector: 
-        - java.lang.String: 
-          - ↑value: 1723653737419
-        - java.lang.String: 
-          - ↑value: ./document/sheet
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: data
+  ↓Iterator [steps.IteratorStep-1723790720482]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1723653737419
+          - java.lang.String: 
+            - ↑value: ./document/sheet/data/row
+    ↓object [steps.JsonObjectStep-1723790746852]: 
+      ↓Iterator [steps.IteratorStep-1723790859475]: 
+        sourceDefinition: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+            - com.twinsoft.convertigo.beans.common.XMLVector: 
+              - java.lang.String: 
+                - ↑value: 1723790720482
+              - java.lang.String: 
+                - ↑value: ./cell
+        ↓field [steps.JsonFieldStep-1723790865874]: 
+          key: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: SOURCE
+                - com.twinsoft.convertigo.beans.common.XMLVector: 
+                  - java.lang.String: 
+                    - ↑value: 1723790859475
+                  - java.lang.String: 
+                    - ↑value: ./@originalKeyName
+          value: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: SOURCE
+                - com.twinsoft.convertigo.beans.common.XMLVector: 
+                  - java.lang.String: 
+                    - ↑value: 1723790859475
+                  - java.lang.String: 
+                    - ↑value: ./text()
 ↓forms_config [variables.RequestableVariable-1723646853562]: 
   comment: |
     '{
@@ -83,7 +127,6 @@ comment: |
     }'
   description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
   required: true
-  value: 
 ↓forms_tableFilter [variables.RequestableVariable-1723646853565]: 
   comment: |
     Filters
