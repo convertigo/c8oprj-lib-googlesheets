@@ -13,6 +13,7 @@ For more technical informations : [documentation](./project.md)
     - [checkAccessTokenGoogle](#checkaccesstokengoogle)
     - [formssource_GetTableData](#formssource_gettabledata)
     - [getApiKey](#getapikey)
+    - [getRefreshToken](#getrefreshtoken)
     - [loginGoogleWithCode](#logingooglewithcode)
     - [SheetAddRow](#sheetaddrow)
     - [SheetGetRange](#sheetgetrange)
@@ -83,6 +84,8 @@ Get data from a Google sheet table for a data grid. Each column of the Google Sh
 ### getApiKey
 
 Utility to get from the server the Googler Drive picker api key
+
+### getRefreshToken
 
 ### loginGoogleWithCode
 

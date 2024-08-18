@@ -17,6 +17,7 @@
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
   ↓formssource_GetTableData [sequences.GenericSequence]: 🗏 sequences/formssource_GetTableData.yaml
   ↓getApiKey [sequences.GenericSequence]: 🗏 sequences/getApiKey.yaml
+  ↓getRefreshToken [sequences.GenericSequence]: 🗏 sequences/getRefreshToken.yaml
   ↓loginGoogleWithCode [sequences.GenericSequence]: 🗏 sequences/loginGoogleWithCode.yaml
   ↓SheetAddRow [sequences.GenericSequence]: 🗏 sequences/SheetAddRow.yaml
   ↓SheetGetRange [sequences.GenericSequence]: 🗏 sequences/SheetGetRange.yaml

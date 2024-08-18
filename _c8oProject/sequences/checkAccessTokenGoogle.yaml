@@ -6,7 +6,7 @@ comment: |
   
   
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607691398179]: 
-  key: oAuthAccessTokenGoogle
+  key: oAuthAccessTokenGoogleSheet
   output: false
 ↓IfExistThenElse [steps.IfExistThenElseStep-1608745385084]: 
   sourceDefinition: 
@@ -108,7 +108,7 @@ comment: |
                     - ↑value: 1608803265338
                   - java.lang.String: 
                     - ↑value: ./text()
-          key: oAuthAccessTokenGoogle
+          key: oAuthAccessTokenGoogleSheet
         ↓Return [steps.ReturnStep-1608803265341]: 
       ↓jElse [steps.ElseStep-1608745524706]: 
         ↓Log [steps.LogStep-1608802298245]: 

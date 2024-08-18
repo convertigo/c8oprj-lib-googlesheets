@@ -91,7 +91,7 @@ comment: |
                 - ↑value: 1607691047306
               - java.lang.String: 
                 - ↑value: ./document/object/access_token/text()
-      key: oAuthAccessTokenGoogle
+      key: oAuthAccessTokenGoogleSheet
     ↓DecodeJWT [steps.SimpleStep-1607691047339]: 
       expression: |
         '//imports
@@ -128,6 +128,16 @@ comment: |
               - ↑value: 1607691047306
             - java.lang.String: 
               - ↑value: ./document/object/refresh_token
+      ↓element [steps.XMLElementStep-1723971002349]: 
+        nodeName: refreshToken
+        sourceDefinition: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+            - com.twinsoft.convertigo.beans.common.XMLVector: 
+              - java.lang.String: 
+                - ↑value: 1607691047306
+              - java.lang.String: 
+                - ↑value: ./document/object/refresh_token/text()
       ↓Get_authenticated_user [steps.GetAuthenticatedUserStep-1608745230342]: 
       ↓Call_Sequence1 [steps.SequenceStep-1608742866087]: 
         sourceSequence: lib_UserManager.SetUserAttribute

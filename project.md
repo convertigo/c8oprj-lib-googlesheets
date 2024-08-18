@@ -21,7 +21,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
 
 Used to get the Google OAuth token
-see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/334a638363d83d83bfed756b025f96226751e50e#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/7.9.0#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_UserManager</b></summary><blockquote><p>
@@ -172,6 +172,14 @@ If true, just return one line of data so that No Code studio can compte the tabl
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") getApiKey
 
 Utility to get from the server the Googler Drive picker api key
+</p></blockquote></details>
+
+<details><summary><b>getRefreshToken</b></summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") getRefreshToken
+
+
 </p></blockquote></details>
 
 <details><summary><b>loginGoogleWithCode</b> : Perform the OAuth flow for Google</summary><blockquote><p>

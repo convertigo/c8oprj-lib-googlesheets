@@ -1,0 +1,28 @@
+accessibility: Hidden
+authenticatedContextRequired: true
+↓authenticatedUserID [steps.GetAuthenticatedUserStep-1724000251712]: 
+  output: false
+↓Call_Sequence [steps.SequenceStep-1724000279928]: 
+  sourceSequence: lib_UserManager.GetUserAttribute
+  ↓user [variables.StepVariable-1724000304538]: 
+    comment: The user where we have to set the attribute on
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724000251712
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓attribute [variables.StepVariable-1724000304540]: 
+    comment: The attribute name
+    value: GoogleOAuthRefreshToken
+↓Copy [steps.XMLCopyStep-1724000368009]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1724000279928
+        - java.lang.String: 
+          - ↑value: ./document/value

@@ -40,8 +40,7 @@ title: Title for Configure
                  "ionBean": "Input",
                  "ControlName": "plain:SheetID",
                  "DoubleBinding": "source:{\"filter\":\"Local\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"localObject\":\"local\"}],\"path\":\"?.SheetID\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}",
-                 "Debounce": "plain:0",
-                 "Value": "plain:Sheet1!A:A"
+                 "Debounce": "plain:0"
                 }'
               tagName: ion-input
         ↓GridCol1 [ngx.components.UIDynamicElement-1723648771370]: 
@@ -58,6 +57,7 @@ title: Title for Configure
             ↓Event [ngx.components.UIControlEvent-1723642068831]: 
               ↓InvokeSharedAction [ngx.components.UIDynamicInvoke-1723642068834]: 
                 beanData: '{"ionBean":"InvokeAction"}'
+                comment: Pick the needed file. This will cause an oAuth login to Google with all the need priviledges to browse and acess SpreadSheets. A refresh token will also be generated and stored in the user profile
                 stack: lib_GoogleSheet.MobileApplication.Application.DisplayGoogleDrivePicker
                 ↓SetLocal [ngx.components.UIDynamicAction-1723651244524]: 
                   beanData: |
@@ -66,6 +66,14 @@ title: Title for Configure
                      "Property": "plain:SheetID",
                      "Value": "source:{\"filter\":\"Action\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"priority\":1723642068834,\"rootEvent\":false,\"pageLocals\":false},{\"priority\":1723642068831,\"rootEvent\":true,\"pageLocals\":false}],\"path\":\"?.out\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}"
                     }'
+                ↓Log [ngx.components.UIDynamicAction-1723987132935]: 
+                  beanData: |
+                    '{
+                     "ionBean": "LogAction",
+                     "message": "source:{\"filter\":\"Action\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"priority\":1723642068834,\"rootEvent\":false,\"pageLocals\":false},{\"priority\":1723642068831,\"rootEvent\":true,\"pageLocals\":false}],\"path\":\"?.out\",\"prefix\":\"JSON.stringify(\",\"suffix\":\")\",\"custom\":\"\",\"useCustom\":false}}",
+                     "level": "plain:warn"
+                    }'
+                  isEnabled: false
           ↓FormatLayout [ngx.components.UIDynamicAttr-1723648835571]: 
             beanData: '{"ionBean":"FormatLayout","TextAlignment":"plain:ion-text-right"}'
             selfClose: false
@@ -131,6 +139,15 @@ title: Title for Configure
           ↓FormatLayout [ngx.components.UIDynamicAttr-1723651002554]: 
             beanData: '{"ionBean":"FormatLayout","TextAlignment":"plain:ion-text-right"}'
             selfClose: false
+  ↓Paragraph1 [ngx.components.UIDynamicElement-1723980156807]: 
+    beanData: '{"ionBean":"Paragraph"}'
+    isEnabled: false
+    tagName: p
+    ↓Text [ngx.components.UIText-1723980156806]: 
+      textValue: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+          - MobileSmartSourceType: source:{"filter":"Global","project":"lib_GoogleSheet","input":"","model":{"data":[{"sharedObject":"router.sharedObject"}],"path":"?.refreshToken","prefix":"","suffix":"","custom":"","useCustom":false}}
   ↓Directive [ngx.components.UIControlDirective-1723642068873]: 
     directiveName: If
     directiveSource: 
@@ -255,33 +272,42 @@ title: Title for Configure
                 - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
                 - MobileSmartSourceType: plain:Confirm
         ↓Event [ngx.components.UIControlEvent-1723652329797]: 
-          ↓ComputeGoogleSheetConfiguration [ngx.components.UICustomAction-1723652329800]: 
-            actionValue: 
-              - xmlizable: 
-                - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
-                - com.twinsoft.convertigo.beans.common.FormatedContent: 
-                  →: |
-                    '		page.c8o.log.debug(''[MB] ''+ props.actionFunction +'': ''+ props.actionName);
-                    		
-                    		let conf : any = {
-                    			sheet_id: page.local.SheetID,
-                    			range: page.local.Range
-                    		}
-                    				
-                    		console.log("conf", conf);
-                    		
-                    		if (window.parent) {
-                    			window.parent["setConfigurationData"](JSON.stringify(conf))
-                    		}
-                    		resolve(conf);
-                    '
-            ↓Log [ngx.components.UIDynamicAction-1723652329803]: 
-              beanData: |
-                '{
-                 "ionBean": "LogAction",
-                 "message": "script:JSON.stringify(out)",
-                 "level": "plain:warn"
-                }'
+          ↓CallSequence [ngx.components.UIDynamicAction-1723999636484]: 
+            beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.getRefreshToken"}'
+            comment: We need to get the refesh token as it will be used in the Configuration
+            ↓ComputeGoogleSheetConfiguration [ngx.components.UICustomAction-1723652329800]: 
+              actionValue: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.common.FormatedContent
+                  - com.twinsoft.convertigo.beans.common.FormatedContent: 
+                    →: |
+                      '		page.c8o.log.debug(''[MB] ''+ props.actionFunction +'': ''+ props.actionName);
+                      		
+                      		let conf : any = {
+                      			sheet_id: page.local.SheetID,
+                      			range: page.local.Range,
+                      			token: vars.refreshToken
+                      		}
+                      				
+                      		console.log("conf", conf);
+                      		
+                      		if (window.parent) {
+                      			window.parent["setConfigurationData"](JSON.stringify(conf))
+                      		}
+                      		resolve(conf);
+                      '
+              ↓Log [ngx.components.UIDynamicAction-1723652329803]: 
+                beanData: |
+                  '{
+                   "ionBean": "LogAction",
+                   "message": "script:JSON.stringify(out)",
+                   "level": "plain:warn"
+                  }'
+              ↓refreshToken [ngx.components.UIControlVariable-1724000492120]: 
+                varValue: 
+                  - xmlizable: 
+                    - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
+                    - MobileSmartSourceType: source:{"filter":"Action","project":"lib_GoogleSheet","input":"","model":{"data":[{"priority":1723999636484,"rootEvent":false,"pageLocals":false},{"priority":1723652329797,"rootEvent":true,"pageLocals":false}],"path":"?.out","prefix":"","suffix":"?.value","custom":"","useCustom":false}}
 ↓PageEvent [ngx.components.UIPageEvent-1723652548487]: 
   ↓SetLocal [ngx.components.UIDynamicAction-1723652555863]: 
     beanData: |

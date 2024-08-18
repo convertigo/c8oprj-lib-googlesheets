@@ -18,13 +18,23 @@ comment: |
        "ionBean": "OAuthLoginAction",
        "provider": "plain:openid",
        "clientid": "source:{\"filter\":\"Sequence\",\"project\":\"GoogleSpeadSheetDemo\",\"input\":\"\",\"model\":{\"data\":[{\"sequence\":\"lib_OAuth.GetOAuthCredentials\",\"marker\":\"\"}],\"path\":\"?.GoogleClientID\",\"prefix\":\"\",\"suffix\":\"\",\"custom\":\"\",\"useCustom\":false}}",
-       "scope": "plain:https:\/\/www.googleapis.com\/auth\/userinfo.email https:\/\/www.googleapis.com\/auth\/userinfo.profile https:\/\/www.googleapis.com\/auth\/spreadsheets https:\/\/www.googleapis.com\/auth\/drive.file&access_type=offline",
+       "scope": "plain:https:\/\/www.googleapis.com\/auth\/userinfo.email https:\/\/www.googleapis.com\/auth\/userinfo.profile https:\/\/www.googleapis.com\/auth\/spreadsheets https:\/\/www.googleapis.com\/auth\/drive.file&access_type=offline&prompt=consent",
        "response_type": "plain:code",
        "loginRequestable": "plain:lib_GoogleSheet.loginGoogleWithCode",
        "checkAccessTokenRequestable": "plain:lib_GoogleSheet.checkAccessTokenGoogle",
        "authorization_endpoint": "plain:https:\/\/accounts.google.com\/o\/oauth2\/v2\/auth",
        "callbackurl": "plain:https:\/\/c8ocloud.convertigo.net\/convertigo\/projects\/lib_OAuth\/getTokenGoogle.html"
       }'
+    ↓If [ngx.components.UIDynamicAction-1723980941990]: 
+      beanData: '{"ionBean":"IfAction","condition":"script:parent.out.refreshToken"}'
+      isEnabled: false
+      ↓SetGlobal [ngx.components.UIDynamicAction-1723979461352]: 
+        beanData: |
+          '{
+           "ionBean": "SetGlobalAction",
+           "Property": "plain:refreshToken",
+           "Value": "source:{\"filter\":\"Action\",\"project\":\"lib_GoogleSheet\",\"input\":\"\",\"model\":{\"data\":[{\"priority\":1723642068759,\"rootEvent\":false,\"pageLocals\":false},{\"priority\":1723642068753,\"rootEvent\":false,\"pageLocals\":false},{\"priority\":1723642068756,\"rootEvent\":false,\"pageLocals\":false}],\"path\":\"?.out\",\"prefix\":\"\",\"suffix\":\"?.refreshToken\",\"custom\":\"\",\"useCustom\":false}}"
+          }'
     ↓CallSequence1 [ngx.components.UIDynamicAction-1723642068762]: 
       beanData: '{"ionBean":"CallSequenceAction","requestable":"plain:lib_GoogleSheet.checkAccessTokenGoogle"}'
       ↓CallSequence [ngx.components.UIDynamicAction-1723642068765]: 

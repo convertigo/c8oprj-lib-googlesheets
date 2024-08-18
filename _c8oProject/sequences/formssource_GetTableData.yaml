@@ -45,6 +45,46 @@ comment: |
       - SmartType: 
         - ↑mode: JS
         - →→: forms_config.range
+↓Range1 [steps.JsonFieldStep-1724002294410]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: refeshToken
+  output: false
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: forms_config.token
+↓authenticatedUserID [steps.GetAuthenticatedUserStep-1724002388467]: 
+↓Call_Sequence1 [steps.SequenceStep-1724002264644]: 
+  sourceSequence: lib_UserManager.SetUserAttribute
+  ↓user [variables.StepVariable-1724002359302]: 
+    comment: The user where we have to set the attribute on
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724002388467
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓attribute [variables.StepVariable-1724002359304]: 
+    comment: The attribute name
+    value: GoogleOAuthRefreshToken
+  ↓value [variables.StepVariable-1724002359306]: 
+    comment: The attribute value
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724002294410
+          - java.lang.String: 
+            - ↑value: ./text()
 ↓Call_Sequence [steps.SequenceStep-1723653737419]: 
   sourceSequence: lib_GoogleSheet.SheetGetRange
   ↓SheetID [variables.StepVariable-1723653737421]: 
