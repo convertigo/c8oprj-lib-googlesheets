@@ -4,11 +4,10 @@ buildscript {
 		maven {
 			url "https://m2.convertigo.com"
 		}
-		mavenCentral()
+		jcenter()
 	}
 	dependencies {
-		classpath 'org.eclipse.jgit:org.eclipse.jgit.ssh.jsch:[5.4,)'
-		classpath 'com.convertigo:gradle-plugin:8.3.0'
+		classpath 'com.convertigo:gradle-plugin:7.9.0-SNAPSHOT'
 	}
 }
 
@@ -100,21 +99,17 @@ car {
 }
 
 //// the 'deploy' task depends on 'car' and allows to push the project to a Convertigo server
-//// the task is auto skipped if properties are empties, following tasks can check deploy.state.didWork
 deploy {
 	//// deploy the current project to <server> using user/password credentials
 	//// can also be configured with a -Pconvertigo.deploy.server as Gradle parameter
-	//// Note: the task is skipped if the property doesn't start with http
 	// server 'https://myserver.com/convertigo'
 	
 	//// user used by the deploy action, default is 'admin'
 	//// can also be configured with a -Pconvertigo.deploy.user as Gradle parameter
-	//// Note: the task is skipped if the property is empty
 	// user 'admin'
 	
 	//// password used by the deploy action, default is 'admin'
 	//// can also be configured with a -Pconvertigo.deploy.password as Gradle parameter
-	//// Note: the task is skipped if the property is empty
 	// user 'password'
 	
 	//// deploy over an https <server> without checking certificates, default is false
@@ -124,10 +119,6 @@ deploy {
 	//// assemble XSL files on deploy, default is false
 	//// can also be configured with a -Pconvertigo.deploy.assembleXsl as Gradle parameter
 	// assembleXsl false
-	
-	//// retry <retry> times in case of deploy failure, default is 5
-	//// can also be configured with a -Pconvertigo.deploy.retry as Gradle parameter
-	// retry 5
 }
 
 //// the 'remoteBuild' task depends on 'load' and it's just a configurator for 'launchRemoteBuild' and 'downloadRemoteBuild'
@@ -175,8 +166,7 @@ localBuild {
 		dependsOn compileMobileBuilder
 	}
 	
-	//// set an array of platforms (Convertigo Platforms object) names to build, empty means all declared platforms
-	//// can also be configured with a -Pconvertigo.localBuild.platforms as Gradle parameter (names separated by comma)
+	//// list platforms to build
 	// platforms = []
 	
 	//// build mode of the native package, can be 'release' or 'debug' (default)
@@ -238,4 +228,4 @@ if (!tasks.findByName('wrapper')) {
 		description 'Generates Gradle wrapper files.'
 	}
 }
-wrapper.gradleVersion = '8.5'
+wrapper.gradleVersion = '6.7.1'
