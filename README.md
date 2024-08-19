@@ -153,6 +153,10 @@ Get a range of cells from a Google Sheet.
 <td>FirstRowHeader</td><td>Set this to true if the first row a header</td>
 </tr>
 <tr>
+<td>Query</td><td>A Query in google Query language Syntax such as SELECT * WHERE  A contains('this pattern')
+</td>
+</tr>
+<tr>
 <td>Range</td><td>The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data</td>
 </tr>
 <tr>

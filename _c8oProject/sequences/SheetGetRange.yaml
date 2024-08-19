@@ -29,7 +29,10 @@ comment: Get a range of cells from a Google Sheet.
       com.google.api.services.sheets.v4.SheetsScopes,
       com.google.api.services.sheets.v4.model.ValueRange,
       com.google.api.client.googleapis.auth.oauth2.GoogleCredential,
-    
+      com.google.api.services.sheets.v4.model.AddSheetRequest,
+      com.google.api.services.sheets.v4.model.Request,
+      com.google.api.services.sheets.v4.model.Collections,
+      
       java.io.FileNotFoundException,
       java.io.IOException,
       java.io.InputStream,
@@ -37,7 +40,8 @@ comment: Get a range of cells from a Google Sheet.
       java.io.InputStreamReader,
       java.security.GeneralSecurityException,
       java.util.Collections,
-      java.util.List
+      java.util.List,
+      java.util.ArrayList
     );
     
     with (GSheetAPI) {
@@ -54,6 +58,52 @@ comment: Get a range of cells from a Google Sheet.
     	setError = null;
     
     	try {
+    		// First, test if we have a Query to execute
+    		if (Query != null && Query != "") {
+    			
+    			log.warn("Query is : " + Query);
+    			
+    			// if yes add a new sheet to the spreadsheet named C8oQyeryExecutor
+    			
+    			// Create a request to add a new sheet
+            	let addSheetRequest = new AddSheetRequest().setProperties(
+                	new com.google.api.services.sheets.v4.model.SheetProperties().setTitle("C8OQueryExecutor")
+            	);
+    	        
+    	        // Create a batch update request
+            	let requests = new ArrayList();
+            	requests.add(new Request().setAddSheet(addSheetRequest));
+            	let batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
+            	// Execute the request
+            	service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();
+    
+    
+    			//Get the fisrt Sheet name
+    			Sheets = service.spreadsheets().get(SheetID).execute();
+    			var sheetName = Sheets.getSheets().get(0).getProperties().getTitle();
+    
+            	
+    			// Write the QUERY as a QUERY formula using the =QUERY(Range; Query) in the added sheet A1 cell
+    			var values = new com.google.api.services.sheets.v4.model.ValueRange();
+    			values.setValues([Collections.singletonList(
+    				"=QUERY(" + 
+    				(Range.indexOf("!") != -1 ? Range : "''" + sheetName + "''!" + Range) +
+    				"; \"" + 
+    				Query + 
+    				"\")"
+    			)]);
+    			
+    			service.spreadsheets().values()
+    				.update(SheetID, "C8OQueryExecutor!A1", values)
+    				.setValueInputOption("USER_ENTERED")
+    				.execute();
+    				
+    				
+    			// Modify range to read the C8OQueryExecutor sheet
+    			Range = "''C8OQueryExecutor''";
+    		}
+    		
+    		
     		response = service.spreadsheets().values()
     	        .get(SheetID, Range)
     	        .execute();
@@ -76,6 +126,32 @@ comment: Get a range of cells from a Google Sheet.
     //				types.push(rowTypes);
     //			}
     	    }
+    	    
+    
+        	// Now remove the added sheet if had a Query
+        	
+    		if (Query != null && Query != "") {
+    			// Find the Sheet ID of the C8OQueryExecutor sheet
+    			var ExecSheetId = null;
+    			for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    				if (Sheets.getSheets().get(i).getProperties().getTitle() == "C8OQueryExecutor") {
+    					ExecSheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
+    					break;
+    				}
+    			}
+    			
+    			requests = new ArrayList();
+    			requests.add(new Request()
+    				.setDeleteSheet(
+    					new com.google.api.services.sheets.v4.model.DeleteSheetRequest()
+    						.setSheetId(ExecSheetId)
+    				)
+    			);
+    			
+    			batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
+    			service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();	
+    	    }		
+    	    
     	} catch (error) {
     		setError = error;
     		log.error("[Google Sreadsheet Connector] Error occured " + error);				
@@ -147,6 +223,10 @@ comment: Get a range of cells from a Google Sheet.
 ↓FirstRowHeader [variables.RequestableVariable-1607621396129]: 
   comment: Set this to true if the first row a header
   value: true
+↓Query [variables.RequestableVariable-1724069475514]: 
+  comment: |
+    A Query in google Query language Syntax such as SELECT * WHERE  A contains('this pattern')
+    
 ↓TestOk [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607603826140]: 
     value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
