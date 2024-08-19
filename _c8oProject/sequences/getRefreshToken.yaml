@@ -1,5 +1,6 @@
 accessibility: Hidden
 authenticatedContextRequired: true
+comment: Gets the google oAuth refresh token previsously stored in user profile. Used  to get the rToken  to be stored in the  Forms data source configuration 
 ↓authenticatedUserID [steps.GetAuthenticatedUserStep-1724000251712]: 
   output: false
 ↓Call_Sequence [steps.SequenceStep-1724000279928]: 

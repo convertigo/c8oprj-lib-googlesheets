@@ -87,6 +87,8 @@ Utility to get from the server the Googler Drive picker api key
 
 ### getRefreshToken
 
+Gets the google oAuth refresh token previsously stored in user profile. Used  to get the rToken  to be stored in the  Forms data source configuration 
+
 ### loginGoogleWithCode
 
 Perform the OAuth flow for Google

@@ -174,12 +174,12 @@ If true, just return one line of data so that No Code studio can compte the tabl
 Utility to get from the server the Googler Drive picker api key
 </p></blockquote></details>
 
-<details><summary><b>getRefreshToken</b></summary><blockquote><p>
+<details><summary><b>getRefreshToken</b> : Gets the google oAuth refresh token previsously stored in user profile</summary><blockquote><p>
 
 
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") getRefreshToken
 
-
+Gets the google oAuth refresh token previsously stored in user profile. Used  to get the rToken  to be stored in the  Forms data source configuration 
 </p></blockquote></details>
 
 <details><summary><b>loginGoogleWithCode</b> : Perform the OAuth flow for Google</summary><blockquote><p>
