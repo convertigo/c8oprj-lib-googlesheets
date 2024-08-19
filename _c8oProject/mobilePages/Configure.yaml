@@ -11,7 +11,7 @@ title: Title for Configure
       textValue: 
         - xmlizable: 
           - ↑classname: com.twinsoft.convertigo.beans.ngx.components.MobileSmartSourceType
-          - MobileSmartSourceType: plain:Please select a Sheet and configure the range of the Google Sheet where the data resides. Ranges are defined by Google sheets A1 notations such as Sheet1!A1:E100. Then click the 'GET SAMPLE DATA' button to test if your range is targetting the correct data zone.
+          - MobileSmartSourceType: plain:Please select a Sheet and configure the range of the Google Sheet where the data resides. Ranges are defined by Google sheets A1 notations such as 'Sheet 1'!A1:E100. Then click the 'GET SAMPLE DATA' button to test if your range is targeting the correct data zone.
   ↓Form [ngx.components.UIForm-1723642068810]: 
     identifier: form1607708098382
     ↓Grid [ngx.components.UIDynamicElement-1723648771375]: 
