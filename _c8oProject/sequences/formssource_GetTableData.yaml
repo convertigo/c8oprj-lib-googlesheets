@@ -13,10 +13,13 @@ comment: |
       "types": ["grid"]
   }
   '
-↓ParseConfig [steps.SimpleStep-1723789002819]: 
+↓ParseConfigAndFilters [steps.SimpleStep-1723789002819]: 
   expression: |
-    forms_config = JSON.parse(forms_config);
+    'forms_config = JSON.parse(forms_config);
+    forms_tableFilter.length != 0  ?  JSON.parse(forms_tableFilter) : forms_tableFilter; 
     
+    log.warn("Filters are : " + JSON.stringify(forms_tableFilter));
+    '
 ↓SheetID [steps.JsonFieldStep-1723654268069]: 
   key: 
     - xmlizable: 
@@ -58,7 +61,9 @@ comment: |
       - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
       - SmartType: 
         - ↑mode: JS
-        - →→: forms_config.token
+        - →→: |
+          com.twinsoft.convertigo.engine.util.Crypto.decodeFromHexString(forms_config.token);
+          
 ↓authenticatedUserID [steps.GetAuthenticatedUserStep-1724002388467]: 
 ↓Call_Sequence1 [steps.SequenceStep-1724002264644]: 
   sourceSequence: lib_UserManager.SetUserAttribute
@@ -118,6 +123,10 @@ comment: |
         - ↑mode: PLAIN
         - →→: data
   ↓Iterator [steps.IteratorStep-1723790720482]: 
+    condition: |
+      'model == "true" ? 1 : undefined;
+      
+      '
     sourceDefinition: 
       - xmlizable: 
         - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector

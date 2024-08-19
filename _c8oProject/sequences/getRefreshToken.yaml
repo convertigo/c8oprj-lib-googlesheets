@@ -18,7 +18,7 @@ comment: Gets the google oAuth refresh token previsously stored in user profile.
   ↓attribute [variables.StepVariable-1724000304540]: 
     comment: The attribute name
     value: GoogleOAuthRefreshToken
-↓Copy [steps.XMLCopyStep-1724000368009]: 
+↓myVariable [steps.SimpleSourceStep-1724062847791]: 
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
@@ -26,4 +26,22 @@ comment: Gets the google oAuth refresh token previsously stored in user profile.
         - java.lang.String: 
           - ↑value: 1724000279928
         - java.lang.String: 
-          - ↑value: ./document/value
+          - ↑value: ./document/value/text()
+  variableName: jToken
+↓Cipher [steps.SimpleStep-1724062889537]: 
+  expression: |
+    jToken = com.twinsoft.convertigo.engine.util.Crypto.encodeToHexString(jToken);
+    
+↓field [steps.JsonFieldStep-1724063167794]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: value
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: jToken
