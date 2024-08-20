@@ -17,13 +17,81 @@ comment: |
   expression: |
     'forms_config = JSON.parse(forms_config);
     try {
-    	forms_tableFilter.length != 0  ?  JSON.parse(forms_tableFilter) : forms_tableFilter; 
+    	if (forms_tableFilter.length != 0)
+    	  	forms_tableFilter = JSON.parse(forms_tableFilter) 
+    	 
     	log.warn("Filters are : " + JSON.stringify(forms_tableFilter));
+    	
+    	// Build a Query from the filters in google Query Language . filters are in this format :
+    	/*	
+    	fl = {
+    		filters:[{
+    			field: "Col Name ",
+    			op: "contains",
+    			value: "Ele1"
+    		}],
+    		mode:"AND"
+    	}
+    	
+    	
+    	Queries must be in This format :
+    	
+    	
+    	SELECT * WHERE Col"&XMATCH("Description"; ''Feuille 1''!A1:F1)&" CONTAINS(''Element1'')"
+    	 
+    	*/
+    	
+    	Query = "SELECT * WHERE ";
+    	parsedRange = extractRangeDetails(forms_config.range)
+    	colRange = parsedRange.sheetName  + parsedRange.firstCol + parsedRange.firstRow + ":" + parsedRange.lastCol + parsedRange.firstRow;
+    	
+    	for (var i = 0; i < forms_tableFilter.filters.length; i++) {
+    		if (i != 0) {
+    			Query += " " + forms_tableFilter.mode + " ";
+    		}
+    		
+    		// $$$SheetName$$$ will replaced with the real sheet name by the SheetGetRange Sequence as it acess acess to the Google Sheet API
+    		Query += ''Col"&XMATCH("'' + forms_tableFilter.filters[i].field + ''"; '' + ''$$$SheetName$$$'' + colRange + '')&" ''
+    		
+    		switch (forms_tableFilter.filters[i].op) {
+    			case "contains":
+    				Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
+    				break;
+    		} 
+    	}
+    	log.warn("Query  : " + Query);
+    
     }
     catch (e) {
     	log.warn("No filters");
     	forms_tableFilter = null
+    	Query = null;
     }
+    
+    
+    function extractRangeDetails(range) {
+      // Regular expression to match the optional sheet name and the range
+      const rangeRegex = /''?([^'']*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
+    
+      const match = range.match(rangeRegex);
+    
+      if (match) {
+        const sheetName = match[1] || null;
+        const firstCol = match[2];
+        const firstRow = match[3];
+        const lastCol = match[4];
+    
+        return {
+          sheetName: sheetName ? sheetName + "!" : "",
+          firstCol: firstCol,
+          firstRow: parseInt(firstRow, 10),
+          lastCol: lastCol
+        };
+      } else {
+        throw new Error("Invalid range format");
+      }
+    }
+    
     '
 ↓SheetID [steps.JsonFieldStep-1723654268069]: 
   key: 
@@ -69,7 +137,8 @@ comment: |
         - →→: |
           com.twinsoft.convertigo.engine.util.Crypto.decodeFromHexString(forms_config.token);
           
-↓authenticatedUserID [steps.GetAuthenticatedUserStep-1724002388467]: 
+↓GetAuthenticatedUserID [steps.GetAuthenticatedUserStep-1724002388467]: 
+  nodeName: GetAuthenticatedUserID
 ↓Call_Sequence1 [steps.SequenceStep-1724002264644]: 
   sourceSequence: lib_UserManager.SetUserAttribute
   ↓user [variables.StepVariable-1724002359302]: 
@@ -120,6 +189,10 @@ comment: |
   ↓FirstRowHeader [variables.StepVariable-1723653737425]: 
     comment: Set this to true if the first row a header
     value: true
+  ↓Query [variables.StepVariable-1724149825744]: 
+    comment: |
+      A Query in google Query language Syntax such as SELECT * WHERE  A contains('this pattern')
+      
 ↓array [steps.JsonArrayStep-1723790732114]: 
   key: 
     - xmlizable: 
@@ -188,3 +261,29 @@ comment: |
   description: filter
 ↓model [variables.RequestableVariable-1723646853568]: 
   comment: If true, just return one line of data so that No Code studio can compte the table model
+↓testFilter [core.TestCase]: 
+  ↓forms_config [variables.TestCaseVariable-1724153963806]: 
+    description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
+    required: true
+    value: |
+      '{
+      	"sheet_id":"1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo",
+      	"range":"A1:Z100",
+      	"token":"${lib_googlesheet.testtoken}"
+      }
+      '
+  ↓forms_tableFilter [variables.TestCaseVariable-1724153963808]: 
+    description: filter
+    value: |
+      '{
+      		"filters":[{
+      			"field": "Description",
+      			"op": "contains",
+      			"value": "Element1"
+      		}],
+      		"mode":"AND"
+      }
+      
+      	
+      	'
+  ↓model [variables.TestCaseVariable-1724153963810]: 

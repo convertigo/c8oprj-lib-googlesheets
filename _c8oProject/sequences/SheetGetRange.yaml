@@ -82,6 +82,8 @@ comment: Get a range of cells from a Google Sheet.
     			Sheets = service.spreadsheets().get(SheetID).execute();
     			var sheetName = Sheets.getSheets().get(0).getProperties().getTitle();
     
+    			// Replace the $$$SheetName$$$ with the first sheet name i the Query
+    			Query = Query.replace("$$$SheetName$$$", "''" + sheetName + "''!");
             	
     			// Write the QUERY as a QUERY formula using the =QUERY(Range; Query) in the added sheet A1 cell
     			var values = new com.google.api.services.sheets.v4.model.ValueRange();
