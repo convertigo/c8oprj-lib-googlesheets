@@ -16,9 +16,14 @@ comment: |
 ↓ParseConfigAndFilters [steps.SimpleStep-1723789002819]: 
   expression: |
     'forms_config = JSON.parse(forms_config);
-    forms_tableFilter.length != 0  ?  JSON.parse(forms_tableFilter) : forms_tableFilter; 
-    
-    log.warn("Filters are : " + JSON.stringify(forms_tableFilter));
+    try {
+    	forms_tableFilter.length != 0  ?  JSON.parse(forms_tableFilter) : forms_tableFilter; 
+    	log.warn("Filters are : " + JSON.stringify(forms_tableFilter));
+    }
+    catch (e) {
+    	log.warn("No filters");
+    	forms_tableFilter = null
+    }
     '
 ↓SheetID [steps.JsonFieldStep-1723654268069]: 
   key: 
