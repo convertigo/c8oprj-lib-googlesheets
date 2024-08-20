@@ -280,6 +280,11 @@ comment: |
       			"field": "Description",
       			"op": "contains",
       			"value": "Element1"
+      		}, 
+      		{
+      			"field": "Price",
+      			"op": "contains",
+      			"value": "64"
       		}],
       		"mode":"AND"
       }
