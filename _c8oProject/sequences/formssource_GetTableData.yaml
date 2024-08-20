@@ -24,20 +24,67 @@ comment: |
     	
     	// Build a Query from the filters in google Query Language . filters are in this format :
     	/*	
-    	fl = {
-    		filters:[{
-    			field: "Col Name ",
-    			op: "contains",
-    			value: "Ele1"
-    		}],
-    		mode:"AND"
+    		This is an example of a Forms filter object :
+    	    "filters": [
+    	        {
+    	            "field": "Description",
+    	            "op": "contains",
+    	            "value": ""
+    	        },
+    	        {
+    	            "field": "Qty",
+    	            "op": "equal",
+    	            "value": "TEST"
+    	        },
+    	        {
+    	            "field": "Price",
+    	            "op": "not_equal",
+    	            "value": "TEST"
+    	        },
+    	        {
+    	            "field": "Price",
+    	            "op": "greater",
+    	            "value": "TEST"
+    	        },
+    	        {
+    	            "field": "Date Purchased",
+    	            "op": "minus"
+    	        },
+    	        {
+    	            "field": "Price Cputed",
+    	            "op": "minusequals"
+    	        },
+    	        {
+    	            "field": "Price Cputed",
+    	            "op": "greaterequals"
+    	        },
+    	        {
+    	            "field": "Description",
+    	            "op": "is_empty"
+    	        },
+    	        {
+    	            "field": "Description",
+    	            "op": "not_contains"
+    	        },
+    	        {
+    	            "field": "Description",
+    	            "op": "is_filled"
+    	        },
+    	        {
+    	            "field": "Description",
+    	            "op": "among_following"
+    	        },
+    	        {
+    	            "field": "Description",
+    	            "op": "out_following"
+    	        }
+    	    ],
+    	    "mode": "OR"
     	}
-    	
-    	
+    
     	Queries must be in This format :
-    	
-    	
     	SELECT * WHERE Col"&XMATCH("Description"; ''Feuille 1''!A1:F1)&" CONTAINS(''Element1'')"
+    
     	 
     	*/
     	
@@ -57,10 +104,53 @@ comment: |
     			case "contains":
     				Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
     				break;
+    				
+    			case "equal":
+    				Query += "= " + forms_tableFilter.filters[i].value;
+    				break;
+    				
+    			case "not_equal":
+    				Query += "!= " + forms_tableFilter.filters[i].value;
+    				break;
+    				
+    			case "greater":
+    				Query += "> " + forms_tableFilter.filters[i].value;
+    				break;
+    				
+    			case "minus":
+    				Query += "< " + forms_tableFilter.filters[i].value;
+    				break;
+    				
+    			case "minusequals":
+    				Query += "<= " + forms_tableFilter.filters[i].value;
+    				break;
+    				
+    			case "greaterequals":
+    				Query += ">= " + forms_tableFilter.filters[i].value;
+    				break;
+    				
+    			case "is_empty":
+    				Query += "IS NULL"
+    				break;
+    				
+    			case "not_contains":
+    				Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
+    				break;
+    				
+    			case "is_filled":
+    				Query += "IS NOT NULL"
+    				break;
+    				
+    			case "among_following":
+    				Query += "IN (" + forms_tableFilter.filters[i].value + ") ";
+    				break;
+    				
+    			case "out_following":
+    				Query += "NOT IN (" + forms_tableFilter.filters[i].value + ") ";
+    				break;
     		} 
     	}
     	log.warn("Query  : " + Query);
-    
     }
     catch (e) {
     	log.warn("No filters");
@@ -283,8 +373,8 @@ comment: |
       		}, 
       		{
       			"field": "Price",
-      			"op": "contains",
-      			"value": "64"
+      			"op": "minus",
+      			"value": "200"
       		}],
       		"mode":"AND"
       }
