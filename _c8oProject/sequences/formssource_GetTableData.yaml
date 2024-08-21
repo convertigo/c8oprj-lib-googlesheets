@@ -105,7 +105,7 @@ comment: |
     			
     			switch (forms_tableFilter.filters[i].op) {
     				case "contains":
-    					Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
+    					Query += "CONTAINS ''" + forms_tableFilter.filters[i].value + "'' ";
     					break;
     					
     				case "equal":
@@ -154,7 +154,7 @@ comment: |
     			} 
     		}
     	}
-    	log.warn("Query  : " + Query);
+    	// log.warn("Query  : " + Query);
     }
     catch (e) {
     	log.warn("No filters");
@@ -373,12 +373,7 @@ comment: |
       		"filters":[{
       			"field": "Description",
       			"op": "contains",
-      			"value": "Element1"
-      		}, 
-      		{
-      			"field": "Price",
-      			"op": "minus",
-      			"value": "200"
+      			"value": ""
       		}],
       		"mode":"AND"
       }

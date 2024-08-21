@@ -61,7 +61,7 @@ comment: Get a range of cells from a Google Sheet.
     		// First, test if we have a Query to execute
     		if (Query != null && Query != "") {
     			
-    			log.warn("Query is : " + Query);
+    			//log.warn("Query is : " + Query);
     			
     			// if yes add a new sheet to the spreadsheet named C8oQyeryExecutor
     			
@@ -84,6 +84,7 @@ comment: Get a range of cells from a Google Sheet.
     
     			// Replace all the $$$SheetName$$$ with the first sheet name in the Query
     			Query = Query.replace(/\$\$\$SheetName\$\$\$/g, "''" + sheetName + "''!");
+    			log.warn("Query is : " + Query);
             	
     			// Write the QUERY as a QUERY formula using the =QUERY(Range; Query) in the added sheet A1 cell
     			var values = new com.google.api.services.sheets.v4.model.ValueRange();
@@ -151,7 +152,7 @@ comment: Get a range of cells from a Google Sheet.
     			);
     			
     			batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
-    			service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();	
+    			// service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();	
     	    }		
     	    
     	} catch (error) {
