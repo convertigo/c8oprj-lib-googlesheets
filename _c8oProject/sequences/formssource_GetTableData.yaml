@@ -109,27 +109,27 @@ comment: |
     					break;
     					
     				case "equal":
-    					Query += "= " + forms_tableFilter.filters[i].value;
+    					Query += "= ''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "not_equal":
-    					Query += "!= " + forms_tableFilter.filters[i].value;
+    					Query += "!= ''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "greater":
-    					Query += "> " + forms_tableFilter.filters[i].value;
+    					Query += "> ''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "minus":
-    					Query += "< " + forms_tableFilter.filters[i].value;
+    					Query += "< ''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "minusequals":
-    					Query += "<= " + forms_tableFilter.filters[i].value;
+    					Query += "<= ''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "greaterequals":
-    					Query += ">= " + forms_tableFilter.filters[i].value;
+    					Query += ">= ''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "is_empty":
@@ -137,7 +137,7 @@ comment: |
     					break;
     					
     				case "not_contains":
-    					Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
+    					Query += "NOT CONTAINS''" + forms_tableFilter.filters[i].value + "''";
     					break;
     					
     				case "is_filled":
