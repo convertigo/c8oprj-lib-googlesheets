@@ -21,7 +21,7 @@ comment: |
 ↓computeTimeDiff [steps.SimpleStep-1724224485364]: 
   expression: |
     'log.warn("oAuthTimeStamp: " + oAuthTimeStamp);
-    timeDiff = new Date().getMilliseconds() - oAuthTimeStamp * 1
+    timeDiff = new Date().geTime() - oAuthTimeStamp * 1
     log.warn("Time diff: " + timeDiff);
     '
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607691398179]: 
