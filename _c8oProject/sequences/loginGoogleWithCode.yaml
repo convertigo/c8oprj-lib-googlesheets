@@ -92,6 +92,18 @@ comment: |
               - java.lang.String: 
                 - ↑value: ./document/object/access_token/text()
       key: oAuthAccessTokenGoogleSheet
+    ↓getTimeStamp [steps.SimpleStep-1724224119684]: 
+      expression: |
+        timeStamp = new Date().getMilliseconds();
+        
+    ↓setTimeStampInSession [steps.SessionSetStep-1724224119688]: 
+      expression: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+          - SmartType: 
+            - ↑mode: JS
+            - →→: timeStamp
+      key: oAuthTimeStamp
     ↓DecodeJWT [steps.SimpleStep-1607691047339]: 
       expression: |
         '//imports

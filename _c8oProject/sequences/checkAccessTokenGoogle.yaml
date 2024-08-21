@@ -5,6 +5,24 @@ comment: |
   This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
   
   
+↓getTimeStampFromSession [steps.SessionGetStep-1724224385806]: 
+  key: oAuthTimeStamp
+  output: false
+↓oAuthTimeStamp [steps.SimpleSourceStep-1724224539638]: 
+  sourceDefinition: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+      - com.twinsoft.convertigo.beans.common.XMLVector: 
+        - java.lang.String: 
+          - ↑value: 1724224385806
+        - java.lang.String: 
+          - ↑value: ./expression/text()
+  variableName: oAuthTimeStamp
+↓computeTimeDiff [steps.SimpleStep-1724224485364]: 
+  expression: |
+    'timeDiff = new Date().getMilliseconds() - oAuthTimeStamp
+    log.warn("Time diff: " + timeDiff);
+    '
 ↓GetTokenFromUserSession [steps.SessionGetStep-1607691398179]: 
   key: oAuthAccessTokenGoogleSheet
   output: false
@@ -109,10 +127,20 @@ comment: |
                   - java.lang.String: 
                     - ↑value: ./text()
           key: oAuthAccessTokenGoogleSheet
+        ↓getTimeStamp [steps.SimpleStep-1724186415814]: 
+          expression: timeStamp = new Date().getMilliseconds();
+        ↓setTimeStampInSession [steps.SessionSetStep-1724186464179]: 
+          expression: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+              - SmartType: 
+                - ↑mode: JS
+                - →→: timeStamp
+          key: oAuthTimeStamp
         ↓Return [steps.ReturnStep-1608803265341]: 
       ↓jElse [steps.ElseStep-1608745524706]: 
         ↓Log [steps.LogStep-1608802298245]: 
-          expression: '"No refresh token avilable for this user, So return no token"'
+          expression: '"No refresh token available for this user, So return no token"'
           level: WARN
         ↓login [steps.XMLElementStep-1607691398191]: 
           nodeName: notoken
