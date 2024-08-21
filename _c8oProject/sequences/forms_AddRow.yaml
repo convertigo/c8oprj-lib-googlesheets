@@ -1,0 +1,137 @@
+accessibility: Hidden
+authenticatedContextRequired: true
+comment: |
+  '{
+      "en": {
+          "displayName": "AddRow",
+          "comment": "Add a row to a Google Sheet. Each column of the table must have the same name as the technicalID of a field on the form."
+      },
+      "fr": {
+          "displayName": "AddRow",
+          "comment": "Ajoutez une ligne à un google Sheet. Chaque colonne de la table doit avoir le même nom que le technicalID d''un champ sur le formulaire."
+      }
+  }
+  '
+↓ParseConfig [steps.SimpleStep-1724259451569]: 
+  expression: |
+    forms_config = JSON.parse(forms_config);
+    
+↓SheetID [steps.JsonFieldStep-1724259493363]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: SheetID
+  output: false
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: forms_config.sheet_id
+↓Range [steps.JsonFieldStep-1724259493366]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: Range
+  output: false
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: forms_config.range
+↓Range1 [steps.JsonFieldStep-1724259493369]: 
+  key: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: PLAIN
+        - →→: refeshToken
+  output: false
+  value: 
+    - xmlizable: 
+      - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+      - SmartType: 
+        - ↑mode: JS
+        - →→: |
+          com.twinsoft.convertigo.engine.util.Crypto.decodeFromHexString(forms_config.token);
+          
+↓GetAuthenticatedUserID [steps.GetAuthenticatedUserStep-1724259536763]: 
+  nodeName: GetAuthenticatedUserID
+↓Call_Sequence1 [steps.SequenceStep-1724259536766]: 
+  sourceSequence: lib_UserManager.SetUserAttribute
+  ↓user [variables.StepVariable-1724259536769]: 
+    comment: The user where we have to set the attribute on
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724259536763
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓attribute [variables.StepVariable-1724259536772]: 
+    comment: The attribute name
+    value: GoogleOAuthRefreshToken
+  ↓value [variables.StepVariable-1724259536775]: 
+    comment: The attribute value
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724259536763
+          - java.lang.String: 
+            - ↑value: ./text()
+↓Call_Sequence [steps.SequenceStep-1724259573861]: 
+  sourceSequence: lib_GoogleSheet.SheetAddRow
+  ↓SheetID [variables.StepVariable-1724259600906]: 
+    comment: The Sheet id as found in the google  sheet URL
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724259493363
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓Range [variables.StepVariable-1724259600908]: 
+    comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724259493366
+          - java.lang.String: 
+            - ↑value: ./text()
+  ↓dataRow [variables.StepMultiValuedVariable-1724259600910]: 
+    comment: The data to be added 
+↓doc [variables.RequestableVariable-1724259036963]: 
+↓originalDoc [variables.RequestableVariable-1724259036966]: 
+↓forms_config [variables.RequestableVariable-1724259148877]: 
+  comment: |
+    '{
+    	"en": {
+    		"comment":"Creates a row in a table with a given configuration",
+    		"displayName":"Configuration"
+    	}
+    }'
+  description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
+  required: true
+  value: 
+↓testOK [core.TestCase]: 
+  ↓forms_config [variables.TestCaseVariable-1724259654301]: 
+    description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
+    required: true
+    value: |
+      '{
+      	"sheet_id":"1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo",
+      	"range":"A1:Z100",
+      	"token":"${lib_googlesheet.testtoken}"
+      }
+      '

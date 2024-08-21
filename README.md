@@ -11,6 +11,7 @@ For more technical informations : [documentation](./project.md)
 - [Installation](#installation)
 - [Sequences](#sequences)
     - [checkAccessTokenGoogle](#checkaccesstokengoogle)
+    - [forms_AddRow](#forms_addrow)
     - [formssource_GetTableData](#formssource_gettabledata)
     - [getApiKey](#getapikey)
     - [getRefreshToken](#getrefreshtoken)
@@ -58,6 +59,27 @@ Checks is a valid access token is held by the current users' session for Google
 This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
 
 
+
+### forms_AddRow
+
+Add a row to a Google Sheet. Each column of the table must have the same name as the technicalID of a field on the form.
+
+**variables**
+
+<table>
+<tr>
+<th>name</th><th>comment</th>
+</tr>
+<tr>
+<td>doc</td><td></td>
+</tr>
+<tr>
+<td>forms_config</td><td>Creates a row in a table with a given configuration</td>
+</tr>
+<tr>
+<td>originalDoc</td><td></td>
+</tr>
+</table>
 
 ### formssource_GetTableData
 

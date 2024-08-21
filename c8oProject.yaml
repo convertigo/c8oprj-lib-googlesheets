@@ -12,9 +12,10 @@
         }
     }
     '
-  version: 2.0.0.4
+  version: 2.0.0.5
   ↓GoogleOAuth [connectors.HttpConnector]: 🗏 connectors/GoogleOAuth.yaml
   ↓checkAccessTokenGoogle [sequences.GenericSequence]: 🗏 sequences/checkAccessTokenGoogle.yaml
+  ↓forms_AddRow [sequences.GenericSequence]: 🗏 sequences/forms_AddRow.yaml
   ↓formssource_GetTableData [sequences.GenericSequence]: 🗏 sequences/formssource_GetTableData.yaml
   ↓getApiKey [sequences.GenericSequence]: 🗏 sequences/getApiKey.yaml
   ↓getRefreshToken [sequences.GenericSequence]: 🗏 sequences/getRefreshToken.yaml

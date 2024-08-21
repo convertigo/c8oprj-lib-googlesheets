@@ -60,31 +60,42 @@ comment: Get a range of cells from a Google Sheet.
     	try {
     		// First, test if we have a Query to execute
     		if (Query != null && Query != "") {
-    			
-    			//log.warn("Query is : " + Query);
-    			
     			// if yes add a new sheet to the spreadsheet named C8oQyeryExecutor
-    			
-    			// Create a request to add a new sheet
-            	let addSheetRequest = new AddSheetRequest().setProperties(
-                	new com.google.api.services.sheets.v4.model.SheetProperties().setTitle("C8OQueryExecutor")
-            	);
-    	        
-    	        // Create a batch update request
-            	let requests = new ArrayList();
-            	requests.add(new Request().setAddSheet(addSheetRequest));
-            	let batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
-            	// Execute the request
-            	service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();
     
-    
-    			//Get the fisrt Sheet name
+    			//Get the first Sheet name
     			Sheets = service.spreadsheets().get(SheetID).execute();
     			var sheetName = Sheets.getSheets().get(0).getProperties().getTitle();
     
-    			// Replace all the $$$SheetName$$$ with the first sheet name in the Query
+    			// Find the Sheet ID of the C8OQueryExecutor sheet
+    			var ExecSheetId = null;
+    			for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    				if (Sheets.getSheets().get(i).getProperties().getTitle() == "C8OQueryExecutor") {
+    					ExecSheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
+    					break;
+    				}
+    			}
+    
+                // Do we already have this Sheet ? if not add it .. 
+                if (ExecSheetId == null) {						
+    				// Create a request to add a new sheet
+    	        	let addSheetRequest = new AddSheetRequest().setProperties(
+    	            	new com.google.api.services.sheets.v4.model.SheetProperties().setTitle("C8OQueryExecutor")
+    	        	);
+    		        
+    		        // Create a batch update request
+    	        	let requests = new ArrayList();
+    	        	requests.add(new Request().setAddSheet(addSheetRequest));
+    	        	let batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
+    	        	// Execute the request
+    	        	service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();
+    	        	// Set a flag that we added an executionSheet
+    	        	bExecSheetAdded = true;
+    			}
+    
+    
+    			// Replace all the $$$SheetName$$$ with the first sheet name in the Query 
     			Query = Query.replace(/\$\$\$SheetName\$\$\$/g, "''" + sheetName + "''!");
-    			log.warn("Query is : " + Query);
+    			log.debug("Google Query  is : " + Query);
             	
     			// Write the QUERY as a QUERY formula using the =QUERY(Range; Query) in the added sheet A1 cell
     			var values = new com.google.api.services.sheets.v4.model.ValueRange();
@@ -134,6 +145,8 @@ comment: Get a range of cells from a Google Sheet.
         	// Now remove the added sheet if had a Query
         	
     		if (Query != null && Query != "") {
+    			// refresh the Sheet information...
+    			Sheets = service.spreadsheets().get(SheetID).execute();
     			// Find the Sheet ID of the C8OQueryExecutor sheet
     			var ExecSheetId = null;
     			for (var i = 0; i < Sheets.getSheets().size(); i++) {
