@@ -129,7 +129,9 @@ comment: |
                     - ↑value: ./text()
           key: oAuthAccessTokenGoogleSheet
         ↓getTimeStamp [steps.SimpleStep-1724186415814]: 
-          expression: timeStamp = new Date().getMilliseconds();
+          expression: |
+            timeStamp = new Date().getTime();
+            
         ↓setTimeStampInSession [steps.SessionSetStep-1724186464179]: 
           expression: 
             - xmlizable: 

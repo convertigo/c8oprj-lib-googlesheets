@@ -94,7 +94,7 @@ comment: |
       key: oAuthAccessTokenGoogleSheet
     ↓getTimeStamp [steps.SimpleStep-1724224119684]: 
       expression: |
-        timeStamp = new Date().getMilliseconds();
+        timeStamp = new Date().getTime();
         
     ↓setTimeStampInSession [steps.SessionSetStep-1724224119688]: 
       expression: 
