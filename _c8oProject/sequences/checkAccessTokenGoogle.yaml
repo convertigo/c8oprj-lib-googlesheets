@@ -20,13 +20,13 @@ comment: |
   variableName: oAuthTimeStamp
 ↓computeTimeDiff [steps.SimpleStep-1724224485364]: 
   expression: |
-    'log.warn("oAuthTimeStamp: " + oAuthTimeStamp);
+    '//log.warn("oAuthTimeStamp: " + oAuthTimeStamp);
     timeDiff = new Date().getTime() - oAuthTimeStamp * 1
-    log.warn("Time diff: " + timeDiff);
+    //log.warn("Time diff: " + timeDiff);
     
     // if timeDiff is greater than 30 minutesset a bRefreshToken flag to true
     if (timeDiff > 1800000) {
-    	log.warn("We have to refresh the toekn ! ");
+    	log.warn("We have to refresh the token ! ");
     	bRefreshToken = true;
     } else {
     	bRefreshToken = false;
