@@ -88,67 +88,71 @@ comment: |
     	 
     	*/
     	
-    	Query = "SELECT * WHERE ";
-    	parsedRange = extractRangeDetails(forms_config.range)
-    	colRange = parsedRange.sheetName  + parsedRange.firstCol + parsedRange.firstRow + ":" + parsedRange.lastCol + parsedRange.firstRow;
+    	Query = null;
     	
-    	for (var i = 0; i < forms_tableFilter.filters.length; i++) {
-    		if (i != 0) {
-    			Query += " " + forms_tableFilter.mode + " ";
+    	if (forms_tableFilter.filters.length != 0) {
+    		Query = "SELECT * WHERE ";
+    		parsedRange = extractRangeDetails(forms_config.range)
+    		colRange = parsedRange.sheetName  + parsedRange.firstCol + parsedRange.firstRow + ":" + parsedRange.lastCol + parsedRange.firstRow;
+    		
+    		for (var i = 0; i < forms_tableFilter.filters.length; i++) {
+    			if (i != 0) {
+    				Query += " " + forms_tableFilter.mode + " ";
+    			}
+    			
+    			// $$$SheetName$$$ will replaced with the real sheet name by the SheetGetRange Sequence as it acess acess to the Google Sheet API
+    			Query += ''Col"&XMATCH("'' + forms_tableFilter.filters[i].field + ''"; '' + ''$$$SheetName$$$'' + colRange + '')&" ''
+    			
+    			switch (forms_tableFilter.filters[i].op) {
+    				case "contains":
+    					Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
+    					break;
+    					
+    				case "equal":
+    					Query += "= " + forms_tableFilter.filters[i].value;
+    					break;
+    					
+    				case "not_equal":
+    					Query += "!= " + forms_tableFilter.filters[i].value;
+    					break;
+    					
+    				case "greater":
+    					Query += "> " + forms_tableFilter.filters[i].value;
+    					break;
+    					
+    				case "minus":
+    					Query += "< " + forms_tableFilter.filters[i].value;
+    					break;
+    					
+    				case "minusequals":
+    					Query += "<= " + forms_tableFilter.filters[i].value;
+    					break;
+    					
+    				case "greaterequals":
+    					Query += ">= " + forms_tableFilter.filters[i].value;
+    					break;
+    					
+    				case "is_empty":
+    					Query += "IS NULL"
+    					break;
+    					
+    				case "not_contains":
+    					Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
+    					break;
+    					
+    				case "is_filled":
+    					Query += "IS NOT NULL"
+    					break;
+    					
+    				case "among_following":
+    					Query += "IN (" + forms_tableFilter.filters[i].value + ") ";
+    					break;
+    					
+    				case "out_following":
+    					Query += "NOT IN (" + forms_tableFilter.filters[i].value + ") ";
+    					break;
+    			} 
     		}
-    		
-    		// $$$SheetName$$$ will replaced with the real sheet name by the SheetGetRange Sequence as it acess acess to the Google Sheet API
-    		Query += ''Col"&XMATCH("'' + forms_tableFilter.filters[i].field + ''"; '' + ''$$$SheetName$$$'' + colRange + '')&" ''
-    		
-    		switch (forms_tableFilter.filters[i].op) {
-    			case "contains":
-    				Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
-    				break;
-    				
-    			case "equal":
-    				Query += "= " + forms_tableFilter.filters[i].value;
-    				break;
-    				
-    			case "not_equal":
-    				Query += "!= " + forms_tableFilter.filters[i].value;
-    				break;
-    				
-    			case "greater":
-    				Query += "> " + forms_tableFilter.filters[i].value;
-    				break;
-    				
-    			case "minus":
-    				Query += "< " + forms_tableFilter.filters[i].value;
-    				break;
-    				
-    			case "minusequals":
-    				Query += "<= " + forms_tableFilter.filters[i].value;
-    				break;
-    				
-    			case "greaterequals":
-    				Query += ">= " + forms_tableFilter.filters[i].value;
-    				break;
-    				
-    			case "is_empty":
-    				Query += "IS NULL"
-    				break;
-    				
-    			case "not_contains":
-    				Query += "CONTAINS(''" + forms_tableFilter.filters[i].value + "'') ";
-    				break;
-    				
-    			case "is_filled":
-    				Query += "IS NOT NULL"
-    				break;
-    				
-    			case "among_following":
-    				Query += "IN (" + forms_tableFilter.filters[i].value + ") ";
-    				break;
-    				
-    			case "out_following":
-    				Query += "NOT IN (" + forms_tableFilter.filters[i].value + ") ";
-    				break;
-    		} 
     	}
     	log.warn("Query  : " + Query);
     }
