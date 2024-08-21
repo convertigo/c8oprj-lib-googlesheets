@@ -87,7 +87,48 @@ comment: |
             - ↑value: 1724259536763
           - java.lang.String: 
             - ↑value: ./text()
+↓PrepareData [steps.SimpleStep-1724260402751]: 
+  comment: Prepare data to submit according to BR field type
+  expression: |
+    '// convert XML to JSON doc
+    var jDoc = JSON.parse('''' + com.twinsoft.convertigo.engine.util.XMLUtils.XmlToJson(doc, true, true));
+    
+    data = {}
+    for (var key in jDoc.variable.resp) {
+    	log.warn("** Key is : [" + key + "] value is : " + jDoc.variable.resp[key].value)
+    	
+    	let obj  = jFields.find((object) => object.name === key )
+    	let type = obj ? obj.type : null
+    	
+    	log.warn("** type is : " + type)
+    	switch (type) {
+    		case ''text'':
+    		case ''long_text'':
+    		case ''number'':
+    		case ''date'':
+    		case ''single_select'':
+    		case ''boolean'':
+    			data[key] = jDoc.variable.resp[key].value;
+    			break;
+    
+    		case ''link_row'':
+    			data[key] = [jDoc.variable.resp[key].value];
+    			break;
+    
+    		case ''file'':
+    			data[key] = [];  // will be filled further on  by the attachment loop.
+    			break;
+    				
+    		default: 
+    			log.warn("** type: " + type + " is not yet handled")
+    	}
+    }
+    
+    log.warn("Add row Data is :" + JSON.stringify(data));
+    
+    '
 ↓Call_Sequence [steps.SequenceStep-1724259573861]: 
+  isEnabled: false
   sourceSequence: lib_GoogleSheet.SheetAddRow
   ↓SheetID [variables.StepVariable-1724259600906]: 
     comment: The Sheet id as found in the google  sheet URL
