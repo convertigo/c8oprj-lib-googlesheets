@@ -152,7 +152,7 @@ comment: Get a range of cells from a Google Sheet.
     			);
     			
     			batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
-    			// service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();	
+    			service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();	
     	    }		
     	    
     	} catch (error) {
