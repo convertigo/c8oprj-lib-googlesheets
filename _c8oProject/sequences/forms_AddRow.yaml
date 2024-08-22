@@ -96,7 +96,7 @@ comment: |
     data = {}
     for (var key in jDoc.variable.resp) {
     	log.warn("** Key is : [" + key + "] value is : " + jDoc.variable.resp[key].value)
-    	data[key] = jDoc.variable.resp[key].value;
+    	data[key] = JSON.stringify(jDoc.variable.resp[key].value);
     }
     
     log.warn("Add row Data is :" + JSON.stringify(data));
