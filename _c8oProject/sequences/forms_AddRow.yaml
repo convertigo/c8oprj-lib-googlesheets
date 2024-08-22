@@ -100,7 +100,7 @@ comment: |
                         resp[doc[property].name] = {
     						"value":
     							doc[property]["children"] ?
-    								"" : 
+    								JSON.stringify(doc[property]["children"]) : 
     								doc[property].value,
     								
     						"type":  doc[property].type,
