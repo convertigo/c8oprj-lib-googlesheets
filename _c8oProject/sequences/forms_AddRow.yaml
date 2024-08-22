@@ -83,7 +83,7 @@ comment: |
         - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
         - com.twinsoft.convertigo.beans.common.XMLVector: 
           - java.lang.String: 
-            - ↑value: 1724259536763
+            - ↑value: 1724259493369
           - java.lang.String: 
             - ↑value: ./text()
 ↓DefineFlatenize [steps.SimpleStep-1724320395638]: 
@@ -100,8 +100,9 @@ comment: |
                         resp[doc[property].name] = {
     						"value":
     							doc[property]["children"] ?
-    								JSON.stringify(doc[property]["children"]) : 
+    								"" : 
     								doc[property].value,
+    								
     						"type":  doc[property].type,
     						"name":  doc[property].name
     					}
@@ -118,14 +119,12 @@ comment: |
   expression: |
     // convert XML to JSON doc
     var jDoc = JSON.parse('' + com.twinsoft.convertigo.engine.util.XMLUtils.XmlToJson(doc, true, true));
-    data= {}
-    flatenize(jDoc.variable.resp, null, data, null);
-    log.warn("Add row Data is :" + JSON.stringify(data));
-    
-    
+    dataRow= {}
+    flatenize(jDoc.variable.resp, null, dataRow, null);
+    log.warn("Add row Data is :" + JSON.stringify(dataRow));
+    dataRow = JSON.stringify(dataRow);
     
 ↓Call_Sequence [steps.SequenceStep-1724259573861]: 
-  isEnabled: false
   sourceSequence: lib_GoogleSheet.SheetAddRow
   ↓SheetID [variables.StepVariable-1724259600906]: 
     comment: The Sheet id as found in the google  sheet URL
@@ -147,7 +146,7 @@ comment: |
             - ↑value: 1724259493366
           - java.lang.String: 
             - ↑value: ./text()
-  ↓dataRow [variables.StepMultiValuedVariable-1724259600910]: 
+  ↓dataRow [variables.StepVariable-1724334072669]: 
     comment: The data to be added 
 ↓doc [variables.RequestableVariable-1724259036963]: 
 ↓originalDoc [variables.RequestableVariable-1724259036966]: 

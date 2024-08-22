@@ -55,31 +55,89 @@ comment: Add a row of cells to a Google Sheet.
     	setError = null;
     
     	try {
-    		log.warn("[Google Sreadsheet Connector] start...");				
+    		log.debug("[Google Sreadsheet Connector] start...");				
      		requestBody = new ValueRange();
     	
-    		sheetData = new ArrayList();
-    		row = new ArrayList();
-    		for (i=0; i < dataRow.length; i++) {
-    			log.warn("[Google Sreadsheet Connector] add " + dataRow[i]);				
-    			row.add(dataRow[i])
+    
+    	    // Parse the data as row
+    		dataRow = JSON.parse(dataRow)
+    		
+    		// Get the Google Sheet column names
+    		headerRange = extractRangeDetails(Range)
+    		headerRange =	headerRange.sheetName + 
+    						headerRange.firstCol +
+    						headerRange.firstRow + ":" + 
+    						headerRange.lastCol + 
+    						headerRange.firstRow;
+    		log.debug("[Google Sreadsheet Connector] Header range is : " + headerRange);
+    						
+    		response = service.spreadsheets().values()
+    	        .get(SheetID, headerRange)
+    	        .execute();		
+    		
+    	    values = response.getValues();
+    	    if (values == null || values.isEmpty()) {
+    			log.warn("[Google Sheet Connector] no data found in the header row");
+    	    } else {
+    			headers = values[0].toArray();		
     		}
+    		
+    		// For each header in headers array we will search the corresponding value in the dataRow and build an array
+    		// with the values in the same order as the headers
+    		row = [];
+    		for (var i = 0; i < headers.length; i++) {
+    			var header = headers[i];
+    			if (dataRow[header]	== undefined) {
+    				log.warn("[Google Sheet Connector] header not found in the dataRow : " + header);
+    				continue;
+    			}
+    			var value = dataRow[header].value 
+    			row.push(value)
+    		}
+    
+    		log.warn("[Google Sheet Connector] row to add : " + JSON.stringify(row));
+    
+    
+    		sheetData = new ArrayList();
     		sheetData.add(row);
     		requestBody.setValues(sheetData);
     		
-    			
+    		 	
     		response = service.spreadsheets().values()
     			.append(SheetID, Range, requestBody)
     	        .setValueInputOption("RAW")
     			.setInsertDataOption("OVERWRITE")
     	        .execute();
     
-    		log.warning("[Google Sreadsheet Connector] response" + response);				
+    		log.debug("[Google Sreadsheet Connector] response" + response);				
     		
     	} catch (error) {
     		setError = error;
     		log.error("[Google Sreadsheet Connector] Error occured " + error);				
     	}
+    }
+    
+    function extractRangeDetails(range) {
+      // Regular expression to match the optional sheet name and the range
+      const rangeRegex = /''?([^'']*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
+    
+      const match = range.match(rangeRegex);
+    
+      if (match) {
+        const sheetName = match[1] || null;
+        const firstCol = match[2];
+        const firstRow = match[3];
+        const lastCol = match[4];
+    
+        return {
+          sheetName: sheetName ? sheetName + "!" : "",
+          firstCol: firstCol,
+          firstRow: parseInt(firstRow, 10),
+          lastCol: lastCol
+        };
+      } else {
+        throw new Error("Invalid range format");
+      }
     }
     '
 ↓jIfThenElse [steps.IfThenElseStep-1607870066657]: 
@@ -103,7 +161,7 @@ comment: Add a row of cells to a Google Sheet.
   comment: The Sheet id as found in the google  sheet URL
 ↓Range [variables.RequestableVariable-1607870066720]: 
   comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
-↓dataRow [variables.RequestableMultiValuedVariable-1607967884873]: 
+↓dataRow [variables.RequestableVariable-1724329813072]: 
   comment: The data to be added 
 ↓TestOk [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607870066727]: 
