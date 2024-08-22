@@ -3,11 +3,11 @@ comment: |
   '{
       "en": {
           "displayName": "AddRow",
-          "comment": "Add a row to a Google Sheet. Each column of the table must have the same name as the technicalID of a field on the form."
+          "comment": "Add a row to a table in a Google Sheet. Each column of the table must have the same name as the technicalID <br>of a field on the form. <br><br>This action can also be used to update some data in a table. In this case, set <br>the <b>Where Clause</b> variable to a condition and set the <b>Update</b> variable to the columns you want to update."
       },
       "fr": {
           "displayName": "AddRow",
-          "comment": "Ajoutez une ligne à un google Sheet. Chaque colonne de la table doit avoir le même nom que le technicalID d''un champ sur le formulaire."
+          "comment": "Ajoutez une ligne à un tableau dans une feuille Google. Chaque colonne du tableau doit avoir le même nom que l''ID technique <br>d''un champ du formulaire.<br><br>Cette action peut également être utilisée pour mettre à jour certaines données d''une table. Dans ce cas, définissez <br>la variable <b>Clause Where</b> sur une condition et définissez la variable <b>Update</b> sur les colonnes que vous souhaitez mettre à jour."
       }
   }
   '
@@ -161,6 +161,30 @@ comment: |
   description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
   required: true
   value: 
+↓forms_update [variables.RequestableVariable-1724338042376]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "<p>Update</p>",
+            "comment": "Will be use only if the WHERE clause is not empty. Give here separated by commas the fields = value to define the columns to be updated by the given values. The fields must be the technical identifiers of the fields of your form. For example: <br><br><i>inputText1 = value1, inputText2 = value2</i>. <br><br>Of course values can be dragged and dropped from the list of fields."
+        },
+        "fr": {
+            "displayName": "<p>Update</p>",
+            "comment": "Sera utilisé uniquement si la clause WHERE n''est pas vide. Donnez ici séparés par des virgules les champs = valeur pour définir les colonnes à mettre à jour par les valeurs données. Les champs doivent être les identifiants techniques des champs de votre formulaire. Par exemple : <br><br><i>inputText1 = valeur1, inputText2 = valeur2</i><br><br>Bien entendu, les valeurs peuvent être glissées et déposées depuis la liste des champs."
+        }
+    }'
+↓forms_where [variables.RequestableVariable-1724338055332]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "<p>WHERE Clause</p>",
+            "comment": "If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid ''SQL like'' WHERE clause without the WHERE keyword. A Where clause can be for example : <br>inputText1 = ''value1'' AND inputText2 = ''value2''."
+        },
+        "fr": {
+            "displayName": "<p>Clause Where</p>",
+            "comment": "Si ce champ n''est pas vide, l''action utilisera la clause WHERE pour filtrer l''enregistrement à mettre à jour. La clause WHERE doit être une clause WHERE valide de type ''SQL'' sans le mot clé WHERE. Une clause Where peut être par exemple : <br>inputText1 = ''value1'' AND inputText2 = ''value2''"
+        }
+    }'
 ↓testOK [core.TestCase]: 
   ↓forms_config [variables.TestCaseVariable-1724259654301]: 
     description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure

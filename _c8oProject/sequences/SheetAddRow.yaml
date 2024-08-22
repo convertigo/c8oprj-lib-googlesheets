@@ -95,7 +95,7 @@ comment: Add a row of cells to a Google Sheet.
     			row.push(value)
     		}
     
-    		log.warn("[Google Sheet Connector] row to add : " + JSON.stringify(row));
+    		log.debug("[Google Sheet Connector] row to add : " + JSON.stringify(row));
     
     
     		sheetData = new ArrayList();
