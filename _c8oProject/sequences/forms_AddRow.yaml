@@ -1,5 +1,4 @@
 accessibility: Hidden
-authenticatedContextRequired: true
 comment: |
   '{
       "en": {
@@ -87,21 +86,44 @@ comment: |
             - ↑value: 1724259536763
           - java.lang.String: 
             - ↑value: ./text()
+↓DefineFlatenize [steps.SimpleStep-1724320395638]: 
+  expression: |
+    '//function flatenize
+    var flatenize = function (doc, prefix, resp, myid) {
+        for (var property in doc) {
+            try {
+                if (doc[property].type != undefined) {
+                    if (doc[property].type == "ion-card") {
+                        flatenize(doc[property]["children"], null, resp, myid);
+                    }
+                    else {
+                        resp[doc[property].name] = {
+    						"value":
+    							doc[property]["children"] ?
+    								JSON.stringify(doc[property]["children"]) : 
+    								doc[property].value,
+    						"type":  doc[property].type,
+    						"name":  doc[property].name
+    					}
+                    }
+                }
+            }
+            catch (e) {
+                log.error("[Google Sheet Connector] an error occurred while computing  value : \n" + JSON.stringify(e));
+            }
+        }
+    };'
 ↓PrepareData [steps.SimpleStep-1724260402751]: 
   comment: Prepare data to submit according to BR field type
   expression: |
-    '// convert XML to JSON doc
-    var jDoc = JSON.parse('''' + com.twinsoft.convertigo.engine.util.XMLUtils.XmlToJson(doc, true, true));
-    
-    data = {}
-    for (var key in jDoc.variable.resp) {
-    	log.warn("** Key is : [" + key + "] value is : " + jDoc.variable.resp[key].value)
-    	data[key] = JSON.stringify(jDoc.variable.resp[key].value);
-    }
-    
+    // convert XML to JSON doc
+    var jDoc = JSON.parse('' + com.twinsoft.convertigo.engine.util.XMLUtils.XmlToJson(doc, true, true));
+    data= {}
+    flatenize(jDoc.variable.resp, null, data, null);
     log.warn("Add row Data is :" + JSON.stringify(data));
     
-    '
+    
+    
 ↓Call_Sequence [steps.SequenceStep-1724259573861]: 
   isEnabled: false
   sourceSequence: lib_GoogleSheet.SheetAddRow
