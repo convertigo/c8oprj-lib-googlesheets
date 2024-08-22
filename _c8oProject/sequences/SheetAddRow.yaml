@@ -69,7 +69,8 @@ comment: Add a row of cells to a Google Sheet.
     						headerRange.firstRow + ":" + 
     						headerRange.lastCol + 
     						headerRange.firstRow;
-    		log.debug("[Google Sreadsheet Connector] Header range is : " + headerRange);
+    						
+    		log.warn("[Google Sreadsheet Connector] Header range is : <" + headerRange + ">");
     						
     		response = service.spreadsheets().values()
     	        .get(SheetID, headerRange)
@@ -89,13 +90,14 @@ comment: Add a row of cells to a Google Sheet.
     			var header = headers[i];
     			if (dataRow[header]	== undefined) {
     				log.warn("[Google Sheet Connector] header not found in the dataRow : " + header);
-    				continue;
+    				var value = ""
+    			} else {
+    				var value = dataRow[header].value 
     			}
-    			var value = dataRow[header].value 
     			row.push(value)
     		}
     
-    		log.debug("[Google Sheet Connector] row to add : " + JSON.stringify(row));
+    		log.warn("[Google Sheet Connector] row to add : " + JSON.stringify(row));
     
     
     		sheetData = new ArrayList();
@@ -119,7 +121,7 @@ comment: Add a row of cells to a Google Sheet.
     
     function extractRangeDetails(range) {
       // Regular expression to match the optional sheet name and the range
-      const rangeRegex = /''?([^'']*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
+      const rangeRegex = /''?([^''!]*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
     
       const match = range.match(rangeRegex);
     
@@ -163,19 +165,27 @@ comment: Add a row of cells to a Google Sheet.
   comment: The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
 ↓dataRow [variables.RequestableVariable-1724329813072]: 
   comment: The data to be added 
-↓TestOk [core.TestCase]: 
+↓where [variables.RequestableVariable-1724340296478]: 
+  comment: A Google Sheet Where clause
+↓update [variables.RequestableVariable-1724340324746]: 
+  comment: a JSON array of field, values
+↓TestNewRow [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607870066727]: 
-    value: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
+    value: 1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo
   ↓Range [variables.TestCaseVariable-1607870066730]: 
-    value: Class Data!A2:E
-  ↓dataRow [variables.TestCaseMultiValuedVariable-1607967611629]: 
-    value: 
-      - xmlizable: 
-        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-        - com.twinsoft.convertigo.beans.common.XMLVector: 
-          - java.lang.String: 
-            - ↑value: val1
-          - java.lang.String: 
-            - ↑value: val2
-          - java.lang.String: 
-            - ↑value: val3
+    value: '''AddRow''!B2:K100'
+  ↓dataRow [variables.TestCaseVariable-1724340447979]: 
+    value: |
+      '{
+      	"inputText1": {
+      		"value": "AAAAAAAAA"
+      	},
+      	"inputText2": {
+      		"value": "BBBBBBBB"
+      	},
+      	"datetime1": {
+      		"value": "10/10/2024"
+      	}
+      }
+      
+      '

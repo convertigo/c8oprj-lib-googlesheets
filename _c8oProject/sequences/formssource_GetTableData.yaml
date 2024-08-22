@@ -165,7 +165,7 @@ comment: |
     
     function extractRangeDetails(range) {
       // Regular expression to match the optional sheet name and the range
-      const rangeRegex = /''?([^'']*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
+      const rangeRegex = /''?([^''!]*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
     
       const match = range.match(rangeRegex);
     

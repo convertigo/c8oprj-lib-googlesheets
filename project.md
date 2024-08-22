@@ -345,6 +345,22 @@ The Cell range to read. (examples, A1:D7 or  Class Data!A2:E)
 The Sheet id as found in the google  sheet URL
 </td>
 </tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;update
+</td>
+<td>
+a JSON array of field, values
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/variables/images/variable_color_16x16.png?raw=true "  alt="RequestableVariable" >&nbsp;where
+</td>
+<td>
+A Google Sheet Where clause
+</td>
+</tr>
 </table>
 
 </p></blockquote></details>
