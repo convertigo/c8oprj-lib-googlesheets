@@ -96,32 +96,7 @@ comment: |
     data = {}
     for (var key in jDoc.variable.resp) {
     	log.warn("** Key is : [" + key + "] value is : " + jDoc.variable.resp[key].value)
-    	
-    	let obj  = jFields.find((object) => object.name === key )
-    	let type = obj ? obj.type : null
-    	
-    	log.warn("** type is : " + type)
-    	switch (type) {
-    		case ''text'':
-    		case ''long_text'':
-    		case ''number'':
-    		case ''date'':
-    		case ''single_select'':
-    		case ''boolean'':
-    			data[key] = jDoc.variable.resp[key].value;
-    			break;
-    
-    		case ''link_row'':
-    			data[key] = [jDoc.variable.resp[key].value];
-    			break;
-    
-    		case ''file'':
-    			data[key] = [];  // will be filled further on  by the attachment loop.
-    			break;
-    				
-    		default: 
-    			log.warn("** type: " + type + " is not yet handled")
-    	}
+    	data[key] = jDoc.variable.resp[key].value;
     }
     
     log.warn("Add row Data is :" + JSON.stringify(data));
