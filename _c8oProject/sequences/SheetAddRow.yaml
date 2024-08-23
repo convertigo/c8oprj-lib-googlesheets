@@ -62,51 +62,62 @@ comment: Add a row of cells to a Google Sheet.
     			// Split the where clause to get the field and the value
     			log.debug("[Google Sheet Connector] We are in Where clause mode " + where );				
     			
-    		    // Parse the where clause
-    		    whereObj = parseWhere(where);			
-    			var field = whereObj.field.trim();
-    			var value = whereObj.value.trim();
-    			
+    		    // Parse the where clause. The clause is in the form field1 = value1, field2 > value2, field3 < value3, etc .. and build an Object
+    		    whereClause = parseWhere(where);
+    		    log.warn("[Google Sheet Connector] Where clause parsed : " + JSON.stringify(whereClause));
+    		    
+    		    // Extract range details
+    		    var rangeDetails = extractRangeDetails(Range);
+    		    				
     			// Get the Headers from the Google Sheet
     			header = getSheetColumns(SheetID, Range);
     			
-    			
-    			
-    			// We have to build a  =ARRAYFORMULA(MIN(FILTER(ROW(Demandes!A1:A100), (Demandes!A1:A100="VORBE") * (Demandes!F1:F100="2024-10-31")))
-    			// where C is the column corresponding to the field. 
-    			// We have to find the column corresponding to the field
-    			column = -1;
-    			for (i=0; i<header.length; i++) {
-    				if (header[i] == field) {
-    					column = i;
-    					break;
-    				}
-    			}
-    			
-    			if (column == -1) {
-    				log.error("[Google Sheet Connector] Field not found in the header row : " + field);
-    				throw new Error("Field not found in the header row : " + field);
-    			}
-    			
-    			// Split Range to get the sheet name
-    			var rangeDetails = extractRangeDetails(Range);
-    			var sheetName = rangeDetails.sheetName;
-    			
-    			// Set column to the corresponding letter in the Google Sheet corrected by the column found in the range
-    			column = String.fromCharCode(65 + column + rangeDetails.firstCol.charCodeAt(0) - 65);
     
-                // Build formula
-                // 1) extract string from value beteween single quotes
-                var value = extractContentBetweenOuterSingleQuotes(value);
-                
-                // 2) double all "" in the value to escape them
-                value = value.replace(/"/g, ''""'');
-    			log.debug("[Google Sheet Connector] value with escaped \"\" : " + value);
-                
-                // 3) Build the formula
-    			var formula = "ARRAYFORMULA(MATCH(TRUE, " + sheetName + column + ":" + column + " = \"" + value + "\" , 0))";
-    			log.debug("[Google Sheet Connector] formula to execute : " + formula);
+    			// We have to build a  =ARRAYFORMULA(MIN(FILTER(ROW(Demandes!A1:A100), (Demandes!A1:A100="VORBE") * (Demandes!F1:F100="2024-10-31")))
+    			var formula = "ARRAYFORMULA(MIN(FILTER(ROW(" + Range + "); "
     			
+    			for (var i = 0; i < whereClause.length; i++) {
+    				var field = whereClause[i].field;
+    				var value = whereClause[i].value;
+    				var operator = whereClause[i].operator;
+    				
+    				// We have to find the column corresponding to the field
+    				column = -1;
+    				for (i=0; i<header.length; i++) {
+    					if (header[i] == field) {
+    						column = i;
+    						break;
+    					}
+    				}
+    
+    				if (column == -1) {
+    					log.error("[Google Sheet Connector] Field not found in the header row : " + field);
+    					throw new Error("Field not found in the header row : " + field);
+    				}
+    
+                    // Set column to the corresponding letter in the Google Sheet corrected by the column found in the range
+    				column = String.fromCharCode(65 + column + rangeDetails.firstCol.charCodeAt(0) - 65);
+    				var sheetName = rangeDetails.sheetName;
+    			
+    	            // Build formula
+    	            // 1) extract string from value beteween single quotes
+    	            var value = extractContentBetweenOuterSingleQuotes(value);
+                
+    	            // 2) double all "" in the value to escape them
+    	            value = value.replace(/"/g, ''""'');
+    				log.warn("[Google Sheet Connector] value with escaped \"\" : " + value);
+                
+    	            // 3) Build the formula
+    				formula += "(" + sheetName + column + rangeDetails.firstRow + ":" + column + rangeDetails.lastRow + " " + operator + " \"" + value + "\") * "; 	
+    			} 
+    
+    			// Remove last '' *'' from formula
+    			const lastIndex = formula.lastIndexOf('' *'');
+    		    if (lastIndex === -1) {
+    		        log.error("[Google Sheet Connector] Incorrect Syntax ");
+    		    }
+        		formula = formula.slice(0, lastIndex) + formula.slice(lastIndex + 2) + "))";
+    			log.warn("[Google Sheet Connector] formula to execute : " + formula);
     		} else {
     	 		requestBody = new ValueRange();
     		
@@ -154,7 +165,7 @@ comment: Add a row of cells to a Google Sheet.
     
     function extractRangeDetails(range) {
       // Regular expression to match the optional sheet name and the range
-      const rangeRegex = /''?([^''!]*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})/;
+      const rangeRegex = /''?([^'']*)''?!?([A-Z]{1,2})(\d+):([A-Z]{1,2})(\d+)/;
     
       const match = range.match(rangeRegex);
     
@@ -163,18 +174,19 @@ comment: Add a row of cells to a Google Sheet.
         const firstCol = match[2];
         const firstRow = match[3];
         const lastCol = match[4];
+        const lastRow = match[5];
     
         return {
           sheetName: sheetName ? "''" + sheetName + "''!" : "",
           firstCol: firstCol,
           firstRow: parseInt(firstRow, 10),
-          lastCol: lastCol
+          lastCol: lastCol,
+          lastRow: parseInt(lastRow, 10)
         };
       } else {
         throw new Error("Invalid range format");
       }
     }
-    
     
     function getSheetColumns(sheetId, range) {
     	// Get the Google Sheet column names
@@ -201,17 +213,36 @@ comment: Add a row of cells to a Google Sheet.
     	return headers;
     }
     
-    function parseWhere(str) {
-    	const parseRegex = /(\w+)\s*=\s*(.*)/;
-    	const match = str.match(parseRegex);
-    	
-    	if (match) {
-    	  const inputName = match[1];  // "input Text1"
-    	  const value = match[2];       // "aa = aa"
-    	  return { "field":inputName, "value":value };
-    	} else {
-    	  console.log("No match found.");
-    	}
+    /**
+     * Parse a where clause in the form of expression field = value, field2 > value2, field3 < value3, etc  seprarated by AND
+     * Operators supported are =, >, <, >=, <=
+     * Return an arry of objects with field and value and operator
+     * 
+     * @param {String} str the where clause
+     * @returns {Object} the parsed where clause as a key value object
+     * @example
+     * 
+     * var where = "field1 = value1 AND field2 > value2 AND field3 < value3";
+     */
+    function parseWhere(whereClause) {
+        const operators = [''='', ''>'', ''<'', ''>='', ''<=''];
+        const conditions = whereClause.split(/AND/i).map(condition => condition.trim());
+        
+        return conditions.map(condition => {
+            let operator = operators.find(op => condition.includes(op));
+            
+            if (!operator) {
+                throw new Error("Unsupported operator in condition:" +  condition);
+            }
+    
+            const [field, value] = condition.split(operator).map(part => part.trim());
+            
+            return {
+                field,
+                operator,
+                value
+            };
+        });
     }
     
     function extractContentBetweenOuterSingleQuotes(inputString) {
@@ -296,6 +327,8 @@ comment: Add a row of cells to a Google Sheet.
       
       '
   ↓where [variables.TestCaseVariable-1724343252936]: 
-    value: inputText1 = 'aaaa dfjl kdfhgd &è'-"_è'-_(('('_à&"_-(fkjh fg sd = f jghlskdfjgh kdfjh k'
+    value: |
+      inputText1 = 'AAAA  "AAA" AA' AND inputText2 > 'BBB  B " '' BB BB'
+      
   ↓update [variables.TestCaseVariable-1724343252938]: 
     value: inputText5 = 'ZZZ', inputText3 = 'UUU'
