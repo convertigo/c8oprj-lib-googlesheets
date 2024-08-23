@@ -178,11 +178,11 @@ comment: |
     '{
         "en": {
             "displayName": "<p>WHERE Clause</p>",
-            "comment": "If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid ''SQL like'' WHERE clause without the WHERE keyword. A Where clause can be for example : <br>inputText1 = ''value1'' AND inputText2 = ''value2''."
+            "comment": "If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid ''SQL like'' WHERE clause without the WHERE keyword. A Where clause can be for example : <br><br><i>inputText1 = ''value1'' </i></br></br>. Google Sheet connector only supports the = operator and one item. Values must be surrounded by single quotes ''"
         },
         "fr": {
             "displayName": "<p>Clause Where</p>",
-            "comment": "Si ce champ n''est pas vide, l''action utilisera la clause WHERE pour filtrer l''enregistrement à mettre à jour. La clause WHERE doit être une clause WHERE valide de type ''SQL'' sans le mot clé WHERE. Une clause Where peut être par exemple : <br>inputText1 = ''value1'' AND inputText2 = ''value2''"
+            "comment": "Si ce champ n''est pas vide, l''action utilisera la clause WHERE pour filtrer l''enregistrement à mettre à jour. La clause WHERE doit être une clause WHERE valide de type ''SQL'' sans le mot clé WHERE. Une clause Where peut être par exemple : <br><br><i>inputText1 = ''value1''</i></br></br>. Le connecteur Google Sheet ne prend en charge que l''opérateur = et un élément. Les valeurs doivent être entourées de guillemets simples ''"
         }
     }'
 ↓testOK [core.TestCase]: 
