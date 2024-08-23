@@ -108,14 +108,14 @@ comment: Get a range of cells from a Google Sheet.
     			Query = Query.replace(/\$\$\$SheetName\$\$\$/g, "''" + sheetName + "''!");
     			log.debug("Google Query  is : " + Query);
             	
-    			// Write the QUERY as a QUERY formula using the =QUERY(Range; Query) in the added sheet A1 cell
+    			// Write the QUERY as a QUERY formula using the =QUERY(Range; Query; 1) in the added sheet A1 cell
     			var values = new com.google.api.services.sheets.v4.model.ValueRange();
     			values.setValues([Collections.singletonList(
     				"=QUERY(" + 
     				(Range.indexOf("!") != -1 ? Range : "''" + sheetName + "''!" + Range) +
     				"; \"" + 
     				Query + 
-    				"\")"
+    				"\" ; 1)"
     			)]);
     			
     			service.spreadsheets().values()
