@@ -80,7 +80,7 @@ Add a row to a table in a Google Sheet. Each column of the table must have the s
 <td>forms_update</td><td>Will be use only if the WHERE clause is not empty. Give here separated by commas the fields = value to define the columns to be updated by the given values. The fields must be the technical identifiers of the fields of your form. For example: <br><br><i>inputText1 = value1, inputText2 = value2</i>. <br><br>Of course values can be dragged and dropped from the list of fields.</td>
 </tr>
 <tr>
-<td>forms_where</td><td>If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid 'SQL like' WHERE clause without the WHERE keyword. A Where clause can be for example : <br><br><i>inputText1 = 'value1' </i></br></br>. Google Sheet connector only supports the = operator and one item. Values must be surrounded by single quotes '</td>
+<td>forms_where</td><td>If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid 'SQL like' WHERE clause without the WHERE keyword. A Where clause can be for example : <br><br><i>inputText1 = 'value1' </i></br></br>Google Sheet connector only supports the = operator and one item. Values must be surrounded by single quotes '</td>
 </tr>
 <tr>
 <td>originalDoc</td><td></td>
