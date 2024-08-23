@@ -97,7 +97,12 @@ comment: Get a range of cells from a Google Sheet.
     			// Do we have a Sheet name in the range if yes use it instead of the default Sheet Name . 
     			if (Range.indexOf("!") != -1) {
     				// Yes, we have a sheet name in the range, we will use it as the sheet name
-    				sheetName = Range.substring(0, Range.indexOf("!"));	
+    				sheetName = Range.substring(0, Range.indexOf("!"));
+    					
+    				// Is our sheet name enclosed by single quotes ? if yes remove them
+    				if (sheetName.charAt(0) == "''") {
+    					sheetName = sheetName.substring(1, sheetName.length - 1);
+    				}
     			}
     			 
     			Query = Query.replace(/\$\$\$SheetName\$\$\$/g, "''" + sheetName + "''!");
