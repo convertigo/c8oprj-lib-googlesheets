@@ -55,12 +55,12 @@ comment: Add a row of cells to a Google Sheet.
     	setError = null;
     
     	try {
-    		log.debug("[Google Sreadsheet Connector] start...");				
+    		log.debug("[Google Sheet Connector] start...");				
     		// do we have  a Where clause ?
     		if (where != null && where != "") {
     			// Yes we have a where clause. It is in the forms a field = value
     			// Split the where clause to get the field and the value
-    			log.warn("[Google Sreadsheet Connector] We are in Where clause mode " + where );				
+    			log.debug("[Google Sheet Connector] We are in Where clause mode " + where );				
     			
     		    // Parse the where clause
     		    whereObj = parseWhere(where);			
@@ -93,10 +93,17 @@ comment: Add a row of cells to a Google Sheet.
     			// Set column to the corresponding letter in the Google Sheet corrected by the column found in the range
     			column = String.fromCharCode(65 + column + rangeDetails.firstCol.charCodeAt(0) - 65);
     
-                // Build formula			
+                // Build formula
+                // 1) extract string from value beteween single quotes
+                var value = extractContentBetweenOuterSingleQuotes(value);
+                
+                // 2) double all "" in the value to escape them
+                value = value.replace(/"/g, ''""'');
+    			log.debug("[Google Sheet Connector] value with escaped \"\" : " + value);
+                
+                // 3) Build the formula
     			var formula = "ARRAYFORMULA(MATCH(TRUE, " + sheetName + column + ":" + column + " = \"" + value + "\" , 0))";
-    			log.warn("[Google Sheet Connector] formula to execute : " + formula);
-    			
+    			log.debug("[Google Sheet Connector] formula to execute : " + formula);
     			
     		} else {
     	 		requestBody = new ValueRange();
@@ -122,8 +129,7 @@ comment: Add a row of cells to a Google Sheet.
     				row.push(value)
     			}
     	
-    			log.warn("[Google Sheet Connector] row to add : " + JSON.stringify(row));
-    	
+    			log.debug("[Google Sheet Connector] row to add : " + JSON.stringify(row));
     	
     			sheetData = new ArrayList();
     			sheetData.add(row);
@@ -157,7 +163,7 @@ comment: Add a row of cells to a Google Sheet.
         const lastCol = match[4];
     
         return {
-          sheetName: sheetName ? sheetName + "!" : "",
+          sheetName: sheetName ? "''" + sheetName + "''!" : "",
           firstCol: firstCol,
           firstRow: parseInt(firstRow, 10),
           lastCol: lastCol
@@ -178,7 +184,7 @@ comment: Add a row of cells to a Google Sheet.
     					headerRange.lastCol + 
     					headerRange.firstRow;
     					
-    	log.warn("[Google Sreadsheet Connector] Header range is : <" + headerRange + ">");
+    	log.debug("[Google Sheet Connector] Header range is : <" + headerRange + ">");
     					
     	response = service.spreadsheets().values()
     	    .get(SheetID, headerRange)
@@ -204,6 +210,21 @@ comment: Add a row of cells to a Google Sheet.
     	} else {
     	  console.log("No match found.");
     	}
+    }
+    
+    function extractContentBetweenOuterSingleQuotes(inputString) {
+        // Regular expression to match content between the first and last single quotes
+        const regex = /''([^'']*(?:''[^'']*)*)''/;
+        const match = regex.exec(inputString);
+    
+        // If a match is found, return the content between the quotes
+        if (match) {
+            return match[1];
+        }
+    
+        // Return an empty string if no match is found
+    	log.warn("[Google Sheet Connector] No quotes was provided surrounding the value : " + inputString);
+        return '''';
     }'
 ↓jIfThenElse [steps.IfThenElseStep-1607870066657]: 
   condition: setError != null
@@ -256,7 +277,7 @@ comment: Add a row of cells to a Google Sheet.
   ↓SheetID [variables.TestCaseVariable-1724343224609]: 
     value: 1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo
   ↓Range [variables.TestCaseVariable-1724343224612]: 
-    value: Add Row!B2:K100
+    value: '''Add Row''!B2:K100'
   ↓dataRow [variables.TestCaseVariable-1724343224615]: 
     value: |
       '{

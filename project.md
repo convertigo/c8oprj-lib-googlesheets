@@ -21,7 +21,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
 
 Used to get the Google OAuth token
-see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/bf120fcf0e880098e3ac992b86c8a1076864564d#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/7.9.0#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_UserManager</b></summary><blockquote><p>
@@ -30,7 +30,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/bf120fcf0e88009
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_UserManager
 
 
-see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/f8941d93af0db63dc16c052daad77de2f6329747#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0#readme)
 </p></blockquote></details>
 </p></blockquote></details>
 

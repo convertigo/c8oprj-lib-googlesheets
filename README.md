@@ -62,7 +62,7 @@ This as to be called by client apps to decide whenever or not they have to displ
 
 ### forms_AddRow
 
-Add a row to a Google Sheet. Each column of the table must have the same name as the technicalID of a field on the form.
+Add a row to a table in a Google Sheet. Each column of the table must have the same name as the technicalID <br>of a field on the form. <br><br>This action can also be used to update some data in a table. In this case, set <br>the <b>Where Clause</b> variable to a condition and set the <b>Update</b> variable to the columns you want to update.
 
 **variables**
 
@@ -75,6 +75,12 @@ Add a row to a Google Sheet. Each column of the table must have the same name as
 </tr>
 <tr>
 <td>forms_config</td><td>Creates a row in a table with a given configuration</td>
+</tr>
+<tr>
+<td>forms_update</td><td>Will be use only if the WHERE clause is not empty. Give here separated by commas the fields = value to define the columns to be updated by the given values. The fields must be the technical identifiers of the fields of your form. For example: <br><br><i>inputText1 = value1, inputText2 = value2</i>. <br><br>Of course values can be dragged and dropped from the list of fields.</td>
+</tr>
+<tr>
+<td>forms_where</td><td>If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid 'SQL like' WHERE clause without the WHERE keyword. A Where clause can be for example : <br>inputText1 = 'value1' AND inputText2 = 'value2'.</td>
 </tr>
 <tr>
 <td>originalDoc</td><td></td>
@@ -158,6 +164,12 @@ Add a row of cells to a Google Sheet.
 </tr>
 <tr>
 <td>SheetID</td><td>The Sheet id as found in the google  sheet URL</td>
+</tr>
+<tr>
+<td>update</td><td>a JSON array of field, values</td>
+</tr>
+<tr>
+<td>where</td><td>A Google Sheet Where clause</td>
 </tr>
 </table>
 
