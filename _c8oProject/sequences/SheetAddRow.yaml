@@ -70,7 +70,9 @@ comment: Add a row of cells to a Google Sheet.
     			// Get the Headers from the Google Sheet
     			header = getSheetColumns(SheetID, Range);
     			
-    			// We have to build a  ARRAYFORMULA(MATCH(TRUE, ''Sheet Name''!C:C = "value" , 0)) formula
+    			
+    			
+    			// We have to build a  =ARRAYFORMULA(MIN(FILTER(ROW(Demandes!A1:A100), (Demandes!A1:A100="VORBE") * (Demandes!F1:F100="2024-10-31")))
     			// where C is the column corresponding to the field. 
     			// We have to find the column corresponding to the field
     			column = -1;
