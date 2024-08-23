@@ -93,14 +93,14 @@ comment: |
     	if (forms_tableFilter.filters.length != 0) {
     		Query = "SELECT * WHERE ";
     		parsedRange = extractRangeDetails(forms_config.range)
-    		colRange = parsedRange.sheetName  + parsedRange.firstCol + parsedRange.firstRow + ":" + parsedRange.lastCol + parsedRange.firstRow;
+    		colRange = parsedRange.firstCol + parsedRange.firstRow + ":" + parsedRange.lastCol + parsedRange.firstRow;
     		
     		for (var i = 0; i < forms_tableFilter.filters.length; i++) {
     			if (i != 0) {
     				Query += " " + forms_tableFilter.mode + " ";
     			}
     			
-    			// $$$SheetName$$$ will replaced with the real sheet name by the SheetGetRange Sequence as it acess acess to the Google Sheet API
+    			// $$$SheetName$$$ will replaced with the real sheet name by the SheetGetRange Sequence as it has acess to the Google Sheet API
     			Query += ''Col"&XMATCH("'' + forms_tableFilter.filters[i].field + ''"; '' + ''$$$SheetName$$$'' + colRange + '')&" ''
     			
     			switch (forms_tableFilter.filters[i].op) {

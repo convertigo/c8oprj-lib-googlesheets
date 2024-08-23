@@ -93,7 +93,13 @@ comment: Get a range of cells from a Google Sheet.
     			}
     
     
-    			// Replace all the $$$SheetName$$$ with the first sheet name in the Query 
+    			// Replace all the $$$SheetName$$$ with the first sheet name in the Query
+    			// Do we have a Sheet name in the range if yes use it instead of the default Sheet Name . 
+    			if (Range.indexOf("!") != -1) {
+    				// Yes, we have a sheet name in the range, we will use it as the sheet name
+    				sheetName = Range.substring(0, Range.indexOf("!"));	
+    			}
+    			 
     			Query = Query.replace(/\$\$\$SheetName\$\$\$/g, "''" + sheetName + "''!");
     			log.debug("Google Query  is : " + Query);
             	
