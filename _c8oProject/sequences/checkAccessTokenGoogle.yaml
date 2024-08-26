@@ -87,7 +87,7 @@ comment: |
         - java.lang.String: 
           - ↑value: 1724238544913
         - java.lang.String: 
-          - ↑value: ./document/value
+          - ↑value: ./document/value/text() && //document/sequence/document/value/text() != 'null'
   ↓jThen [steps.ThenStep-1724238544925]: 
     ↓Log [steps.LogStep-1724238544928]: 
       expression: '"A refresh token is available, requesting from it an acess token..."'
@@ -114,6 +114,27 @@ comment: |
               - java.lang.String: 
                 - ↑value: ./document/value/text()
         value: refresh_token
+    ↓IfExist [steps.IfExistStep-1724599180505]: 
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1724238544931
+            - java.lang.String: 
+              - ↑value: ./document//error
+      ↓Error_structure [steps.XMLErrorStep-1724599259876]: 
+        message: 
+          - xmlizable: 
+            - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+            - SmartType: 
+              - ↑mode: SOURCE
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1724238544931
+                - java.lang.String: 
+                  - ↑value: .//error_description/text()
+      ↓Return [steps.ReturnStep-1724599484668]: 
     ↓login [steps.XMLElementStep-1724238544946]: 
       nodeName: token
       nodeText: ok

@@ -21,7 +21,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-extended-components-ui-ngx
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_OAuth
 
 Used to get the Google OAuth token
-see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/bf120fcf0e880098e3ac992b86c8a1076864564d#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/334a638363d83d83bfed756b025f96226751e50e#readme)
 </p></blockquote></details>
 
 <details><summary><b>lib_UserManager</b></summary><blockquote><p>
@@ -30,7 +30,7 @@ see [readme](https://github.com/convertigo/c8oprj-lib-oauth/tree/bf120fcf0e88009
 ## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/references/images/ProjectSchemaReference_16x16.png?raw=true "ProjectSchemaReference") lib_UserManager
 
 
-see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/f8941d93af0db63dc16c052daad77de2f6329747#readme)
+see [readme](https://github.com/convertigo/c8oprj-lib-user-manager/tree/7.9.0#readme)
 </p></blockquote></details>
 </p></blockquote></details>
 
@@ -117,6 +117,14 @@ Checks is a valid access token is held by the current users' session for Google
 This as to be called by client apps to decide whenever or not they have to display an OAuth login screen
 
 
+</p></blockquote></details>
+
+<details><summary><b>ClearRefreshToken</b> : Remove any RefreshToken and GoogleSheetAcessTokne form the session and user profile</summary><blockquote><p>
+
+
+## ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/sequences/images/genericsequence_color_16x16.png?raw=true "GenericSequence") ClearRefreshToken
+
+Remove any RefreshToken and GoogleSheetAcessTokne form the session and user profile
 </p></blockquote></details>
 
 <details><summary><b>forms_AddRow</b> : Add a row to a table in a Google Sheet</summary><blockquote><p>
@@ -439,9 +447,21 @@ Test and demo app to show Google Sheet capacities
 <details><summary><span style="color:DarkGoldenRod"><i>Pages</i></span></summary><blockquote><p>
 
 
+<details><summary><b>Configure</b></summary><blockquote><p>
+
+
 ### ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/ngx/components/images/pagecomponent_color_16x16.png?raw=true "PageComponent") Configure
 
 
+</p></blockquote></details>
+
+<details><summary><b>TestOnly</b> : This is a Test page to launch before calling BackEnd seqeunces</summary><blockquote><p>
+
+
+### ![](https://github.com/convertigo/convertigo/blob/develop/engine/src/com/twinsoft/convertigo/beans/ngx/components/images/pagecomponent_color_16x16.png?raw=true "PageComponent") TestOnly
+
+This is a Test page to launch before calling BackEnd seqeunces. This will login using the DEMO user profile
+</p></blockquote></details>
 </p></blockquote></details>
 
 <details><summary><span style="color:DarkGoldenRod"><i>Shared Actions</i></span></summary><blockquote><p>

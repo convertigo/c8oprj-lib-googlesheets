@@ -26,6 +26,7 @@ componentScriptContent:
 tplProjectName: mobilebuilder_tpl_8_3_0_ngx
 ↓DisplayGoogleDrivePicker [ngx.components.UIActionStack-1723642068753]: 🗏 mobileSharedActions/DisplayGoogleDrivePicker.yaml
 ↓Configure [ngx.components.PageComponent-1723642068777]: 🗏 mobilePages/Configure.yaml
+↓TestOnly [ngx.components.PageComponent-1724657032162]: 🗏 mobilePages/TestOnly.yaml
 ↓Style [ngx.components.UIStyle-1723648569770]: 
   comment: You can add some global application styles here
   styleContent: 
