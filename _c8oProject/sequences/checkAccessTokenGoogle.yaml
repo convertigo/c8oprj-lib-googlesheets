@@ -36,6 +36,7 @@ comment: |
   key: oAuthAccessTokenGoogleSheet
   output: false
 ↓IfExistThenElse [steps.IfExistStep-1724238537126]: 
+  comment: We do have a token in the user session.. Test if it is still in the time diff
   condition: IfExistThenElse
   sourceDefinition: 
     - xmlizable: 
@@ -46,11 +47,13 @@ comment: |
         - java.lang.String: 
           - ↑value: ./expression/text()
   ↓jIf [steps.IfStep-1724238581472]: 
+    comment: If bRefreshToken is false we are still in the syime diff so no need to refresh it
     condition: '! bRefreshToken'
     ↓Log [steps.LogStep-1608802467238]: 
       expression: '"We found a token in user session, so return it"'
       level: WARN
     ↓login [steps.XMLElementStep-1607691398185]: 
+      comment: Just return it
       nodeName: token
       nodeText: ok
       sourceDefinition: 
@@ -63,8 +66,10 @@ comment: |
               - ↑value: ./expression/text()
     ↓Return [steps.ReturnStep-1607691398188]: 
 ↓Get_authenticated_user [steps.GetAuthenticatedUserStep-1724238544910]: 
+  comment: Token is expired, so we have to refresh it
   output: false
 ↓Call_Sequence [steps.SequenceStep-1724238544913]: 
+  comment: Get the user token for the user profile
   sourceSequence: lib_UserManager.GetUserAttribute
   ↓user [variables.StepVariable-1724238544916]: 
     comment: The user where we have to set the attribute on
@@ -80,6 +85,7 @@ comment: |
     comment: The attribute name
     value: GoogleOAuthRefreshToken
 ↓IfExistThenElse1 [steps.IfExistThenElseStep-1724238544922]: 
+  comment: If we have one and it is not null
   sourceDefinition: 
     - xmlizable: 
       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
@@ -90,6 +96,7 @@ comment: |
           - ↑value: ./document/value/text() && //document/sequence/document/value/text() != 'null'
   ↓jThen [steps.ThenStep-1724238544925]: 
     ↓Log [steps.LogStep-1724238544928]: 
+      comment: Refresh it
       expression: '"A refresh token is available, requesting from it an acess token..."'
       level: WARN
     ↓Call_Transaction [steps.TransactionStep-1724238544931]: 
@@ -163,6 +170,7 @@ comment: |
         timeStamp = new Date().getTime();
         
     ↓setTimeStampInSession [steps.SessionSetStep-1724238544955]: 
+      comment: Not the timestamp the token we refreshed in the session
       expression: 
         - xmlizable: 
           - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
@@ -173,6 +181,7 @@ comment: |
     ↓Return [steps.ReturnStep-1724238544958]: 
   ↓jElse [steps.ElseStep-1724238544961]: 
     ↓Log [steps.LogStep-1724238544964]: 
+      comment: Well not token at all ! we will need a new one 
       expression: '"No refresh token available for this user, So return no token"'
       level: WARN
     ↓login [steps.XMLElementStep-1724238544967]: 
