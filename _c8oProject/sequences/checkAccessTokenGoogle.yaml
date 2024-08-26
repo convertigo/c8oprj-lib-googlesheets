@@ -93,7 +93,7 @@ comment: |
         - java.lang.String: 
           - ↑value: 1724238544913
         - java.lang.String: 
-          - ↑value: ./document/value/text() && //document/sequence/document/value/text() != 'null'
+          - ↑value: ./document/value[text() != '' and text() != 'null']
   ↓jThen [steps.ThenStep-1724238544925]: 
     ↓Log [steps.LogStep-1724238544928]: 
       comment: Refresh it
