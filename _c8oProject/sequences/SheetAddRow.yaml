@@ -489,7 +489,7 @@ comment: Add a row of cells to a Google Sheet.
                     .setRequests(requests);
     
             // Execute the batch update request
-            service.spreadsheets().batchUpdate(sheetID, batchUpdateRequest).execute();
+            service.spreadsheets().batchUpdate(spreadSheetID, batchUpdateRequest).execute();
         }
     }
      
