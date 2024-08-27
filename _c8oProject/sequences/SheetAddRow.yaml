@@ -29,7 +29,17 @@ comment: Add a row of cells to a Google Sheet.
       com.google.api.services.sheets.v4.SheetsScopes,
       com.google.api.services.sheets.v4.model.ValueRange,
       com.google.api.client.googleapis.auth.oauth2.GoogleCredential,
-    
+      com.google.api.services.sheets.v4.model.AddSheetRequest,
+      com.google.api.services.sheets.v4.model.Request,
+      com.google.api.services.sheets.v4.model.Collections,
+      com.google.api.services.sheets.v4.model.GridRange,
+      com.google.api.services.sheets.v4.model.GridCoordinate,
+      com.google.api.services.sheets.v4.model.CellData,
+      com.google.api.services.sheets.v4.model.ExtendedValue,
+      com.google.api.services.sheets.v4.model.UpdateCellsRequest,
+      com.google.api.services.sheets.v4.model.RowData,
+      com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest,
+     
       java.io.FileNotFoundException,
       java.io.IOException,
       java.io.InputStream,
@@ -38,7 +48,8 @@ comment: Add a row of cells to a Google Sheet.
       java.security.GeneralSecurityException,
       java.util.Collections,
       java.util.List,
-      java.util.ArrayList
+      java.util.ArrayList,
+      java.util.Arrays
     );
     
     with (GSheetAPI) {
@@ -74,29 +85,15 @@ comment: Add a row of cells to a Google Sheet.
     			
     
     			// We have to build a  =ARRAYFORMULA(MIN(FILTER(ROW(Demandes!A1:A100), (Demandes!A1:A100="VORBE") * (Demandes!F1:F100="2024-10-31")))
-    			var formula = "ARRAYFORMULA(MIN(FILTER(ROW(" + Range + "); "
+    			var formula = "=ARRAYFORMULA(MIN(FILTER(ROW(" + Range + "); "
     			
     			for (var i = 0; i < whereClause.length; i++) {
     				var field = whereClause[i].field;
     				var value = whereClause[i].value;
     				var operator = whereClause[i].operator;
     				
-    				// We have to find the column corresponding to the field
-    				column = -1;
-    				for (i=0; i<header.length; i++) {
-    					if (header[i] == field) {
-    						column = i;
-    						break;
-    					}
-    				}
-    
-    				if (column == -1) {
-    					log.error("[Google Sheet Connector] Field not found in the header row : " + field);
-    					throw new Error("Field not found in the header row : " + field);
-    				}
-    
-                    // Set column to the corresponding letter in the Google Sheet corrected by the column found in the range
-    				column = String.fromCharCode(65 + column + rangeDetails.firstCol.charCodeAt(0) - 65);
+    				
+    				column = getColFromHeader(field, rangeDetails.firstCol)
     				var sheetName = rangeDetails.sheetName;
     			
     	            // Build formula
@@ -116,8 +113,63 @@ comment: Add a row of cells to a Google Sheet.
     		    if (lastIndex === -1) {
     		        log.error("[Google Sheet Connector] Incorrect Syntax ");
     		    }
-        		formula = formula.slice(0, lastIndex) + formula.slice(lastIndex + 2) + "))";
+        		formula = formula.slice(0, lastIndex) + formula.slice(lastIndex + 2) + ")))";
     			log.warn("[Google Sheet Connector] formula to execute : " + formula);
+    			
+    			AddExecutorSheet();
+    			log.warn("[Google Sheet Connector] Executor Sheet Added");
+    			
+    			// Write the Formula in the Excutor Sheet
+    			var values = new com.google.api.services.sheets.v4.model.ValueRange();
+    			values.setValues([Collections.singletonList(formula)]);
+    
+    			// The formula will compute the row number to update so write it in the Executor Sheet			
+    			service.spreadsheets().values()
+    				.update(SheetID, "C8OQueryExecutor!A1", values)
+    				.setValueInputOption("USER_ENTERED")
+    				.execute();			
+    			
+    			// Get back the row number computed
+    			response = service.spreadsheets().values()
+    		        .get(SheetID, "C8OQueryExecutor!A1")
+    		        .execute();
+    			
+    		    values = response.getValues();
+    		    if (values == null || values.isEmpty()) {
+    				log.error("[Google Sreadsheet Connector] no data found");
+    				//RemoveExecutorSheet();
+    				throw ("No Values")
+    			} 
+    			rows = values.toArray();
+    			updateRow = rows[0][0]
+    			log.warn("[Google Sreadsheet Connector] Row to update is : " + updateRow);
+    			
+    			if (updateRow == "#N/A") {
+    				log.error("[Google Sreadsheet Connector] Update row not found");
+    				//RemoveExecutorSheet();
+    				throw ("Update row not found")
+    			}
+    			
+    			// Parse the update statement
+    			update = ParseUpdate(update)
+    			
+    			// Build Update Ranges
+    			cellNotations = []
+    			cellValues = []
+    			for (let i=0; i < update.length; i++) {
+    				
+    				let updateRange = getColFromHeader(update[i].field, rangeDetails.firstCol) +
+    								  //update[i].field +
+    								  updateRow
+    				cellNotations.push(updateRange + "")
+    				cellValues.push(update[i].value + "")
+    				log.warn("[Google Sheet Connector] Will update : [" + i + "]" + updateRange + " With value  : <" + update[i].value + ">");
+    			}
+    			updateDiscontinuousCellsInRow(cellNotations, cellValues, rangeDetails.sheetName, SheetID)
+    			
+    			//RemoveExecutorSheet();
+    			log.warn("[Google Sheet Connector] Executor Sheet Removed");
+    			
     		} else {
     	 		requestBody = new ValueRange();
     		
@@ -258,6 +310,203 @@ comment: Add a row of cells to a Google Sheet.
         // Return an empty string if no match is found
     	log.warn("[Google Sheet Connector] No quotes was provided surrounding the value : " + inputString);
         return '''';
+    }
+    
+    /**
+     * Get all Sheets from the document, and if the C8Oexecutor sheet is not present add it
+     * 
+     */
+    function AddExecutorSheet() {
+    	with (GSheetAPI) {	
+    		//Get the first Sheet name
+    		Sheets = service.spreadsheets().get(SheetID).execute();
+    		var sheetName = Sheets.getSheets().get(0).getProperties().getTitle();
+    	
+    		// Find the Sheet ID of the C8OQueryExecutor sheet
+    		var ExecSheetId = null;
+    		for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    			if (Sheets.getSheets().get(i).getProperties().getTitle() == "C8OQueryExecutor") {
+    				ExecSheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
+    				break;
+    			}
+    		}
+    	
+    	    // Do we already have this Sheet ? if not add it .. 
+    	    if (ExecSheetId == null) {						
+    			// Create a request to add a new sheet
+    	    	let addSheetRequest = new AddSheetRequest().setProperties(
+    	        	new com.google.api.services.sheets.v4.model.SheetProperties().setTitle("C8OQueryExecutor")
+    	    	);
+    	        
+    	        // Create a batch update request
+    	    	let requests = new ArrayList();
+    	    	requests.add(new Request().setAddSheet(addSheetRequest));
+    	    	let batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
+    	    	// Execute the request
+    	    	service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();
+    	    	// Set a flag that we added an executionSheet
+    	    	bExecSheetAdded = true;
+    		}
+    	}
+    }
+    
+    /**
+     * Remove the execuore Sheet
+     */
+    function RemoveExecutorSheet() {
+    	with (GSheetAPI) {		
+    		// refresh the Sheet information...
+    		Sheets = service.spreadsheets().get(SheetID).execute();
+    		// Find the Sheet ID of the C8OQueryExecutor sheet
+    		var ExecSheetId = null;
+    		for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    			if (Sheets.getSheets().get(i).getProperties().getTitle() == "C8OQueryExecutor") {
+    				ExecSheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
+    				break;
+    			}
+    		}
+    		
+    		requests = new ArrayList();
+    		requests.add(new Request()
+    			.setDeleteSheet(
+    				new com.google.api.services.sheets.v4.model.DeleteSheetRequest()
+    					.setSheetId(ExecSheetId)
+    			)
+    		);
+    		
+    		batchUpdateRequest = new com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest().setRequests(requests);
+    		service.spreadsheets().batchUpdate(SheetID, batchUpdateRequest).execute();	
+    	}
+    }
+    
+    /**
+     * Parse the update Statement from a string of this syntax
+     * 
+     * inputText5 = ''ZZZ'', inputText3 = ''UUU''
+     * 
+     * Return an array of field / value objects.. 
+     * 
+     * Note : Parse handles Single quotes in field and values 
+     */
+    function ParseUpdate(input) {
+        const result = [];
+        const parts = input.split(/,(?=(?:[^'']*''[^'']*'')*[^'']*$)/);
+    
+        parts.forEach(part => {
+            const regex = /([^=]+?)\s*=\s*''(.*)''/;
+            const match = regex.exec(part.trim());
+            if (match) {
+                const field = match[1].trim();
+                const value = match[2];
+    	        // Push each matched field-value pair into the result array
+    	        result.push({
+    				field: field,
+    				value: value
+    			});
+    		}
+        })
+        
+       	log.warn("[Google Sheet Connector] Inputs : " + JSON.stringify(result));
+        return result;
+    }	
+    
+    /**
+     * Compute Col from Header
+     */
+    function getColFromHeader(field, firstCol) {
+    	// We have to find the column corresponding to the field
+    	let column = -1;
+    	for (i=0; i<header.length; i++) {
+    		if (header[i] == field) {
+    			column = i;
+    			break;
+    		}
+    	}
+    
+    	if (column == -1) {
+    		log.error("[Google Sheet Connector] Field not found in the header row : " + field);
+    		throw new Error("Field not found in the header row : " + field);
+    	}
+    
+        // Set column to the corresponding letter in the Google Sheet corrected by the column found in the range
+    	column = String.fromCharCode(65 + column + firstCol.charCodeAt(0) - 65);
+    	return column
+    }
+    
+    // Helper method to convert A1 notation to GridCoordinate
+    function convertA1ToGridCoordinate(a1Notation, sheetId) {
+        // Extract column and row from A1 notation
+        const columnPart = a1Notation.replace(/[^A-Z]/g, "");
+        const rowPart = a1Notation.replace(/[^0-9]/g, "");
+    
+        // Convert column to index (A=0, B=1, ..., Z=25, AA=26, etc.)
+        let columnIndex = 0;
+        for (let i = 0; i < columnPart.length; i++) {
+            columnIndex = columnIndex * 26 + (columnPart.charCodeAt(i) - ''A''.charCodeAt(0) + 1);
+        }
+        columnIndex--; // Convert to 0-indexed
+    
+        // Convert row to index (1-indexed, so subtract 1)
+        const rowIndex = parseInt(rowPart, 10) - 1;
+    
+        // Create and return the GridCoordinate object
+    	with (GSheetAPI) {
+    	    return new GridCoordinate().setSheetId(sheetId).setRowIndex(rowIndex).setColumnIndex(columnIndex);
+    	}
+    }
+    
+    function updateDiscontinuousCellsInRow(cellNotations, values, sheetName, spreadSheetID)  {
+    	with (GSheetAPI) {
+            // Prepare the requests for each cell
+            requests = new ArrayList();
+            
+     		// Get Sheet ID
+    		let sheetID = getSheetIdByName(spreadSheetID, sheetName)       
+    
+            // Example cells to update: A2, C2, E2 with respective values
+            for (let i = 0; i < cellNotations.length; i++) {
+                // Convert A1 notation to GridCoordinate
+                gridCoordinate = convertA1ToGridCoordinate(cellNotations[i], sheetID, spreadSheetID);
+    
+                // Create the CellData
+                cellData = new CellData()
+                        .setUserEnteredValue(new ExtendedValue().setStringValue(values[i]));
+    
+                // Create UpdateCellsRequest for each cell
+                updateCellsRequest = new UpdateCellsRequest()
+                        .setStart(gridCoordinate)
+                        .setRows(Arrays.asList(new RowData().setValues(Arrays.asList(cellData))))
+                        .setFields("userEnteredValue");
+    
+                // Add the request to the list
+                requests.add(new Request().setUpdateCells(updateCellsRequest));
+            }
+    
+    
+    		
+            // Create the BatchUpdateSpreadsheetRequest
+            batchUpdateRequest = new BatchUpdateSpreadsheetRequest()
+                    .setRequests(requests);
+    
+            // Execute the batch update request
+            service.spreadsheets().batchUpdate(sheetID, batchUpdateRequest).execute();
+        }
+    }
+     
+    // Helper method to get the sheet ID by sheet name
+    function getSheetIdByName(spreadsheetId, sheetName) {
+    	// refresh the Sheet information...
+    		sheetName = sheetName.replace(/[\''!]/g, "");
+    		Sheets = service.spreadsheets().get(spreadsheetId).execute();
+    		// Find the Sheet ID of the C8OQueryExecutor sheet
+    		var SheetId = null;
+    		for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    			if (Sheets.getSheets().get(i).getProperties().getTitle() == sheetName) {
+    				SheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
+    				break;
+    			}
+    		}
+    		return (SheetId)
     }'
 ↓jIfThenElse [steps.IfThenElseStep-1607870066657]: 
   condition: setError != null
@@ -328,7 +577,7 @@ comment: Add a row of cells to a Google Sheet.
       '
   ↓where [variables.TestCaseVariable-1724343252936]: 
     value: |
-      inputText1 = 'AAAA  "AAA" AA' AND inputText2 > 'BBB  B " '' BB BB'
+      inputText1 = 'hdghgf' AND inputText2 = 'fhfghdfgh'
       
   ↓update [variables.TestCaseVariable-1724343252938]: 
-    value: inputText5 = 'ZZZ', inputText3 = 'UUU'
+    value: inputText5 = 'Z'hghg , ""gg'hj hg 'ZZ', inputText3 = 'UU,U'
