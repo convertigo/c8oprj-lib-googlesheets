@@ -86,19 +86,27 @@ comment: Add a row of cells to a Google Sheet.
     
     			// We have to build a  =ARRAYFORMULA(MIN(FILTER(ROW(Demandes!A1:A100), (Demandes!A1:A100="VORBE") * (Demandes!F1:F100="2024-10-31")))
     			var formula = "=ARRAYFORMULA(MIN(FILTER(ROW(" + Range + "); "
+    
+    			log.warn("[Google Sheet Connector] Found " + whereClause.length + " Clauses");
     			
     			for (var i = 0; i < whereClause.length; i++) {
+    
+    				log.warn("[Google Sheet Connector] Handle clause N° " + i + " field:" + whereClause[i].field + " value:"  + whereClause[i].value);
+    
     				var field = whereClause[i].field;
     				var value = whereClause[i].value;
     				var operator = whereClause[i].operator;
     				
     				
     				column = getColFromHeader(field, rangeDetails.firstCol)
+    				log.warn("[Google Sheet Connector] Handle clause N° " + i + " Colun:" + column);
+    
     				var sheetName = rangeDetails.sheetName;
     			
     	            // Build formula
     	            // 1) extract string from value beteween single quotes
     	            var value = extractContentBetweenOuterSingleQuotes(value);
+    				log.warn("[Google Sheet Connector] Handle clause N° " + i + " Value:" + value);
                 
     	            // 2) double all "" in the value to escape them
     	            value = value.replace(/"/g, ''""'');
