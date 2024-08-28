@@ -162,6 +162,43 @@ comment: |
             - ↑value: 1724259493369
           - java.lang.String: 
             - ↑value: ./text()
+↓jIf1 [steps.IfStep-1724826139288]: 
+  condition: model == 'true'
+  ↓Call_Sequence2 [steps.SequenceStep-1724826159951]: 
+    sourceSequence: lib_GoogleSheet.SheetGetRange
+    ↓SheetID [variables.StepVariable-1724826188699]: 
+      comment: The Sheet id as found in the google  sheet URL
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1724259493363
+            - java.lang.String: 
+              - ↑value: ./text()
+    ↓Range [variables.StepVariable-1724826188701]: 
+      comment: The Cell range to read. (examples, A1:D7 or  Sheet!A2:E). leave empty to return all the sheet data
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1724259493366
+            - java.lang.String: 
+              - ↑value: ./text()
+    ↓FirstRowHeader [variables.StepVariable-1724826188703]: 
+      comment: Set this to true if the first row a header
+      value: true
+  ↓Copy [steps.XMLCopyStep-1724826444054]: 
+    sourceDefinition: 
+      - xmlizable: 
+        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+        - com.twinsoft.convertigo.beans.common.XMLVector: 
+          - java.lang.String: 
+            - ↑value: 1724826159951
+          - java.lang.String: 
+            - ↑value: ./document/sheet/data
+  ↓Return [steps.ReturnStep-1724826465510]: 
 ↓jIf [steps.IfStep-1724824601052]: 
   comment: If we have a Where clause do not prepare data as we will only update a row
   condition: where == null
@@ -269,6 +306,7 @@ comment: |
         }
     }'
   description: filter
+↓model [variables.RequestableVariable-1724826074352]: 
 ↓testOK [core.TestCase]: 
   ↓forms_config [variables.TestCaseVariable-1724259654301]: 
     description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
@@ -305,3 +343,5 @@ comment: |
       		"mode":"AND"
       }
       '
+  ↓model [variables.TestCaseVariable-1724826052818]: 
+    value: true
