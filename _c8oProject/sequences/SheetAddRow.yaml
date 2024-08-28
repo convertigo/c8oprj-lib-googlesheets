@@ -191,7 +191,7 @@ comment: Add a row of cells to a Google Sheet.
     			// For each header in headers array we will search the corresponding value in the dataRow and build an array
     			// with the values in the same order as the headers
     			row = [];
-    			for (var i = 0; i < headers.length; i++) {
+    			for (let i = 0; i < headers.length; i++) {
     				var header = headers[i];
     				if (dataRow[header]	== undefined) {
     					log.warn("[Google Sheet Connector] header not found in the dataRow : " + header);
@@ -332,7 +332,7 @@ comment: Add a row of cells to a Google Sheet.
     	
     		// Find the Sheet ID of the C8OQueryExecutor sheet
     		var ExecSheetId = null;
-    		for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    		for (let i = 0; i < Sheets.getSheets().size(); i++) {
     			if (Sheets.getSheets().get(i).getProperties().getTitle() == "C8OQueryExecutor") {
     				ExecSheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
     				break;
@@ -367,7 +367,7 @@ comment: Add a row of cells to a Google Sheet.
     		Sheets = service.spreadsheets().get(SheetID).execute();
     		// Find the Sheet ID of the C8OQueryExecutor sheet
     		var ExecSheetId = null;
-    		for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    		for (let i = 0; i < Sheets.getSheets().size(); i++) {
     			if (Sheets.getSheets().get(i).getProperties().getTitle() == "C8OQueryExecutor") {
     				ExecSheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
     				break;
@@ -424,7 +424,7 @@ comment: Add a row of cells to a Google Sheet.
     function getColFromHeader(field, firstCol) {
     	// We have to find the column corresponding to the field
     	let column = -1;
-    	for (i=0; i<header.length; i++) {
+    	for (let i=0; i<header.length; i++) {
     		if (header[i] == field) {
     			column = i;
     			break;
@@ -508,7 +508,7 @@ comment: Add a row of cells to a Google Sheet.
     		Sheets = service.spreadsheets().get(spreadsheetId).execute();
     		// Find the Sheet ID of the C8OQueryExecutor sheet
     		var SheetId = null;
-    		for (var i = 0; i < Sheets.getSheets().size(); i++) {
+    		for (let i = 0; i < Sheets.getSheets().size(); i++) {
     			if (Sheets.getSheets().get(i).getProperties().getTitle() == sheetName) {
     				SheetId = Sheets.getSheets().get(i).getProperties().getSheetId();
     				break;
