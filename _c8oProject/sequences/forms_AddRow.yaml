@@ -86,8 +86,9 @@ comment: |
     	log.warn("[Google Sheet Connector] Update is : " + update);
     }
     catch (e) {
-    	log.warn("[Google Sheet Connector] Where filter parse error, using the Field = ''Value'' AND field2 = ''value2'' syntax" + e);
+    	log.warn("[Google Sheet Connector] Where filter parse error, using the Field = ''Value'' AND field2 = ''value2'' syntax. " + e);
     	where = forms_where
+    	update = forms_update
     }
     	'
 ↓SheetID [steps.JsonFieldStep-1724259493363]: 
