@@ -89,7 +89,7 @@ comment: Add a row of cells to a Google Sheet.
     
     			log.warn("[Google Sheet Connector] Found " + whereClause.length + " Clauses");
     			
-    			for (var i = 0; i < whereClause.length; i++) {
+    			for (let i = 0; i < whereClause.length; i++) {
     
     				log.warn("[Google Sheet Connector] Handle clause N° " + i + " field:" + whereClause[i].field + " value:"  + whereClause[i].value);
     
