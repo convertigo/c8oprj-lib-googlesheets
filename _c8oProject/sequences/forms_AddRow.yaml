@@ -189,15 +189,54 @@ comment: |
     ↓FirstRowHeader [variables.StepVariable-1724826188703]: 
       comment: Set this to true if the first row a header
       value: true
-  ↓Copy [steps.XMLCopyStep-1724826444054]: 
-    sourceDefinition: 
+  ↓array [steps.JsonArrayStep-1724833630915]: 
+    key: 
       - xmlizable: 
-        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-        - com.twinsoft.convertigo.beans.common.XMLVector: 
-          - java.lang.String: 
-            - ↑value: 1724826159951
-          - java.lang.String: 
-            - ↑value: ./document/sheet/data
+        - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+        - SmartType: 
+          - ↑mode: PLAIN
+          - →→: data
+    ↓Iterator [steps.IteratorStep-1724833630918]: 
+      condition: 1
+      sourceDefinition: 
+        - xmlizable: 
+          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+          - com.twinsoft.convertigo.beans.common.XMLVector: 
+            - java.lang.String: 
+              - ↑value: 1724826159951
+            - java.lang.String: 
+              - ↑value: ./document/sheet/data/row
+      ↓object [steps.JsonObjectStep-1724833630921]: 
+        ↓Iterator [steps.IteratorStep-1724833630924]: 
+          sourceDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1724833630918
+                - java.lang.String: 
+                  - ↑value: ./cell
+          ↓field [steps.JsonFieldStep-1724833630927]: 
+            key: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+                - SmartType: 
+                  - ↑mode: SOURCE
+                  - com.twinsoft.convertigo.beans.common.XMLVector: 
+                    - java.lang.String: 
+                      - ↑value: 1724833630924
+                    - java.lang.String: 
+                      - ↑value: ./@originalKeyName
+            value: 
+              - xmlizable: 
+                - ↑classname: com.twinsoft.convertigo.beans.steps.SmartType
+                - SmartType: 
+                  - ↑mode: SOURCE
+                  - com.twinsoft.convertigo.beans.common.XMLVector: 
+                    - java.lang.String: 
+                      - ↑value: 1724833630924
+                    - java.lang.String: 
+                      - ↑value: ./text()
   ↓Return [steps.ReturnStep-1724826465510]: 
 ↓jIf [steps.IfStep-1724824601052]: 
   comment: If we have a Where clause do not prepare data as we will only update a row
