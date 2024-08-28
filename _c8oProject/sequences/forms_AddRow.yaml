@@ -11,10 +11,86 @@ comment: |
       }
   }
   '
-↓ParseConfig [steps.SimpleStep-1724259451569]: 
+↓ParseConfigAndFilters [steps.SimpleStep-1724259451569]: 
   expression: |
-    forms_config = JSON.parse(forms_config);
+    'forms_config = JSON.parse(forms_config);
+    try {
+    	if (forms_where.length != 0)
+    	  	forms_where = JSON.parse(forms_where) 
+    	 
+    	log.warn("Filters are : " + JSON.stringify(forms_where));
     
+    	where = null;
+    	if (forms_where.filters.length != 0) {
+    		where = "";
+    		for (var i = 0; i < forms_where.filters.length; i++) {
+    			if (i != 0) {
+    				// Only AND is supported for now
+    				where += " AND ";
+    			}
+    			
+    			where += forms_where.filters[i].field + " ";
+    			switch (forms_where.filters[i].op) {
+    				case "contains":
+    					where += "CONTAINS ''" + forms_where.filters[i].value + "'' ";
+    					break;
+    					
+    				case "equal":
+    					where += "= ''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "not_equal":
+    					where += "!= ''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "greater":
+    					where += "> ''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "minus":
+    					where += "< ''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "minusequals":
+    					where += "<= ''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "greaterequals":
+    					where += ">= ''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "is_empty":
+    					where += "IS NULL"
+    					break;
+    					
+    				case "not_contains":
+    					where += "NOT CONTAINS''" + forms_where.filters[i].value + "''";
+    					break;
+    					
+    				case "is_filled":
+    					where += "IS NOT NULL"
+    					break;
+    					
+    				case "among_following":
+    					where += "IN (" + forms_tableFilter.filters[i].value + ") ";
+    					break;
+    					
+    				case "out_following":
+    					where += "NOT IN (" + forms_tableFilter.filters[i].value + ") ";
+    					break;
+    			} 
+    		}
+    	}
+    	update = forms_update;
+    	log.warn("[Google Sheet Connector] Where clause is : " + where);
+    	log.warn("[Google Sheet Connector] Update is : " + update);
+    }
+    catch (e) {
+    	log.error("[Google Sheet Connector] Where filter error" + e);
+    	forms_where = null
+    	where = null;
+    }
+    	'
 ↓SheetID [steps.JsonFieldStep-1724259493363]: 
   key: 
     - xmlizable: 
@@ -86,44 +162,47 @@ comment: |
             - ↑value: 1724259493369
           - java.lang.String: 
             - ↑value: ./text()
-↓DefineFlatenize [steps.SimpleStep-1724320395638]: 
-  expression: |
-    '//function flatenize
-    var flatenize = function (doc, prefix, resp, myid) {
-        for (var property in doc) {
-            try {
-                if (doc[property].type != undefined) {
-                    if (doc[property].type == "ion-card") {
-                        flatenize(doc[property]["children"], null, resp, myid);
-                    }
-                    else {
-                        resp[doc[property].name] = {
-    						"value":
-    							doc[property]["children"] ?
-    								JSON.stringify(doc[property]["children"]) : 
-    								doc[property].value,
-    								
-    						"type":  doc[property].type,
-    						"name":  doc[property].name
-    					}
-                    }
-                }
-            }
-            catch (e) {
-                log.error("[Google Sheet Connector] an error occurred while computing  value : \n" + JSON.stringify(e));
-            }
-        }
-    };'
-↓PrepareData [steps.SimpleStep-1724260402751]: 
-  comment: Prepare data to submit according to BR field type
-  expression: |
-    // convert XML to JSON doc
-    var jDoc = JSON.parse('' + com.twinsoft.convertigo.engine.util.XMLUtils.XmlToJson(doc, true, true));
-    dataRow= {}
-    flatenize(jDoc.variable.resp, null, dataRow, null);
-    log.warn("Add row Data is :" + JSON.stringify(dataRow));
-    dataRow = JSON.stringify(dataRow);
-    
+↓jIf [steps.IfStep-1724824601052]: 
+  comment: If we have a Where clause do not prepare data as we will only update a row
+  condition: where == null
+  ↓DefineFlatenize [steps.SimpleStep-1724320395638]: 
+    expression: |
+      '//function flatenize
+      var flatenize = function (doc, prefix, resp, myid) {
+          for (var property in doc) {
+              try {
+                  if (doc[property].type != undefined) {
+                      if (doc[property].type == "ion-card") {
+                          flatenize(doc[property]["children"], null, resp, myid);
+                      }
+                      else {
+                          resp[doc[property].name] = {
+      						"value":
+      							doc[property]["children"] ?
+      								JSON.stringify(doc[property]["children"]) : 
+      								doc[property].value,
+      								
+      						"type":  doc[property].type,
+      						"name":  doc[property].name
+      					}
+                      }
+                  }
+              }
+              catch (e) {
+                  log.error("[Google Sheet Connector] an error occurred while computing  value : \n" + JSON.stringify(e));
+              }
+          }
+      };'
+  ↓PrepareData [steps.SimpleStep-1724260402751]: 
+    comment: Prepare data to submit according to BR field type
+    expression: |
+      // convert XML to JSON doc
+      var jDoc = JSON.parse('' + com.twinsoft.convertigo.engine.util.XMLUtils.XmlToJson(doc, true, true));
+      dataRow= {}
+      flatenize(jDoc.variable.resp, null, dataRow, null);
+      log.warn("Add row Data is :" + JSON.stringify(dataRow));
+      dataRow = JSON.stringify(dataRow);
+      
 ↓Call_Sequence [steps.SequenceStep-1724259573861]: 
   sourceSequence: lib_GoogleSheet.SheetAddRow
   ↓SheetID [variables.StepVariable-1724259600906]: 
@@ -148,6 +227,10 @@ comment: |
             - ↑value: ./text()
   ↓dataRow [variables.StepVariable-1724334072669]: 
     comment: The data to be added 
+  ↓where [variables.StepVariable-1724823612124]: 
+    comment: A Google Sheet Where clause
+  ↓update [variables.StepVariable-1724823612126]: 
+    comment: a JSON array of field, values
 ↓doc [variables.RequestableVariable-1724259036963]: 
 ↓originalDoc [variables.RequestableVariable-1724259036966]: 
 ↓forms_config [variables.RequestableVariable-1724259148877]: 
@@ -185,6 +268,7 @@ comment: |
             "comment": "Si ce champ n''est pas vide, l''action utilisera la clause WHERE pour filtrer l''enregistrement à mettre à jour. La clause WHERE doit être une clause WHERE valide de type ''SQL'' sans le mot clé WHERE. Une clause Where peut être par exemple : <br><br><i>inputText1 = ''value1'' AND inputText1 > ''Other Value''</i></br></br>Les valeurs doivent être entourées de guillemets simples ''"
         }
     }'
+  description: filter
 ↓testOK [core.TestCase]: 
   ↓forms_config [variables.TestCaseVariable-1724259654301]: 
     description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
@@ -194,5 +278,30 @@ comment: |
       	"sheet_id":"1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo",
       	"range":"A1:Z100",
       	"token":"${lib_googlesheet.testtoken}"
+      }
+      '
+↓TestWhere [core.TestCase]: 
+  ↓forms_config [variables.TestCaseVariable-1724823366519]: 
+    description: configure=lib_GoogleSheet/DisplayObjects/mobile/Configure
+    required: true
+    value: |
+      '{
+      	"sheet_id":"1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo",
+      	"range":"''Add Row''!B2:K100",
+      	"token":"${lib_googlesheet.testtoken}"
+      }
+      '
+  ↓forms_update [variables.TestCaseVariable-1724823366521]: 
+    value: inputText5 = 'Z'hghg , ""gg'hj hg 'ZZ', inputText3 = 'UU,U'
+  ↓forms_where [variables.TestCaseVariable-1724823366523]: 
+    description: filter
+    value: |
+      '{
+      		"filters":[{
+      			"field": "inputText1",
+      			"op": "equal",
+      			"value": "hdghgf"
+      		}],
+      		"mode":"AND"
       }
       '
