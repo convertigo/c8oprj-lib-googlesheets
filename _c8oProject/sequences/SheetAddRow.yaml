@@ -74,8 +74,8 @@ comment: Add a row of cells to a Google Sheet.
     			log.debug("[Google Sheet Connector] We are in Where clause mode " + where );				
     			
     		    // Parse the where clause. The clause is in the form field1 = value1, field2 > value2, field3 < value3, etc .. and build an Object
-    		    whereClause = parseWhere(where);
-    		    log.warn("[Google Sheet Connector] Where clause parsed : " + JSON.stringify(whereClause));
+    		    whereClause = parseWhereWithOperator(where);
+    		    log.debug("[Google Sheet Connector] Where clause parsed : " + JSON.stringify(whereClause));
     		    
     		    // Extract range details
     		    var rangeDetails = extractRangeDetails(Range);
@@ -87,45 +87,51 @@ comment: Add a row of cells to a Google Sheet.
     			// We have to build a  =ARRAYFORMULA(MIN(FILTER(ROW(Demandes!A1:A100), (Demandes!A1:A100="VORBE") * (Demandes!F1:F100="2024-10-31")))
     			var formula = "=ARRAYFORMULA(MIN(FILTER(ROW(" + Range + "); "
     
-    			log.warn("[Google Sheet Connector] Found " + whereClause.length + " Clauses");
+    			log.debug("[Google Sheet Connector] Found " + whereClause.conditions.length + " Clauses with ''" + whereClause.logicalOperator + "'' operator");
     			
-    			for (let i = 0; i < whereClause.length; i++) {
+    			for (let i = 0; i < whereClause.conditions.length; i++) {
     
-    				log.warn("[Google Sheet Connector] Handle clause N° " + i + " field:" + whereClause[i].field + " value:"  + whereClause[i].value);
+    				log.debug("[Google Sheet Connector] Handle clause N° " + i + " field:" + whereClause.conditions[i].field + " value:"  + whereClause.conditions[i].value);
     
-    				var field = whereClause[i].field;
-    				var value = whereClause[i].value;
-    				var operator = whereClause[i].operator;
+    				var field = whereClause.conditions[i].field;
+    				var value = whereClause.conditions[i].value;
+    				var operator = whereClause.conditions[i].operator;
     				
     				
     				column = getColFromHeader(field, rangeDetails.firstCol)
-    				log.warn("[Google Sheet Connector] Handle clause N° " + i + " Colun:" + column);
+    				log.debug("[Google Sheet Connector] Handle clause N° " + i + " Colun:" + column);
     
     				var sheetName = rangeDetails.sheetName;
     			
     	            // Build formula
     	            // 1) extract string from value beteween single quotes
     	            var value = extractContentBetweenOuterSingleQuotes(value);
-    				log.warn("[Google Sheet Connector] Handle clause N° " + i + " Value:" + value);
+    				log.debug("[Google Sheet Connector] Handle clause N° " + i + " Value:" + value);
                 
     	            // 2) double all "" in the value to escape them
     	            value = value.replace(/"/g, ''""'');
-    				log.warn("[Google Sheet Connector] value with escaped \"\" : " + value);
+    				log.debug("[Google Sheet Connector] value with escaped \"\" : " + value);
                 
     	            // 3) Build the formula
-    				formula += "(" + sheetName + column + rangeDetails.firstRow + ":" + column + rangeDetails.lastRow + " " + operator + " \"" + value + "\") * "; 	
+    				formula += "(" + sheetName + column + rangeDetails.firstRow + ":" + column + rangeDetails.lastRow + " " + operator + " \"" + value + "\") ";
+    				if (i < whereClause.conditions.length -1)
+    					formula += whereClause.logicalOperator == "AND" ? "* ":"+ "
     			} 
     
+    			formula += ")))"
+    
     			// Remove last '' *'' from formula
-    			const lastIndex = formula.lastIndexOf('' *'');
-    		    if (lastIndex === -1) {
-    		        log.error("[Google Sheet Connector] Incorrect Syntax ");
-    		    }
-        		formula = formula.slice(0, lastIndex) + formula.slice(lastIndex + 2) + ")))";
-    			log.warn("[Google Sheet Connector] formula to execute : " + formula);
+    //			
+    //			const lastIndex = formula.lastIndexOf('' *'');
+    //		    if (lastIndex === -1) {
+    //		        log.error("[Google Sheet Connector] Incorrect Syntax ");
+    //		    }
+    //    		formula = formula.slice(0, lastIndex) + formula.slice(lastIndex + 2) + ")))";
+    
+    			log.debug("[Google Sheet Connector] formula to execute : " + formula);
     			
     			AddExecutorSheet();
-    			log.warn("[Google Sheet Connector] Executor Sheet Added");
+    			log.debug("[Google Sheet Connector] Executor Sheet Added");
     			
     			// Write the Formula in the Excutor Sheet
     			var values = new com.google.api.services.sheets.v4.model.ValueRange();
@@ -150,7 +156,7 @@ comment: Add a row of cells to a Google Sheet.
     			} 
     			rows = values.toArray();
     			updateRow = rows[0][0]
-    			log.warn("[Google Sreadsheet Connector] Row to update is : " + updateRow);
+    			log.debug("[Google Sreadsheet Connector] Row to update is : " + updateRow);
     			
     			if (updateRow == "#N/A") {
     				log.error("[Google Sreadsheet Connector] Update row not found");
@@ -171,12 +177,12 @@ comment: Add a row of cells to a Google Sheet.
     								  updateRow
     				cellNotations.push(updateRange + "")
     				cellValues.push(update[i].value + "")
-    				log.warn("[Google Sheet Connector] Will update : [" + i + "]" + updateRange + " With value  : <" + update[i].value + ">");
+    				log.debug("[Google Sheet Connector] Will update : [" + i + "]" + updateRange + " With value  : <" + update[i].value + ">");
     			}
     			updateDiscontinuousCellsInRow(cellNotations, cellValues, rangeDetails.sheetName, SheetID)
     			
     			//RemoveExecutorSheet();
-    			log.warn("[Google Sheet Connector] Executor Sheet Removed");
+    			log.debug("[Google Sheet Connector] Executor Sheet Removed");
     			
     		} else {
     	 		requestBody = new ValueRange();
@@ -215,7 +221,7 @@ comment: Add a row of cells to a Google Sheet.
     				.setInsertDataOption("OVERWRITE")
     		        .execute();
     	
-    			log.debug("[Google Sreadsheet Connector] response" + response);				
+    			log.debug("[Google Sheet Connector] response" + response);				
     	   }		
     	} catch (error) {
     		setError = error;
@@ -271,38 +277,6 @@ comment: Add a row of cells to a Google Sheet.
     		headers = values[0].toArray();		
     	}
     	return headers;
-    }
-    
-    /**
-     * Parse a where clause in the form of expression field = value, field2 > value2, field3 < value3, etc  seprarated by AND
-     * Operators supported are =, >, <, >=, <=
-     * Return an arry of objects with field and value and operator
-     * 
-     * @param {String} str the where clause
-     * @returns {Object} the parsed where clause as a key value object
-     * @example
-     * 
-     * var where = "field1 = value1 AND field2 > value2 AND field3 < value3";
-     */
-    function parseWhere(whereClause) {
-        const operators = [''='', ''>'', ''<'', ''>='', ''<=''];
-        const conditions = whereClause.split(/AND/i).map(condition => condition.trim());
-        
-        return conditions.map(condition => {
-            let operator = operators.find(op => condition.includes(op));
-            
-            if (!operator) {
-                throw new Error("Unsupported operator in condition:" +  condition);
-            }
-    
-            const [field, value] = condition.split(operator).map(part => part.trim());
-            
-            return {
-                field,
-                operator,
-                value
-            };
-        });
     }
     
     function extractContentBetweenOuterSingleQuotes(inputString) {
@@ -414,7 +388,7 @@ comment: Add a row of cells to a Google Sheet.
     		}
         })
         
-       	log.warn("[Google Sheet Connector] Inputs : " + JSON.stringify(result));
+       	log.debug("[Google Sheet Connector] Inputs : " + JSON.stringify(result));
         return result;
     }	
     
@@ -515,7 +489,67 @@ comment: Add a row of cells to a Google Sheet.
     			}
     		}
     		return (SheetId)
-    }'
+    }
+    
+    
+    /**
+     * Parse a where clause in the form of expression field = value, field2 > value2, field3 < value3, etc  seprarated by AND
+     * Operators supported are =, >, <, >=, <=
+     * Return an array of objects with field and value and operator
+     * 
+     * @param {String} str the where clause
+     * @returns {Object} the parsed where clause as a key value object
+     * @example
+     * 
+     * var where = "field1 = value1 AND field2 > value2 AND field3 < value3";
+     */
+    
+    function parseWhereWithOperator(whereClause) {
+        const operators = [''='', ''>'', ''<'', ''>='', ''<=''];
+        const logicalOperators = [''AND'', ''OR''];
+    
+        // Determine which logical operator is used in the clause
+        const logicalOperatorUsed = logicalOperators.find(op => whereClause.toUpperCase().includes(op));
+        
+        if (!logicalOperatorUsed) {
+            throw new Error("No logical operator found. Only AND or OR can be used.");
+        }
+    
+        // Ensure only one type of logical operator is used
+        const otherLogicalOperator = logicalOperators.find(op => op !== logicalOperatorUsed);
+        if (whereClause.toUpperCase().includes(otherLogicalOperator)) {
+            throw new Error("Mixing AND and OR operators is not allowed.");
+        }
+    
+        // Split the whereClause by the detected logical operator
+        const conditions = whereClause.split(new RegExp(logicalOperatorUsed, ''i'')).map(part => part.trim());
+    
+        // Parse the conditions
+        const parsedConditions = conditions.map(condition => {
+            // Find the operator in the condition
+            let operator = operators.find(op => condition.includes(op));
+    
+            if (!operator) {
+                throw new Error("Unsupported operator in condition: " + condition);
+            }
+    
+            // Split the condition by the operator to get the field and value
+            const [field, value] = condition.split(operator).map(part => part.trim());
+    
+            return {
+                field,
+                operator,
+                value
+            };
+        });
+    
+        // Return the parsed conditions along with the logical operator used
+        return {
+            logicalOperator: logicalOperatorUsed.toUpperCase(),
+            conditions: parsedConditions
+        };
+    }
+    '
 ↓jIfThenElse [steps.IfThenElseStep-1607870066657]: 
   condition: setError != null
   ↓jThen [steps.ThenStep-1607870066660]: 
@@ -585,7 +619,7 @@ comment: Add a row of cells to a Google Sheet.
       '
   ↓where [variables.TestCaseVariable-1724343252936]: 
     value: |
-      inputText1 = 'hdghgf' AND inputText2 = 'fhfghdfgh'
+      inputText1 = 'hdghgf' OR inputText2 = 'fhfghdfgh' OR inputText3 = 'ZZZ'
       
   ↓update [variables.TestCaseVariable-1724343252938]: 
     value: inputText5 = 'Z'hghg , ""gg'hj hg 'ZZ', inputText3 = 'UU,U'
