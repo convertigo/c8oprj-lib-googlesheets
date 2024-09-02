@@ -252,7 +252,7 @@ comment: Get a range of cells from a Google Sheet.
   value: true
 ↓Query [variables.RequestableVariable-1724069475514]: 
   comment: |
-    'A Query in Google Query language Syntax such as : SELECT * WHERE  A contains(''this pattern''). Columns can be named by identifier (A,B,C, ...) or Columns numbers (Col1, Col2, Col3, ...)
+    'A Query in Google Query language Syntax such as : SELECT * WHERE  A contains ''this pattern'' . Columns can be named by identifier (A,B,C, ...) or Columns numbers (Col1, Col2, Col3, ...)
     '
 ↓TestOk [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607603826140]: 
