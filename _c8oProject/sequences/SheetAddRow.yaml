@@ -217,7 +217,7 @@ comment: Add a row of cells to a Google Sheet.
     			 	
     			response = service.spreadsheets().values()
     				.append(SheetID, Range, requestBody)
-    		        .setValueInputOption("RAW")
+    		        .setValueInputOption("USER_ENTERED")
     				.setInsertDataOption("OVERWRITE")
     		        .execute();
     	
