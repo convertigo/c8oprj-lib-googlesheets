@@ -506,10 +506,10 @@ comment: Add a row of cells to a Google Sheet.
     
     function parseWhereWithOperator(whereClause) {
         const operators = [''='', ''>'', ''<'', ''>='', ''<=''];
-        const logicalOperators = [''AND'', ''OR''];
+        const logicalOperators = ['' AND '', '' OR ''];
     
         // Determine which logical operator is used in the clause
-        const logicalOperatorUsed = logicalOperators.find(op => whereClause.toUpperCase().includes(op));
+        const logicalOperatorUsed = logicalOperators.find(op => whereClause.includes(op));
         
         if (!logicalOperatorUsed) {
             throw new Error("No logical operator found. Only AND or OR can be used.");
@@ -517,7 +517,7 @@ comment: Add a row of cells to a Google Sheet.
     
         // Ensure only one type of logical operator is used
         const otherLogicalOperator = logicalOperators.find(op => op !== logicalOperatorUsed);
-        if (whereClause.toUpperCase().includes(otherLogicalOperator)) {
+        if (whereClause.includes(otherLogicalOperator)) {
             throw new Error("Mixing AND and OR operators is not allowed.");
         }
     
@@ -545,7 +545,7 @@ comment: Add a row of cells to a Google Sheet.
     
         // Return the parsed conditions along with the logical operator used
         return {
-            logicalOperator: logicalOperatorUsed.toUpperCase(),
+            logicalOperator: logicalOperatorUsed.toUpperCase().trim(),
             conditions: parsedConditions
         };
     }
@@ -577,6 +577,30 @@ comment: Add a row of cells to a Google Sheet.
   comment: A Google Sheet Where clause
 ↓update [variables.RequestableVariable-1724340324746]: 
   comment: a JSON array of field, values
+↓TestMultipleAnd [core.TestCase]: 
+  ↓SheetID [variables.TestCaseVariable-1725269497149]: 
+    value: 1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo
+  ↓Range [variables.TestCaseVariable-1725269497152]: 
+    value: '''Add Row''!B2:K100'
+  ↓dataRow [variables.TestCaseVariable-1725269497155]: 
+    value: |
+      '{
+      	"inputText1": {
+      		"value": "AAAAAAAAA"
+      	},
+      	"inputText2": {
+      		"value": "BBBBBBBB"
+      	},
+      	"datetime1": {
+      		"value": "10/10/2024"
+      	}
+      }
+      
+      '
+  ↓where [variables.TestCaseVariable-1725269497158]: 
+    value:  email = 'gregoryv@convertigo.com' AND Nom = 'VORBE' AND statut = ''
+  ↓update [variables.TestCaseVariable-1725269497161]: 
+    value: inputText5 = 'Z'hghg , ""gg'hj hg 'ZZ', inputText3 = 'UU,U'
 ↓TestNewRow [core.TestCase]: 
   ↓SheetID [variables.TestCaseVariable-1607870066727]: 
     value: 1txNgqBGAwpua2ZhP8XE8i8IHsOl1I-XwmhDs4mAmRCo

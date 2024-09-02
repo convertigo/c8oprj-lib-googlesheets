@@ -11,6 +11,7 @@ For more technical informations : [documentation](./project.md)
 - [Installation](#installation)
 - [Sequences](#sequences)
     - [checkAccessTokenGoogle](#checkaccesstokengoogle)
+    - [ClearRefreshToken](#clearrefreshtoken)
     - [forms_AddRow](#forms_addrow)
     - [formssource_GetTableData](#formssource_gettabledata)
     - [getApiKey](#getapikey)
@@ -60,6 +61,10 @@ This as to be called by client apps to decide whenever or not they have to displ
 
 
 
+### ClearRefreshToken
+
+Remove any RefreshToken and GoogleSheetAcessTokne form the session and user profile
+
 ### forms_AddRow
 
 Add a row to a table in a Google Sheet. Each column of the table must have the same name as the technicalID <br>of a field on the form. <br><br>This action can also be used to update some data in a table. In this case, set <br>the <b>Where Clause</b> variable to a condition and set the <b>Update</b> variable to the columns you want to update.
@@ -77,10 +82,13 @@ Add a row to a table in a Google Sheet. Each column of the table must have the s
 <td>forms_config</td><td>Creates a row in a table with a given configuration</td>
 </tr>
 <tr>
-<td>forms_update</td><td>Will be use only if the WHERE clause is not empty. Give here separated by commas the fields = value to define the columns to be updated by the given values. The fields must be the technical identifiers of the fields of your form. For example: <br><br><i>inputText1 = value1, inputText2 = value2</i>. <br><br>Of course values can be dragged and dropped from the list of fields.</td>
+<td>forms_update</td><td>Will be use only if the WHERE clause is not empty. Give here separated by commas the fields = value to define the columns to be updated by the given values. The fields must be the technical identifiers of the fields of your form. For example: <br><br><i>inputText1 = 'value1', inputText2 = 'value2'</i>. <br><br>Of course values can be dragged and dropped from the list of fields.</td>
 </tr>
 <tr>
-<td>forms_where</td><td>If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid 'SQL like' WHERE clause without the WHERE keyword. A Where clause can be for example : <br><br><i>inputText1 = 'value1' </i></br></br>Google Sheet connector only supports the = operator and one item. Values must be surrounded by single quotes '</td>
+<td>forms_where</td><td>If this field is not empty, the action will use the WHERE clause to filter the record to update. The WHERE clause must be a valid ''SQL like'' WHERE clause without the WHERE keyword. A Where clause can be for example : <br><br><i>inputText1 = ''value1''  AND inputText1 > ''Other Value''</i></br></br>Values must be surrounded by single quotes ''. You can use AND/OR operators (in uppercase) but you cannnot combine AND and OR in the same clause.</td>
+</tr>
+<tr>
+<td>model</td><td></td>
 </tr>
 <tr>
 <td>originalDoc</td><td></td>
